@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { HardHat, LogOut } from "lucide-react";
 import type { ReactNode } from "react";
+import { STATUS_CLASS, STATUS_LABEL, type Status } from "@/lib/format";
 import { supabase } from "@/integrations/supabase/client";
 
 export function AppShell({ children, action }: { children: ReactNode; action?: ReactNode }) {
@@ -35,6 +36,10 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
   );
 }
 
-export function StatusBadge({ status, label }: { status: string; label: string }) {
-  return null as unknown as ReactNode ?? <span>{status}{label}</span>;
+export function StatusBadge({ status }: { status: Status }) {
+  return (
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_CLASS[status]}`}>
+      {STATUS_LABEL[status]}
+    </span>
+  );
 }
