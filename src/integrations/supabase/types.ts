@@ -14,7 +14,110 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      change_orders: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          foreman_name: string | null
+          id: string
+          job_id: string
+          number: number
+          photos: string[]
+          reject_reason: string | null
+          sent_at: string | null
+          share_token: string
+          signature: string | null
+          signed_at: string | null
+          signed_method: string | null
+          signer_name: string | null
+          signer_title: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          description?: string
+          foreman_name?: string | null
+          id?: string
+          job_id: string
+          number?: number
+          photos?: string[]
+          reject_reason?: string | null
+          sent_at?: string | null
+          share_token?: string
+          signature?: string | null
+          signed_at?: string | null
+          signed_method?: string | null
+          signer_name?: string | null
+          signer_title?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          foreman_name?: string | null
+          id?: string
+          job_id?: string
+          number?: number
+          photos?: string[]
+          reject_reason?: string | null
+          sent_at?: string | null
+          share_token?: string
+          signature?: string | null
+          signed_at?: string | null
+          signed_method?: string | null
+          signer_name?: string | null
+          signer_title?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "change_orders_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          address: string | null
+          created_at: string
+          gc_name: string | null
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          gc_name?: string | null
+          id?: string
+          name: string
+          user_id?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          gc_name?: string | null
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
