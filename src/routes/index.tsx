@@ -15,6 +15,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Track every field change directive by job, status, date, and amount." },
       { property: "og:title", content: "FieldCO — Field Change Directives" },
       { property: "og:description", content: "Capture, sign, and track field change directives in minutes." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Dashboard,

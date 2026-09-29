@@ -18,6 +18,8 @@ export const Route = createFileRoute("/approve/$token")({
       { name: "description", content: "Review photos, scope, and price, then approve with your signature." },
       { property: "og:title", content: "Review Change Directive" },
       { property: "og:description", content: "Review photos, scope, and price, then approve with your signature." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

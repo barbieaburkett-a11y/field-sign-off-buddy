@@ -34,6 +34,7 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
+  --color-sage: var(--sage);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);

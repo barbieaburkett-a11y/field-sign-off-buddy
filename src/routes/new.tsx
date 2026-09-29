@@ -19,6 +19,8 @@ export const Route = createFileRoute("/new")({
       { name: "description", content: "Capture photos, scope, and a lump-sum price for extra field work." },
       { property: "og:title", content: "New Change Directive — FieldCO" },
       { property: "og:description", content: "Capture photos, scope, and a lump-sum price for extra field work." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: NewCO,
