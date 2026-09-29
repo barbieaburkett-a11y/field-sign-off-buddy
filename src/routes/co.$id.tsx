@@ -107,7 +107,7 @@ function CODetail() {
         </div>
       )}
 
-      <Packet co={{ ...co, companyName: hasFeature(account, "custom_logo") ? account?.company_name : null, companyLogoUrl: hasFeature(account, "custom_logo") ? account?.company_logo_url : null }} />
+      <Packet co={{ ...co, companyName: hasFeature(account, "custom_logo") ? (account?.company_name ?? null) : null, companyLogoUrl: hasFeature(account, "custom_logo") ? (account?.company_logo_url ?? null) : null }} />
 
       <div className="no-print mt-4 grid grid-cols-2 gap-2 pb-10">
         <Button variant="outline" className="h-11" onClick={() => window.print()}>

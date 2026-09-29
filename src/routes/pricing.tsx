@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Minus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
@@ -45,6 +45,13 @@ function PricingPage() {
   const [officeEmail, setOfficeEmail] = useState(account?.office_pm_email ?? "");
   const plan = effectivePlan(account);
   const canBrand = plan === "pro" || plan === "unlimited";
+
+  useEffect(() => {
+    if (!account) return;
+    setCompanyName(account.company_name ?? "");
+    setLogoUrl(account.company_logo_url ?? "");
+    setOfficeEmail(account.office_pm_email ?? "");
+  }, [account]);
 
   if (!user) return null;
 
