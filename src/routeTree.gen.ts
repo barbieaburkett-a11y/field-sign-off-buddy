@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as NewRouteImport } from './routes/new'
+import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
+import { Route as CoIdRouteImport } from './routes/co.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewRoute = NewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApproveTokenRoute = ApproveTokenRouteImport.update({
+  id: '/approve/$token',
+  path: '/approve/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoIdRoute = CoIdRouteImport.update({
+  id: '/co/$id',
+  path: '/co/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/new': typeof NewRoute
+  '/approve/$token': typeof ApproveTokenRoute
+  '/co/$id': typeof CoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/new': typeof NewRoute
+  '/approve/$token': typeof ApproveTokenRoute
+  '/co/$id': typeof CoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/new': typeof NewRoute
+  '/approve/$token': typeof ApproveTokenRoute
+  '/co/$id': typeof CoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/auth' | '/new' | '/approve/$token' | '/co/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth' | '/new' | '/approve/$token' | '/co/$id'
+  id: '__root__' | '/' | '/auth' | '/new' | '/approve/$token' | '/co/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  NewRoute: typeof NewRoute
+  ApproveTokenRoute: typeof ApproveTokenRoute
+  CoIdRoute: typeof CoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new': {
+      id: '/new'
+      path: '/new'
+      fullPath: '/new'
+      preLoaderRoute: typeof NewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approve/$token': {
+      id: '/approve/$token'
+      path: '/approve/$token'
+      fullPath: '/approve/$token'
+      preLoaderRoute: typeof ApproveTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/co/$id': {
+      id: '/co/$id'
+      path: '/co/$id'
+      fullPath: '/co/$id'
+      preLoaderRoute: typeof CoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  NewRoute: NewRoute,
+  ApproveTokenRoute: ApproveTokenRoute,
+  CoIdRoute: CoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
