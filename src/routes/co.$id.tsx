@@ -123,7 +123,7 @@ function OnSiteSign({ open, onOpenChange, coId, amount, title, onDone }: { open:
       signed_method: "onsite", signed_at: now, updated_at: now,
     }).eq("id", coId);
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Signed and approved");
     onOpenChange(false);
     onDone();

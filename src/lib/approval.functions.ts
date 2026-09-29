@@ -47,7 +47,7 @@ export const submitApproval = createServerFn({ method: "POST" })
         status: data.decision,
         signer_name: data.signerName,
         signer_title: data.signerTitle ?? null,
-        signature: data.decision === "approved" ? data.signature : null,
+        signature: data.decision === "approved" ? (data.signature ?? null) : null,
         reject_reason: data.decision === "rejected" ? (data.reason ?? null) : null,
         signed_method: "remote",
         signed_at: new Date().toISOString(),
