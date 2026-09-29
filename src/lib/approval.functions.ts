@@ -10,7 +10,7 @@ export const getApproval = createServerFn({ method: "GET" })
     const { data: co } = await supabaseAdmin
       .from("change_orders")
       .select(
-        "number,title,description,amount,photos,status,foreman_name,signer_name,signer_title,signature,signed_at,sent_at,created_at,reject_reason,jobs(name,gc_name,address)",
+        "user_id,number,title,description,amount,photos,status,foreman_name,signer_name,signer_title,signature,signed_at,sent_at,created_at,reject_reason,jobs(name,gc_name,address)",
       )
       .eq("share_token", data.token)
       .maybeSingle();
@@ -22,8 +22,15 @@ export const getApproval = createServerFn({ method: "GET" })
         .createSignedUrls(co.photos, 3600);
       photoUrls = (s ?? []).map((x) => x.signedUrl ?? "");
     }
-    const { photos: _p, ...rest } = co;
-    return { ...rest, photoUrls };
+    const { data: account } = await supabaseAdmin
+      .from("account_plans")
+      .select("plan,subscription_status,trial_ends_at,company_name,company_logo_url")
+      .eq("user_id", co.user_id)
+      .maybeSingle();
+    const trialActive = account?.subscription_status === "trialing" && new Date(account.trial_ends_at).getTime() > Date.now();
+    const canBrand = trialActive || (account?.subscription_status === "active" && (account.plan === "pro" || account.plan === "unlimited"));
+    const { photos: _p, user_id: _u, ...rest } = co;
+    return { ...rest, photoUrls, companyName: canBrand ? account?.company_name : null, companyLogoUrl: canBrand ? account?.company_logo_url : null };
   });
 
 export const submitApproval = createServerFn({ method: "POST" })

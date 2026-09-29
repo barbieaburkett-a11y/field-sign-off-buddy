@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ArrowLeft, Copy, MessageSquare, PenLine, Printer, Mail } from "lucide-react";
+import { ArrowLeft, Copy, LockKeyhole, MessageSquare, PenLine, Printer, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useRequireAuth } from "@/lib/auth";
@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { coNumber, money, type Status } from "@/lib/format";
+import { hasFeature, usePlan } from "@/lib/plans";
+import { UpgradeDialog } from "@/components/UpgradeDialog";
 
 export const Route = createFileRoute("/co/$id")({
   head: () => ({
@@ -21,6 +23,8 @@ export const Route = createFileRoute("/co/$id")({
       { name: "description", content: "Review, sign, and export a field change directive." },
       { property: "og:title", content: "Change Directive — FieldCO" },
       { property: "og:description", content: "Review, sign, and export a field change directive." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CODetail,
@@ -31,6 +35,8 @@ function CODetail() {
   const { user } = useRequireAuth();
   const qc = useQueryClient();
   const [signOpen, setSignOpen] = useState(false);
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const { data: account } = usePlan(user?.id);
 
   const { data: co, refetch } = useQuery({
     queryKey: ["co", id],
@@ -60,7 +66,8 @@ function CODetail() {
   };
   const email = () => {
     const body = `${msg}\n\nSigned packet available at the link above once approved.`;
-    window.location.href = `mailto:?subject=${encodeURIComponent(`Change Directive ${coNumber(co.number)} – ${co.jobs?.name}`)}&body=${encodeURIComponent(body)}`;
+    const cc = hasFeature(account, "office_cc") && account?.office_pm_email ? `cc=${encodeURIComponent(account.office_pm_email)}&` : "";
+    window.location.href = `mailto:?${cc}subject=${encodeURIComponent(`Change Directive ${coNumber(co.number)} – ${co.jobs?.name}`)}&body=${encodeURIComponent(body)}`;
   };
 
   const open = co.status === "draft" || co.status === "pending";
@@ -82,11 +89,17 @@ function CODetail() {
             <Button className="h-12" onClick={() => setSignOpen(true)}>
               <PenLine className="mr-1 h-4 w-4" /> Sign on this device
             </Button>
-            <Button className="h-12" variant="secondary" asChild>
-              <a href={`sms:?&body=${encodeURIComponent(msg)}`} onClick={markSent}>
-                <MessageSquare className="mr-1 h-4 w-4" /> Text approval link
-              </a>
-            </Button>
+            {hasFeature(account, "sms_routing") ? (
+              <Button className="h-12" variant="secondary" asChild>
+                <a href={`sms:?&body=${encodeURIComponent(msg)}`} onClick={markSent}>
+                  <MessageSquare className="mr-1 h-4 w-4" /> Text approval link
+                </a>
+              </Button>
+            ) : (
+              <Button className="h-12" variant="secondary" onClick={() => setUpgradeOpen(true)}>
+                <LockKeyhole className="mr-1 h-4 w-4" /> SMS requires Pro
+              </Button>
+            )}
           </div>
           <button onClick={copy} className="mt-3 flex w-full items-center gap-2 rounded-md bg-ink-foreground/10 px-3 py-2 text-left text-xs">
             <Copy className="h-3.5 w-3.5 shrink-0" /> <span className="truncate font-mono">{link}</span>
@@ -94,7 +107,7 @@ function CODetail() {
         </div>
       )}
 
-      <Packet co={co} />
+      <Packet co={{ ...co, companyName: hasFeature(account, "custom_logo") ? (account?.company_name ?? null) : null, companyLogoUrl: hasFeature(account, "custom_logo") ? (account?.company_logo_url ?? null) : null }} />
 
       <div className="no-print mt-4 grid grid-cols-2 gap-2 pb-10">
         <Button variant="outline" className="h-11" onClick={() => window.print()}>
@@ -106,6 +119,7 @@ function CODetail() {
       </div>
 
       <OnSiteSign open={signOpen} onOpenChange={setSignOpen} coId={co.id} amount={co.amount} title={co.title} onDone={() => { refetch(); qc.invalidateQueries({ queryKey: ["cos"] }); }} />
+      <UpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} recommended="pro" reason="SMS approval routing is included with Pro and Unlimited." />
     </AppShell>
   );
 }

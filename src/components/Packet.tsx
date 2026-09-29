@@ -17,15 +17,21 @@ export type PacketData = {
   reject_reason: string | null;
   jobs: { name: string; gc_name: string | null; address?: string | null } | null;
   photoUrls: string[];
+  companyName?: string | null;
+  companyLogoUrl?: string | null;
 };
 
 export function Packet({ co }: { co: PacketData }) {
   return (
     <article className="rounded-xl border bg-card p-6 text-card-foreground print:border-0 print:p-0">
       <header className="flex items-start justify-between border-b-4 border-primary pb-4">
-        <div>
+        <div className="flex items-start gap-3">
+          {co.companyLogoUrl && <img src={co.companyLogoUrl} alt={`${co.companyName || "Company"} logo`} className="h-11 w-11 object-contain" />}
+          <div>
+          {co.companyName && <div className="mb-1 text-sm font-bold">{co.companyName}</div>}
           <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Field Change Directive</div>
           <h1 className="mt-1 text-2xl font-extrabold">{coNumber(co.number)}</h1>
+          </div>
         </div>
         <div className="text-right">
           <div className="text-xs uppercase text-muted-foreground">Lump sum</div>

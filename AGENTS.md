@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Billing entitlements live in `public.account_plans`; the browser may create only its own Starter trial and update company display settings, while provider callbacks own subscription fields, preventing client-side plan escalation.
