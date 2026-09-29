@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_plans: {
+        Row: {
+          company_logo_url: string | null
+          company_name: string | null
+          created_at: string
+          office_pm_email: string | null
+          paddle_customer_id: string | null
+          paddle_subscription_id: string | null
+          plan: string
+          subscription_status: string
+          trial_ends_at: string
+          trial_started_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_logo_url?: string | null
+          company_name?: string | null
+          created_at?: string
+          office_pm_email?: string | null
+          paddle_customer_id?: string | null
+          paddle_subscription_id?: string | null
+          plan?: string
+          subscription_status?: string
+          trial_ends_at?: string
+          trial_started_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_logo_url?: string | null
+          company_name?: string | null
+          created_at?: string
+          office_pm_email?: string | null
+          paddle_customer_id?: string | null
+          paddle_subscription_id?: string | null
+          plan?: string
+          subscription_status?: string
+          trial_ends_at?: string
+          trial_started_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       change_orders: {
         Row: {
           amount: number
