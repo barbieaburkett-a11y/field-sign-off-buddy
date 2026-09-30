@@ -10,6 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited" } => {
+    const p = search["plan"];
+    return p === "starter" || p === "pro" || p === "unlimited" ? { plan: p } : {};
+  },
   head: () => ({
     meta: [
       { title: "Sign in — FieldCO" },
@@ -26,10 +30,15 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const { session } = useAuth();
   const navigate = useNavigate();
+  const { plan } = Route.useSearch();
   const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (plan) sessionStorage.setItem("fieldco.pendingPlan", plan);
+  }, [plan]);
 
   useEffect(() => {
     if (session) navigate({ to: "/" });
@@ -63,6 +72,11 @@ function AuthPage() {
             Get the extra work <span className="text-primary">signed</span> before you build it.
           </h1>
           <p className="mt-3 text-sm opacity-70">Photos, scope, price, signature. Done in the field in two minutes.</p>
+          {plan && (
+            <p className="mt-4 rounded-md border-l-4 border-sage bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground">
+              You picked the {plan === "pro" ? "Pro" : plan === "unlimited" ? "Unlimited" : "Starter"} plan — create your account to continue.
+            </p>
+          )}
           <div className="mt-8 rounded-xl bg-card p-5 text-card-foreground">
             <Button variant="outline" className="h-11 w-full" onClick={google}>
               Continue with Google

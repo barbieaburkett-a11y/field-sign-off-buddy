@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Plus, Camera } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useRequireAuth } from "@/lib/auth";
 import { AppShell, StatusBadge } from "@/components/AppShell";
+import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { Button } from "@/components/ui/button";
 import { coNumber, dateOnly, money, STATUS_LABEL, type Status } from "@/lib/format";
+import type { PlanId } from "@/lib/plans";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,6 +29,19 @@ function Dashboard() {
   const { user } = useRequireAuth();
   const [job, setJob] = useState("all");
   const [status, setStatus] = useState<"all" | Status>("all");
+  const [upgrade, setUpgrade] = useState<PlanId | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    const pending = sessionStorage.getItem("fieldco.pendingPlan") as PlanId | null;
+    if (!pending) return;
+    sessionStorage.removeItem("fieldco.pendingPlan");
+    if (pending === "starter") {
+      toast.success("Your 14-day Pro trial is on — Starter kicks in when it ends.");
+    } else {
+      setUpgrade(pending);
+    }
+  }, [user]);
 
   const { data: jobs = [] } = useQuery({
     queryKey: ["jobs"],
@@ -121,6 +137,7 @@ function Dashboard() {
           </Button>
         </div>
       </div>
+      <UpgradeDialog open={upgrade !== null} onOpenChange={(open) => !open && setUpgrade(null)} recommended={upgrade ?? "pro"} />
     </AppShell>
   );
 }
