@@ -1,0 +1,1 @@
+ALTER TABLE public.account_plans ADD COLUMN next_payment_retry_at timestamptz, ADD COLUMN retry_reminder_sent_for timestamptz;

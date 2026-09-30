@@ -11,6 +11,9 @@ export function PaymentIssueBanner({ account }: { account?: AccountPlan | null |
   if (account?.subscription_status !== "past_due") return null;
   const inGrace = isInGracePeriod(account);
   const days = graceDaysLeft(account);
+  const retryAt = account.next_payment_retry_at && new Date(account.next_payment_retry_at).getTime() > Date.now()
+    ? new Date(account.next_payment_retry_at).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
+    : null;
 
   async function openPortal() {
     const tab = window.open("", "_blank");
@@ -32,7 +35,7 @@ export function PaymentIssueBanner({ account }: { account?: AccountPlan | null |
         <span className="flex items-start gap-2">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
           {inGrace ? (
-            <span><strong>Payment failed.</strong> Your plan stays active for {days} more {days === 1 ? "day" : "days"} — update your card to avoid losing features.</span>
+            <span><strong>Payment failed.</strong> Your plan stays active for {days} more {days === 1 ? "day" : "days"} — update your card to avoid losing features.{retryAt && <> We'll try your card again on <strong>{retryAt}</strong>.</>}</span>
           ) : (
             <span><strong>Payment still failing.</strong> Paid features are paused until your card is updated.</span>
           )}

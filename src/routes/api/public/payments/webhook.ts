@@ -27,7 +27,7 @@ async function upsertFromSubscription(data: any, env: PaddleEnv) {
     billing_environment: env,
     updated_at: new Date().toISOString(),
     ...(data.status === "active" || data.status === "trialing"
-      ? { payment_failed_at: null, grace_period_ends_at: null }
+      ? { payment_failed_at: null, grace_period_ends_at: null, next_payment_retry_at: null, retry_reminder_sent_for: null }
       : {}),
   };
 
@@ -37,17 +37,22 @@ async function upsertFromSubscription(data: any, env: PaddleEnv) {
   } else {
     await supabaseAdmin.from("account_plans").update(values).eq("paddle_subscription_id", data.id);
   }
-  if (data.status === "past_due") await startGracePeriod(data.id);
+  if (data.status === "past_due") await startGracePeriod(data.id, data.nextBilledAt);
 }
 
 const GRACE_DAYS = 7;
 
 // Starts the grace period once per failure episode; access stays on until it ends.
-async function startGracePeriod(subscriptionId: string) {
+async function startGracePeriod(subscriptionId: string, nextRetryAt?: string | null) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const now = new Date();
   await supabaseAdmin.from("account_plans")
-    .update({ subscription_status: "past_due", updated_at: now.toISOString() })
+    .update({
+      subscription_status: "past_due",
+      updated_at: now.toISOString(),
+      // Paddle's own retry schedule: the next attempt it has planned for this subscription.
+      ...(nextRetryAt && new Date(nextRetryAt).getTime() > now.getTime() ? { next_payment_retry_at: nextRetryAt } : {}),
+    })
     .eq("paddle_subscription_id", subscriptionId);
   await supabaseAdmin.from("account_plans")
     .update({
