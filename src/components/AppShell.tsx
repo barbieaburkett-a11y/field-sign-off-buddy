@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { isTrialActive, trialDaysLeft, usePlan } from "@/lib/plans";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
 export function AppShell({ children, action }: { children: ReactNode; action?: ReactNode }) {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
   const { data: account } = usePlan(user?.id);
   return (
     <div className="min-h-screen">
+      <div className="no-print"><PaymentTestModeBanner /></div>
       <header className="no-print sticky top-0 z-10 border-b bg-ink text-ink-foreground">
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold">
