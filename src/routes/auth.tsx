@@ -10,9 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    plan: search.plan === "starter" || search.plan === "pro" || search.plan === "unlimited" ? search.plan : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited" } => {
+    const p = search["plan"];
+    return { plan: p === "starter" || p === "pro" || p === "unlimited" ? p : undefined };
+  },
   head: () => ({
     meta: [
       { title: "Sign in — FieldCO" },
