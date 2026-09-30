@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { getBillingPortalUrl } from "@/lib/payments.functions";
 import { graceDaysLeft, isInGracePeriod, type AccountPlan } from "@/lib/plans";
 
-export function PaymentIssueBanner({ account }: { account?: AccountPlan | null }) {
+export function PaymentIssueBanner({ account }: { account?: AccountPlan | null | undefined }) {
   const getPortal = useServerFn(getBillingPortalUrl);
   const [busy, setBusy] = useState(false);
   if (account?.subscription_status !== "past_due") return null;
