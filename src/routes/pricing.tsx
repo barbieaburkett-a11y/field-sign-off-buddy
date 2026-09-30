@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, Minus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -7,7 +7,9 @@ import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRequireAuth } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
+import { HardHat } from "lucide-react";
+import type { ReactNode } from "react";
 import { effectivePlan, isTrialActive, PLANS, trialDaysLeft, usePlan, type PlanId } from "@/lib/plans";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -37,8 +39,9 @@ const rows = [
 ] as const;
 
 function PricingPage() {
-  const { user } = useRequireAuth();
+  const { user, loading } = useAuth();
   const { data: account, refetch } = usePlan(user?.id);
+  const navigate = useNavigate();
   const [upgrade, setUpgrade] = useState<PlanId | null>(null);
   const [companyName, setCompanyName] = useState(account?.company_name ?? "");
   const [logoUrl, setLogoUrl] = useState(account?.company_logo_url ?? "");
@@ -53,9 +56,11 @@ function PricingPage() {
     setOfficeEmail(account.office_pm_email ?? "");
   }, [account]);
 
-  if (!user) return null;
+  if (loading) return null;
+  const Shell = user ? AppShell : PublicShell;
 
   const saveSettings = async () => {
+    if (!user) return;
     const { error } = await supabase.from("account_plans").update({ company_name: companyName || null, company_logo_url: logoUrl || null, office_pm_email: officeEmail || null, updated_at: new Date().toISOString() }).eq("user_id", user.id);
     if (error) { toast.error(error.message); return; }
     toast.success("Packet and office settings saved");
@@ -63,14 +68,14 @@ function PricingPage() {
   };
 
   return (
-    <AppShell>
+    <Shell>
       <div className="mb-7 flex items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase text-primary">Plans & billing</p>
           <h1 className="mt-1 text-3xl font-bold">Keep every extra protected.</h1>
           <p className="mt-2 max-w-xl text-sm text-muted-foreground">Straightforward monthly pricing for crews that need signed backup before the work starts.</p>
         </div>
-        <Button variant="outline" asChild><Link to="/">Back</Link></Button>
+        {user && <Button variant="outline" asChild><Link to="/">Back</Link></Button>}
       </div>
 
       {isTrialActive(account) && (
@@ -93,7 +98,7 @@ function PricingPage() {
               <ul className="my-5 space-y-2 text-sm">
                 {item.features.map((feature) => <li key={feature} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />{feature}</li>)}
               </ul>
-              <Button className="w-full" variant={current ? "secondary" : item.id === "pro" ? "default" : "outline"} disabled={current} onClick={() => setUpgrade(item.id)}>{current ? "Current plan" : `Choose ${item.name}`}</Button>
+              <Button className="w-full" variant={current ? "secondary" : item.id === "pro" ? "default" : "outline"} disabled={current} onClick={() => user ? setUpgrade(item.id) : navigate({ to: "/auth" })}>{current ? "Current plan" : `Choose ${item.name}`}</Button>
             </section>
           );
         })}
@@ -109,7 +114,7 @@ function PricingPage() {
         </div>
       </section>
 
-      <section className="mt-10 border-t pt-8">
+      {user && <section className="mt-10 border-t pt-8">
         <h2 className="text-xl font-bold">Signed packet & office delivery</h2>
         <p className="mt-1 text-sm text-muted-foreground">Available on Pro and Unlimited.</p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -118,8 +123,24 @@ function PricingPage() {
           <div className="sm:col-span-2"><Label htmlFor="office">Office PM email</Label><Input id="office" type="email" className="mt-1 h-11" disabled={!canBrand} value={officeEmail} onChange={(e) => setOfficeEmail(e.target.value)} /></div>
         </div>
         <Button className="mt-4" disabled={!canBrand} onClick={saveSettings}>Save settings</Button>
-      </section>
+      </section>}
       <UpgradeDialog open={upgrade !== null} onOpenChange={(open) => !open && setUpgrade(null)} recommended={upgrade ?? "pro"} />
-    </AppShell>
+    </Shell>
+  );
+}
+function PublicShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-10 border-b bg-ink text-ink-foreground">
+        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
+          <Link to="/pricing" className="flex items-center gap-2 font-display text-lg font-bold">
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><HardHat className="h-5 w-5" /></span>
+            FieldCO
+          </Link>
+          <Button size="sm" asChild><Link to="/auth">Start free trial</Link></Button>
+        </div>
+      </header>
+      <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
+    </div>
   );
 }
