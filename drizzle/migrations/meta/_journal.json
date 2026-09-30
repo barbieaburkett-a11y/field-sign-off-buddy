@@ -29,6 +29,13 @@
       "when": 1790766564300,
       "tag": "0003_add_payment_grace_period",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790766830526,
+      "tag": "0004_add_next_payment_retry",
+      "breakpoints": true
     }
   ]
 }
