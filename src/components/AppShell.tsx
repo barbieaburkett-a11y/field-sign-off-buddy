@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { isTrialActive, trialDaysLeft, usePlan } from "@/lib/plans";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { LegalFooter } from "@/components/LegalPage";
 
 export function AppShell({ children, action }: { children: ReactNode; action?: ReactNode }) {
   const navigate = useNavigate();
