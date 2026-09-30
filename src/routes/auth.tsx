@@ -26,10 +26,15 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const { session } = useAuth();
   const navigate = useNavigate();
+  const { plan } = Route.useSearch();
   const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (plan) sessionStorage.setItem("fieldco.pendingPlan", plan);
+  }, [plan]);
 
   useEffect(() => {
     if (session) navigate({ to: "/" });

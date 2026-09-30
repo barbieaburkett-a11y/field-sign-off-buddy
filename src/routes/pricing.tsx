@@ -98,7 +98,7 @@ function PricingPage() {
               <ul className="my-5 space-y-2 text-sm">
                 {item.features.map((feature) => <li key={feature} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />{feature}</li>)}
               </ul>
-              <Button className="w-full" variant={current ? "secondary" : item.id === "pro" ? "default" : "outline"} disabled={current} onClick={() => user ? setUpgrade(item.id) : navigate({ to: "/auth" })}>{current ? "Current plan" : `Choose ${item.name}`}</Button>
+              <Button className="w-full" variant={current ? "secondary" : item.id === "pro" ? "default" : "outline"} disabled={current} onClick={() => user ? setUpgrade(item.id) : navigate({ to: "/auth", search: { plan: item.id } })}>{current ? "Current plan" : `Choose ${item.name}`}</Button>
             </section>
           );
         })}
