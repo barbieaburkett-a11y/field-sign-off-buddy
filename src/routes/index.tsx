@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Plus, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { useRequireAuth } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
+import { Landing } from "@/components/Landing";
 import { AppShell, StatusBadge } from "@/components/AppShell";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { Button } from "@/components/ui/button";
@@ -14,19 +15,25 @@ import type { PlanId } from "@/lib/plans";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dashboard — FieldCO Change Directives" },
-      { name: "description", content: "Track every field change directive by job, status, date, and amount." },
-      { property: "og:title", content: "FieldCO — Field Change Directives" },
+      { title: "FieldCO — Field Change Orders for Subcontractors" },
+      { name: "description", content: "Capture extra work with photos and a price, get GC sign-off on site or by text, and export signed packets for pay apps." },
+      { property: "og:title", content: "FieldCO — Field Change Orders for Subcontractors" },
       { property: "og:description", content: "Capture, sign, and track field change directives in minutes." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Dashboard,
+  component: Home,
 });
 
+function Home() {
+  const { user, loading } = useAuth();
+  if (loading || !user) return <Landing />;
+  return <Dashboard />;
+}
+
 function Dashboard() {
-  const { user } = useRequireAuth();
+  const { user } = useAuth();
   const [job, setJob] = useState("all");
   const [status, setStatus] = useState<"all" | Status>("all");
   const [upgrade, setUpgrade] = useState<PlanId | null>(null);
