@@ -52,6 +52,7 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
         </div>
       )}
       <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
+      <LegalFooter />
     </div>
   );
 }
