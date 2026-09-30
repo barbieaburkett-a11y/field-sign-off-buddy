@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       account_plans: {
         Row: {
+          billing_environment: string | null
           company_logo_url: string | null
           company_name: string | null
           created_at: string
@@ -30,6 +31,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          billing_environment?: string | null
           company_logo_url?: string | null
           company_name?: string | null
           created_at?: string
@@ -44,6 +46,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          billing_environment?: string | null
           company_logo_url?: string | null
           company_name?: string | null
           created_at?: string
