@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/auth";
 import { HardHat } from "lucide-react";
 import type { ReactNode } from "react";
-import { effectivePlan, isTrialActive, PLANS, trialDaysLeft, usePlan, type PlanId } from "@/lib/plans";
+import { effectivePlan, hasPaidPlan, isTrialActive, PLANS, trialDaysLeft, usePlan, type PlanId } from "@/lib/plans";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/pricing")({
@@ -87,7 +87,7 @@ function PricingPage() {
 
       <div className="grid gap-4 lg:grid-cols-3">
         {PLANS.map((item) => {
-          const current = !isTrialActive(account) && account?.subscription_status === "active" && account.plan === item.id;
+          const current = hasPaidPlan(account) && account?.plan === item.id;
           return (
             <section key={item.id} className={`border bg-card p-5 ${item.id === "pro" ? "border-primary shadow-sm" : ""}`}>
               {item.id === "pro" && <p className="mb-3 text-xs font-bold uppercase text-primary">Most popular</p>}
