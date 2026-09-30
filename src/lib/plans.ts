@@ -46,7 +46,7 @@ export type AccountPlan = {
 const PLAN_COLUMNS = "user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email,billing_environment";
 
 function currentBillingEnv() {
-  const token = import.meta.env.VITE_PAYMENTS_CLIENT_TOKEN as string | undefined;
+  const token = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'] as string | undefined;
   return token?.startsWith("test_") ? "sandbox" : "live";
 }
 

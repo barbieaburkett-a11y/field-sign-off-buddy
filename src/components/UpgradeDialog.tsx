@@ -15,7 +15,7 @@ export function UpgradeDialog({ open, onOpenChange, recommended = "pro", reason 
     setBusy(plan);
     try {
       onOpenChange(false);
-      await openPlanCheckout(plan, { id: user.id, email: user.email });
+      await openPlanCheckout(plan, { id: user.id, email: user.email ?? null });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Checkout could not open");
     } finally {
