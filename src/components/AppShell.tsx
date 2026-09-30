@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { isTrialActive, trialDaysLeft, usePlan } from "@/lib/plans";
+import { PaymentIssueBanner } from "@/components/PaymentIssueBanner";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { LegalFooter } from "@/components/LegalPage";
 
@@ -44,6 +45,7 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
           </div>
         </div>
       </header>
+      <PaymentIssueBanner account={account} />
       {isTrialActive(account) && (
         <div className="no-print border-b bg-secondary">
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-2 text-sm">
