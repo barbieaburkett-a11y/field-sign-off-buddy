@@ -1,0 +1,1 @@
+ALTER TABLE public.account_plans ADD COLUMN IF NOT EXISTS billing_environment text CHECK (billing_environment IN ('sandbox','live'));

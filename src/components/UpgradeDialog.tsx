@@ -1,11 +1,27 @@
+import { useState } from "react";
 import { Check, LockKeyhole } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PLANS, type PlanId } from "@/lib/plans";
+import { useAuth } from "@/lib/auth";
+import { openPlanCheckout } from "@/lib/paddle";
 
 export function UpgradeDialog({ open, onOpenChange, recommended = "pro", reason }: { open: boolean; onOpenChange: (open: boolean) => void; recommended?: PlanId; reason?: string }) {
-  const choose = (name: string) => toast.info(`${name} checkout will be available after payments are activated.`);
+  const { user } = useAuth();
+  const [busy, setBusy] = useState<PlanId | null>(null);
+  const choose = async (plan: PlanId) => {
+    if (!user) { toast.error("Please sign in first."); return; }
+    setBusy(plan);
+    try {
+      onOpenChange(false);
+      await openPlanCheckout(plan, { id: user.id, email: user.email ?? null });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Checkout could not open");
+    } finally {
+      setBusy(null);
+    }
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto p-0">
@@ -24,7 +40,7 @@ export function UpgradeDialog({ open, onOpenChange, recommended = "pro", reason 
               <ul className="my-4 space-y-2 text-sm">
                 {plan.features.map((feature) => <li key={feature} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />{feature}</li>)}
               </ul>
-              <Button className="w-full" variant={plan.id === recommended ? "default" : "outline"} onClick={() => choose(plan.name)}>Choose {plan.name}</Button>
+              <Button className="w-full" disabled={busy !== null} variant={plan.id === recommended ? "default" : "outline"} onClick={() => choose(plan.id)}>{busy === plan.id ? "Opening…" : `Choose ${plan.name}`}</Button>
             </section>
           ))}
         </div>

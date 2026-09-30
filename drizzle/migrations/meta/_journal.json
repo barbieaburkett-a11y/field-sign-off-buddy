@@ -15,6 +15,13 @@
       "when": 1790724220096,
       "tag": "0001_add_account_plans_and_entitlements",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790766181165,
+      "tag": "0002_add_billing_environment",
+      "breakpoints": true
     }
   ]
 }

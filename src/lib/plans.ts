@@ -40,17 +40,25 @@ export type AccountPlan = {
   company_name: string | null;
   company_logo_url: string | null;
   office_pm_email: string | null;
+  billing_environment: "sandbox" | "live" | null;
 };
+
+const PLAN_COLUMNS = "user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email,billing_environment";
+
+function currentBillingEnv() {
+  const token = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'] as string | undefined;
+  return token?.startsWith("test_") ? "sandbox" : "live";
+}
 
 export function usePlan(userId?: string) {
   return useQuery({
     queryKey: ["account-plan", userId],
     enabled: Boolean(userId),
     queryFn: async () => {
-      const { data, error } = await supabase.from("account_plans").select("user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email").eq("user_id", userId ?? "").maybeSingle();
+      const { data, error } = await supabase.from("account_plans").select(PLAN_COLUMNS).eq("user_id", userId ?? "").maybeSingle();
       if (error) throw error;
       if (data) return data as AccountPlan;
-      const { data: created, error: createError } = await supabase.from("account_plans").insert({ user_id: userId ?? "" }).select("user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email").single();
+      const { data: created, error: createError } = await supabase.from("account_plans").insert({ user_id: userId ?? "" }).select(PLAN_COLUMNS).single();
       if (createError) throw createError;
       return created as AccountPlan;
     },
@@ -61,9 +69,14 @@ export function isTrialActive(account?: AccountPlan | null) {
   return Boolean(account?.subscription_status === "trialing" && new Date(account.trial_ends_at).getTime() > Date.now());
 }
 
+export function hasPaidPlan(account?: AccountPlan | null) {
+  return account?.subscription_status === "active" && account.billing_environment === currentBillingEnv();
+}
+
 export function effectivePlan(account?: AccountPlan | null): PlanId {
+  if (hasPaidPlan(account)) return account!.plan;
   if (isTrialActive(account)) return "pro";
-  return account?.subscription_status === "active" ? account.plan : "starter";
+  return "starter";
 }
 
 export function hasFeature(account: AccountPlan | null | undefined, feature: PlanFeature) {
