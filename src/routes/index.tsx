@@ -28,8 +28,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { user, loading } = useAuth();
-  if (loading) return null;
-  if (!user) return <Landing />;
+  if (loading || !user) return <Landing />;
   return <Dashboard />;
 }
 
