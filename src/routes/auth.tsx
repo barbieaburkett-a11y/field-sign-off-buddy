@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { HardHat } from "lucide-react";
 import { toast } from "sonner";
@@ -84,6 +84,7 @@ function AuthPage() {
             <button className="mt-4 w-full text-center text-sm text-muted-foreground" onClick={() => setMode(mode === "in" ? "up" : "in")}>
               {mode === "in" ? "New here? Create an account" : "Have an account? Sign in"}
             </button>
+            <Link to="/pricing" className="mt-2 block text-center text-sm font-semibold text-primary hover:underline">View plans & pricing</Link>
           </div>
         </div>
       </div>
