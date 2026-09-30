@@ -13,6 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundsRouteImport } from './routes/refunds'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -37,6 +40,21 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundsRoute = RefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApproveTokenRoute = ApproveTokenRouteImport.update({
   id: '/approve/$token',
   path: '/approve/$token',
@@ -59,6 +77,9 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refunds': typeof RefundsRoute
+  '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -68,6 +89,9 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refunds': typeof RefundsRoute
+  '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -78,6 +102,9 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refunds': typeof RefundsRoute
+  '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -89,6 +116,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/new'
     | '/pricing'
+    | '/privacy'
+    | '/refunds'
+    | '/terms'
     | '/approve/$token'
     | '/co/$id'
     | '/api/public/payments/webhook'
@@ -98,6 +128,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/new'
     | '/pricing'
+    | '/privacy'
+    | '/refunds'
+    | '/terms'
     | '/approve/$token'
     | '/co/$id'
     | '/api/public/payments/webhook'
@@ -107,6 +140,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/new'
     | '/pricing'
+    | '/privacy'
+    | '/refunds'
+    | '/terms'
     | '/approve/$token'
     | '/co/$id'
     | '/api/public/payments/webhook'
@@ -117,6 +153,9 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   NewRoute: typeof NewRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RefundsRoute: typeof RefundsRoute
+  TermsRoute: typeof TermsRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -152,6 +191,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refunds': {
+      id: '/refunds'
+      path: '/refunds'
+      fullPath: '/refunds'
+      preLoaderRoute: typeof RefundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/approve/$token': {
       id: '/approve/$token'
       path: '/approve/$token'
@@ -181,6 +241,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   NewRoute: NewRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  RefundsRoute: RefundsRoute,
+  TermsRoute: TermsRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,

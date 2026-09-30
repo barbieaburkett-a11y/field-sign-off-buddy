@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { isTrialActive, trialDaysLeft, usePlan } from "@/lib/plans";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { LegalFooter } from "@/components/LegalPage";
 
 export function AppShell({ children, action }: { children: ReactNode; action?: ReactNode }) {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
         </div>
       )}
       <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
+      <LegalFooter />
     </div>
   );
 }
