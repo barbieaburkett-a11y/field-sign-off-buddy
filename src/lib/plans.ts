@@ -43,9 +43,10 @@ export type AccountPlan = {
   billing_environment: "sandbox" | "live" | null;
   payment_failed_at: string | null;
   grace_period_ends_at: string | null;
+  next_payment_retry_at: string | null;
 };
 
-const PLAN_COLUMNS = "user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email,billing_environment,payment_failed_at,grace_period_ends_at";
+const PLAN_COLUMNS = "user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email,billing_environment,payment_failed_at,grace_period_ends_at,next_payment_retry_at";
 
 function currentBillingEnv() {
   const token = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'] as string | undefined;
