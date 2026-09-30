@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LegalFooter } from "@/components/LegalPage";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited" } => {
@@ -102,6 +103,7 @@ function AuthPage() {
           </div>
         </div>
       </div>
+      <LegalFooter />
     </div>
   );
 }

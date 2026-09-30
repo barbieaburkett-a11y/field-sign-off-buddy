@@ -3,6 +3,7 @@ import { Check, Minus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
+import { LegalFooter } from "@/components/LegalPage";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,6 +142,7 @@ function PublicShell({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
+      <LegalFooter />
     </div>
   );
 }
