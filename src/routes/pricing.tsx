@@ -57,8 +57,7 @@ function PricingPage() {
     setOfficeEmail(account.office_pm_email ?? "");
   }, [account]);
 
-  if (loading) return null;
-  const Shell = user ? AppShell : PublicShell;
+  const Shell = user && !loading ? AppShell : PublicShell;
 
   const saveSettings = async () => {
     if (!user) return;
