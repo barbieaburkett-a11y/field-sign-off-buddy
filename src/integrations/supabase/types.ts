@@ -20,9 +20,11 @@ export type Database = {
           company_logo_url: string | null
           company_name: string | null
           created_at: string
+          grace_period_ends_at: string | null
           office_pm_email: string | null
           paddle_customer_id: string | null
           paddle_subscription_id: string | null
+          payment_failed_at: string | null
           plan: string
           subscription_status: string
           trial_ends_at: string
@@ -35,9 +37,11 @@ export type Database = {
           company_logo_url?: string | null
           company_name?: string | null
           created_at?: string
+          grace_period_ends_at?: string | null
           office_pm_email?: string | null
           paddle_customer_id?: string | null
           paddle_subscription_id?: string | null
+          payment_failed_at?: string | null
           plan?: string
           subscription_status?: string
           trial_ends_at?: string
@@ -50,9 +54,11 @@ export type Database = {
           company_logo_url?: string | null
           company_name?: string | null
           created_at?: string
+          grace_period_ends_at?: string | null
           office_pm_email?: string | null
           paddle_customer_id?: string | null
           paddle_subscription_id?: string | null
+          payment_failed_at?: string | null
           plan?: string
           subscription_status?: string
           trial_ends_at?: string
