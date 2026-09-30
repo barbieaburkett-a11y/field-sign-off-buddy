@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited" } => {
     const p = search["plan"];
-    return { plan: p === "starter" || p === "pro" || p === "unlimited" ? p : undefined };
+    return p === "starter" || p === "pro" || p === "unlimited" ? { plan: p } : {};
   },
   head: () => ({
     meta: [
