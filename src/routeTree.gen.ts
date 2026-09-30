@@ -18,6 +18,7 @@ import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
+import { Route as ApiPublicHooksPaymentRetryRemindersRouteImport } from './routes/api/public/hooks/payment-retry-reminders'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
@@ -66,6 +67,12 @@ const CoIdRoute = CoIdRouteImport.update({
   path: '/co/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksPaymentRetryRemindersRoute =
+  ApiPublicHooksPaymentRetryRemindersRouteImport.update({
+    id: '/api/public/hooks/payment-retry-reminders',
+    path: '/api/public/hooks/payment-retry-reminders',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -89,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -102,6 +110,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -116,6 +125,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
+    | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
+    | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
   id:
@@ -157,6 +169,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
+    | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
@@ -171,6 +184,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
+  ApiPublicHooksPaymentRetryRemindersRoute: typeof ApiPublicHooksPaymentRetryRemindersRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
@@ -240,6 +254,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/payment-retry-reminders': {
+      id: '/api/public/hooks/payment-retry-reminders'
+      path: '/api/public/hooks/payment-retry-reminders'
+      fullPath: '/api/public/hooks/payment-retry-reminders'
+      preLoaderRoute: typeof ApiPublicHooksPaymentRetryRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -267,6 +288,8 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,
+  ApiPublicHooksPaymentRetryRemindersRoute:
+    ApiPublicHooksPaymentRetryRemindersRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
