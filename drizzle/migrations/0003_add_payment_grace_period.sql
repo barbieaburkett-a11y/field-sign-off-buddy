@@ -1,0 +1,1 @@
+ALTER TABLE public.account_plans ADD COLUMN payment_failed_at timestamptz, ADD COLUMN grace_period_ends_at timestamptz;

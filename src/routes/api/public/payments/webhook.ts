@@ -8,7 +8,7 @@ const PLAN_BY_PRODUCT: Record<string, "starter" | "pro" | "unlimited"> = {
 };
 
 function mapStatus(status: string) {
-  if (status === "active" || status === "trialing" || status === "past_due") return "active";
+  if (status === "active" || status === "trialing") return "active";
   return status; // canceled, paused
 }
 
@@ -26,6 +26,9 @@ async function upsertFromSubscription(data: any, env: PaddleEnv) {
     paddle_customer_id: data.customerId,
     billing_environment: env,
     updated_at: new Date().toISOString(),
+    ...(data.status === "active" || data.status === "trialing"
+      ? { payment_failed_at: null, grace_period_ends_at: null }
+      : {}),
   };
 
   if (userId) {
@@ -34,6 +37,25 @@ async function upsertFromSubscription(data: any, env: PaddleEnv) {
   } else {
     await supabaseAdmin.from("account_plans").update(values).eq("paddle_subscription_id", data.id);
   }
+  if (data.status === "past_due") await startGracePeriod(data.id);
+}
+
+const GRACE_DAYS = 7;
+
+// Starts the grace period once per failure episode; access stays on until it ends.
+async function startGracePeriod(subscriptionId: string) {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const now = new Date();
+  await supabaseAdmin.from("account_plans")
+    .update({ subscription_status: "past_due", updated_at: now.toISOString() })
+    .eq("paddle_subscription_id", subscriptionId);
+  await supabaseAdmin.from("account_plans")
+    .update({
+      payment_failed_at: now.toISOString(),
+      grace_period_ends_at: new Date(now.getTime() + GRACE_DAYS * 86_400_000).toISOString(),
+    })
+    .eq("paddle_subscription_id", subscriptionId)
+    .is("payment_failed_at", null);
 }
 
 export const Route = createFileRoute("/api/public/payments/webhook")({
@@ -50,6 +72,12 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
             case EventName.SubscriptionCanceled:
               await upsertFromSubscription(event.data, env);
               break;
+            case EventName.TransactionPaymentFailed: {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const subId = (event.data as any).subscriptionId as string | undefined;
+              if (subId) await startGracePeriod(subId);
+              break;
+            }
             default:
               break;
           }

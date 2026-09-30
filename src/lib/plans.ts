@@ -41,9 +41,11 @@ export type AccountPlan = {
   company_logo_url: string | null;
   office_pm_email: string | null;
   billing_environment: "sandbox" | "live" | null;
+  payment_failed_at: string | null;
+  grace_period_ends_at: string | null;
 };
 
-const PLAN_COLUMNS = "user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email,billing_environment";
+const PLAN_COLUMNS = "user_id,plan,subscription_status,trial_started_at,trial_ends_at,company_name,company_logo_url,office_pm_email,billing_environment,payment_failed_at,grace_period_ends_at";
 
 function currentBillingEnv() {
   const token = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'] as string | undefined;
@@ -70,7 +72,22 @@ export function isTrialActive(account?: AccountPlan | null) {
 }
 
 export function hasPaidPlan(account?: AccountPlan | null) {
-  return account?.subscription_status === "active" && account.billing_environment === currentBillingEnv();
+  if (!account || account.billing_environment !== currentBillingEnv()) return false;
+  if (account.subscription_status === "active") return true;
+  return isInGracePeriod(account);
+}
+
+export function isInGracePeriod(account?: AccountPlan | null) {
+  return Boolean(
+    account?.subscription_status === "past_due" &&
+    account.grace_period_ends_at &&
+    new Date(account.grace_period_ends_at).getTime() > Date.now(),
+  );
+}
+
+export function graceDaysLeft(account?: AccountPlan | null) {
+  if (!isInGracePeriod(account)) return 0;
+  return Math.max(1, Math.ceil((new Date(account?.grace_period_ends_at ?? 0).getTime() - Date.now()) / 86_400_000));
 }
 
 export function effectivePlan(account?: AccountPlan | null): PlanId {
