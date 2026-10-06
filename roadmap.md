@@ -12,4 +12,4 @@
 - [x] Agent integrations (MCP) with OAuth
 - [x] Paid trade template packs ($9.99/trade, $39 bundle; download + email), covering most-searched template types (change orders, workflows, etc.)
 - [x] Write and verify the first construction change order guide, with free-form and app links
-- [ ] Build and verify guides: change directives, change order tracking, construction schedules
+- [x] Build and verify guides: change directives, change order tracking, construction schedules
