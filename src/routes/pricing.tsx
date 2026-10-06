@@ -15,6 +15,7 @@ import { effectivePlan, hasPaidPlan, isTrialActive, PLANS, trialDaysLeft, usePla
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/pricing")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Plans & Pricing — FieldCO" },

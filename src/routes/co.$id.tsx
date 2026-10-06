@@ -17,6 +17,7 @@ import { hasFeature, usePlan } from "@/lib/plans";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 
 export const Route = createFileRoute("/co/$id")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Change Directive — FieldCO" },

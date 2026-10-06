@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "@/components/LegalPage";
 
 export const Route = createFileRoute("/refunds")({
+  staticData: { sitemap: true },
   component: RefundsPage,
   head: () => ({
     meta: [

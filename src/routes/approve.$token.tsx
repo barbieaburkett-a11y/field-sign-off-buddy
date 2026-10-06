@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Route = createFileRoute("/approve/$token")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Review Change Directive — FieldCO" },
