@@ -6,5 +6,6 @@
 - [x] Refine FieldCO's visual identity: Architectural technical directive selected
 - [x] Apply selected palette, home-page product presentation, and clearer dashboard hierarchy
 - [x] Verify public pages, dashboard filters, and existing photo-import form without altering records
+- [ ] Apply and verify selected Organic sage professional refinement
 - [ ] Launch: publish (needs the user to click Publish)
 - Skipped: social proof/reviews (user doesn't want invented reviews)

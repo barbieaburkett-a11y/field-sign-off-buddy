@@ -10,6 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        welcoming: "bg-primary text-primary-foreground shadow-welcoming hover:bg-primary/90 motion-safe:active:scale-[0.98]",
         stamped: "bg-primary text-primary-foreground shadow-stamped hover:bg-primary/90 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none",
         ink: "bg-ink text-ink-foreground hover:bg-primary hover:text-primary-foreground",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
