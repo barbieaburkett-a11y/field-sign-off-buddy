@@ -3,6 +3,7 @@ import { ArrowRight, HardHat, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LegalFooter } from "@/components/LegalPage";
 import fieldPhoto from "@/assets/field-electrical.jpg";
+import { RelatedGuides } from "@/components/GuidePage";
 
 const TITLE = "How to Write a Change Order in Construction — FieldCO";
 const DESCRIPTION = "A practical guide for subcontractors: document changed scope, price extra work, record schedule impacts, and get authorized approval. Includes a worked example and free form.";
@@ -109,6 +110,7 @@ function ChangeOrderGuide() {
               <p>This guide draws on <a className="text-accent-foreground underline underline-offset-4" href="https://help.aiacontracts.com/hc/en-us/articles/1500010255802-instructions-g701s-2017-change-order" target="_blank" rel="noopener noreferrer">AIA’s G701S–2017 change order instructions</a>, which address scope, subcontract sum, time adjustments, and execution. The example above is original, not a reproduction of an AIA form.</p>
               <p>General information, not legal advice. Your subcontract, project requirements, and applicable law control; a form or signature alone does not guarantee payment.</p>
             </section>
+            <section className="no-print border-t pt-8"><h2>More field notes</h2><RelatedGuides /></section>
           </article>
         </div>
         <section className="no-print border-t bg-secondary px-5 py-12 sm:px-8">

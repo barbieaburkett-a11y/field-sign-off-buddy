@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChangeOrderTemplateRouteImport } from './routes/change-order-template'
+import { Route as HowToTrackChangeOrdersRouteImport } from './routes/how-to-track-change-orders'
 import { Route as HowToWriteAChangeOrderRouteImport } from './routes/how-to-write-a-change-order'
+import { Route as HowToWriteAConstructionScheduleRouteImport } from './routes/how-to-write-a-construction-schedule'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -20,6 +22,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WhatIsAChangeDirectiveRouteImport } from './routes/what-is-a-change-directive'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
@@ -46,11 +49,22 @@ const ChangeOrderTemplateRoute = ChangeOrderTemplateRouteImport.update({
   path: '/change-order-template',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HowToTrackChangeOrdersRoute = HowToTrackChangeOrdersRouteImport.update({
+  id: '/how-to-track-change-orders',
+  path: '/how-to-track-change-orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowToWriteAChangeOrderRoute = HowToWriteAChangeOrderRouteImport.update({
   id: '/how-to-write-a-change-order',
   path: '/how-to-write-a-change-order',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HowToWriteAConstructionScheduleRoute =
+  HowToWriteAConstructionScheduleRouteImport.update({
+    id: '/how-to-write-a-construction-schedule',
+    path: '/how-to-write-a-construction-schedule',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
@@ -84,6 +98,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhatIsAChangeDirectiveRoute = WhatIsAChangeDirectiveRouteImport.update({
+  id: '/what-is-a-change-directive',
+  path: '/what-is-a-change-directive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
@@ -145,7 +164,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/how-to-track-change-orders': typeof HowToTrackChangeOrdersRoute
   '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
+  '/how-to-write-a-construction-schedule': typeof HowToWriteAConstructionScheduleRoute
   '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
@@ -153,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/refunds': typeof RefundsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
@@ -168,7 +190,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/how-to-track-change-orders': typeof HowToTrackChangeOrdersRoute
   '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
+  '/how-to-write-a-construction-schedule': typeof HowToWriteAConstructionScheduleRoute
   '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
@@ -176,6 +200,7 @@ export interface FileRoutesByTo {
   '/refunds': typeof RefundsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
@@ -192,7 +217,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/how-to-track-change-orders': typeof HowToTrackChangeOrdersRoute
   '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
+  '/how-to-write-a-construction-schedule': typeof HowToWriteAConstructionScheduleRoute
   '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
@@ -200,6 +227,7 @@ export interface FileRoutesById {
   '/refunds': typeof RefundsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
@@ -217,7 +245,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/how-to-track-change-orders'
     | '/how-to-write-a-change-order'
+    | '/how-to-write-a-construction-schedule'
     | '/mcp'
     | '/new'
     | '/pricing'
@@ -225,6 +255,7 @@ export interface FileRouteTypes {
     | '/refunds'
     | '/sitemap.xml'
     | '/terms'
+    | '/what-is-a-change-directive'
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
@@ -240,7 +271,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/how-to-track-change-orders'
     | '/how-to-write-a-change-order'
+    | '/how-to-write-a-construction-schedule'
     | '/mcp'
     | '/new'
     | '/pricing'
@@ -248,6 +281,7 @@ export interface FileRouteTypes {
     | '/refunds'
     | '/sitemap.xml'
     | '/terms'
+    | '/what-is-a-change-directive'
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
@@ -263,7 +297,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/how-to-track-change-orders'
     | '/how-to-write-a-change-order'
+    | '/how-to-write-a-construction-schedule'
     | '/mcp'
     | '/new'
     | '/pricing'
@@ -271,6 +307,7 @@ export interface FileRouteTypes {
     | '/refunds'
     | '/sitemap.xml'
     | '/terms'
+    | '/what-is-a-change-directive'
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
@@ -287,7 +324,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   ChangeOrderTemplateRoute: typeof ChangeOrderTemplateRoute
+  HowToTrackChangeOrdersRoute: typeof HowToTrackChangeOrdersRoute
   HowToWriteAChangeOrderRoute: typeof HowToWriteAChangeOrderRoute
+  HowToWriteAConstructionScheduleRoute: typeof HowToWriteAConstructionScheduleRoute
   McpRoute: typeof McpRoute
   NewRoute: typeof NewRoute
   PricingRoute: typeof PricingRoute
@@ -295,6 +334,7 @@ export interface RootRouteChildren {
   RefundsRoute: typeof RefundsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  WhatIsAChangeDirectiveRoute: typeof WhatIsAChangeDirectiveRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
@@ -330,11 +370,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangeOrderTemplateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/how-to-track-change-orders': {
+      id: '/how-to-track-change-orders'
+      path: '/how-to-track-change-orders'
+      fullPath: '/how-to-track-change-orders'
+      preLoaderRoute: typeof HowToTrackChangeOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-to-write-a-change-order': {
       id: '/how-to-write-a-change-order'
       path: '/how-to-write-a-change-order'
       fullPath: '/how-to-write-a-change-order'
       preLoaderRoute: typeof HowToWriteAChangeOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-write-a-construction-schedule': {
+      id: '/how-to-write-a-construction-schedule'
+      path: '/how-to-write-a-construction-schedule'
+      fullPath: '/how-to-write-a-construction-schedule'
+      preLoaderRoute: typeof HowToWriteAConstructionScheduleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -384,6 +438,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/what-is-a-change-directive': {
+      id: '/what-is-a-change-directive'
+      path: '/what-is-a-change-directive'
+      fullPath: '/what-is-a-change-directive'
+      preLoaderRoute: typeof WhatIsAChangeDirectiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.well-known/oauth-protected-resource': {
@@ -463,7 +524,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   ChangeOrderTemplateRoute: ChangeOrderTemplateRoute,
+  HowToTrackChangeOrdersRoute: HowToTrackChangeOrdersRoute,
   HowToWriteAChangeOrderRoute: HowToWriteAChangeOrderRoute,
+  HowToWriteAConstructionScheduleRoute: HowToWriteAConstructionScheduleRoute,
   McpRoute: McpRoute,
   NewRoute: NewRoute,
   PricingRoute: PricingRoute,
@@ -471,6 +534,7 @@ const rootRouteChildren: RootRouteChildren = {
   RefundsRoute: RefundsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  WhatIsAChangeDirectiveRoute: WhatIsAChangeDirectiveRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   ApproveTokenRoute: ApproveTokenRoute,

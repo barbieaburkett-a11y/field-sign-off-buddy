@@ -3,6 +3,7 @@ import { Camera, FileCheck2, HardHat, LayoutList, PenLine, Smartphone, ArrowUpRi
 import { Button } from "@/components/ui/button";
 import { LegalFooter } from "@/components/LegalPage";
 import fieldPhoto from "@/assets/field-electrical.jpg";
+import { RelatedGuides } from "@/components/GuidePage";
 
 const FEATURES = [
   { icon: Camera, title: "Capture in the field", body: "Pick the job, snap photos of the condition, describe the scope, and enter a lump-sum price." },
@@ -63,6 +64,7 @@ export function Landing() {
         <section className="bg-ink px-5 py-16 text-ink-foreground sm:py-20">
           <div className="mx-auto max-w-4xl text-center"><h2 className="text-3xl font-extrabold uppercase sm:text-4xl">Built for every trade in the field</h2><p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-ink-foreground/75">Keep extra work documented, priced, and signed — without adding another complicated system to your day.</p><div className="mt-8 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-xs uppercase"><span>Electrical</span><span>HVAC</span><span>Plumbing</span><span>Drywall</span><span>Concrete</span></div></div>
         </section>
+        <section className="mx-auto w-full max-w-5xl px-5 py-12 sm:px-8"><h2 className="text-2xl font-bold text-heading">Field notes for subcontractors</h2><div className="mt-4"><RelatedGuides /></div></section>
       </main>
       <LegalFooter />
     </div>
