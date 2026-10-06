@@ -86,6 +86,11 @@ async function handleTemplatePurchase(data: any, env: PaddleEnv) {
     const pack = packForItem(item);
     if (pack && !packs.includes(pack)) packs.push(pack);
   }
+  // Transaction events carry the product only in details.lineItems — use it too.
+  for (const lineItem of (data.details?.lineItems ?? []) as any[]) {
+    const pack = packForItem({ product: lineItem.product });
+    if (pack && !packs.includes(pack)) packs.push(pack);
+  }
   if (!packs.length) { console.error("No packs for template purchase", data.id); return; }
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { getPaddleClient } = await import("@/lib/paddle.server");
