@@ -43,6 +43,13 @@
       "when": 1791298034663,
       "tag": "0005_add_gc_phone_and_approval_reminder",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791301038144,
+      "tag": "0006_add_template_purchases",
+      "breakpoints": true
     }
   ]
 }
