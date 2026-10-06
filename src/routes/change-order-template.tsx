@@ -46,6 +46,7 @@ function TemplatePage() {
           <p className="mt-3 text-muted-foreground">
             Print this form and get the GC's signature before you start extra work. It covers what most supers need to see: the job, what changed, the lump-sum price, and a signature with the date.
           </p>
+          <p className="mt-3 text-sm text-muted-foreground">Need help with the wording? <Link to="/how-to-write-a-change-order" className="text-accent-foreground underline underline-offset-4">Read our guide to writing a construction change order</Link>.</p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Button onClick={() => window.print()}><Printer className="mr-1 h-4 w-4" /> Print or save as PDF</Button>
             <Button variant="outline" asChild><Link to="/auth"><Smartphone className="mr-1 h-4 w-4" /> Do it on your phone instead</Link></Button>

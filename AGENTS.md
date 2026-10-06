@@ -13,3 +13,4 @@
 - The hourly /api/public/hooks/payment-retry-reminders job also sends the one-time 24h unsigned-directive reminder; add new periodic emails there instead of new cron jobs to avoid extra schedules.
 - Shared visual roles and button treatments are defined in global theme tokens and Button variants; page styling must consume these roles so the public site and field workflows remain consistent.
 - MCP: agent tools live in src/lib/mcp/ with Supabase OAuth; RLS runs as the caller via forwarded token.
+- Public educational guides use standalone content routes with leaf metadata and explicit sitemap inclusion, linked from relevant public pages so readers and crawlers can discover them.
