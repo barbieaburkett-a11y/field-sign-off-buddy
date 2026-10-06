@@ -30,12 +30,14 @@ export function Landing() {
         <section className="mx-auto max-w-5xl px-4 py-16 text-center">
           <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">Get the extra work signed before you build it.</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            FieldCO is the field change-order app for construction subcontractors. Foremen capture extra work with photos and a price, and the GC signs off on site or by text — so you get paid for every change.
+            Not another all-in-one jobsite platform. FieldCO does one thing: turns a "just do it" from the GC into a signed, priced change directive in under a minute — on site or by text — so every change gets paid.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button size="lg" asChild><Link to="/auth">Start 14-day free trial</Link></Button>
             <Button size="lg" variant="outline" asChild><Link to="/pricing">See plans & pricing</Link></Button>
           </div>
+          <p className="mt-3 text-sm text-muted-foreground">No demo call. No sales rep. Sign up and send your first directive today.</p>
+          <p className="mt-2 text-sm"><Link to="/change-order-template" className="underline underline-offset-4 hover:text-primary">Or grab our free printable change order template</Link></p>
         </section>
         <section className="mx-auto grid max-w-5xl gap-4 px-4 pb-16 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(({ icon: Icon, title, body }) => (
