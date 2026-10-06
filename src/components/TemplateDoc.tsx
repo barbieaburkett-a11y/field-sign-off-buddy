@@ -1,13 +1,25 @@
+import { createContext, useContext } from "react";
 import { TRADES, DOCS, type DocId, type TradeId } from "@/lib/template-packs";
 
-const Line = ({ label, tall }: { label: string; tall?: boolean }) => (
-  <div className="mt-4">
-    <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
-    <div className={`border-b border-foreground/60 ${tall ? "h-24" : "h-8"}`} />
-  </div>
-);
+type FormValues = Record<string, string>;
+const FillCtx = createContext<{ values: FormValues; set: (k: string, v: string) => void } | null>(null);
+
+const Line = ({ label, tall }: { label: string; tall?: boolean }) => {
+  const fill = useContext(FillCtx);
+  const v = fill?.values[label] ?? "";
+  return (
+    <div className="mt-4">
+      <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      {fill ? (tall
+        ? <textarea aria-label={label} value={v} onChange={(e) => fill.set(label, e.target.value)} className="h-24 w-full resize-none border-0 border-b border-foreground/60 bg-transparent p-1 text-sm focus:outline-none focus:ring-0" />
+        : <input aria-label={label} value={v} onChange={(e) => fill.set(label, e.target.value)} className="h-8 w-full border-0 border-b border-foreground/60 bg-transparent px-1 text-sm focus:outline-none" />)
+        : <div className={`border-b border-foreground/60 ${tall ? "h-24" : "h-8"}`} />}
+    </div>
+  );
+};
 
 function Table({ cols, rows = 10, first }: { cols: string[]; rows?: number; first?: string[] }) {
+  const fill = useContext(FillCtx);
   return (
     <table className="mt-5 w-full border-collapse text-sm">
       <thead>
@@ -16,7 +28,10 @@ function Table({ cols, rows = 10, first }: { cols: string[]; rows?: number; firs
       <tbody>
         {Array.from({ length: rows }).map((_, r) => (
           <tr key={r}>{cols.map((c, ci) => (
-            <td key={c} className="h-8 border border-foreground/50 px-2 text-xs text-muted-foreground">{ci === 0 ? first?.[r] ?? "" : ""}</td>
+            <td key={c} className="h-8 border border-foreground/50 px-2 text-xs text-muted-foreground">{fill ? (() => {
+              const k = `${cols.join("|")}#${r}#${ci}`;
+              return <input aria-label={`${c} row ${r + 1}`} value={fill.values[k] ?? (ci === 0 ? first?.[r] ?? "" : "")} onChange={(e) => fill.set(k, e.target.value)} className="w-full bg-transparent text-xs text-foreground focus:outline-none" />;
+            })() : ci === 0 ? first?.[r] ?? "" : ""}</td>
           ))}</tr>
         ))}
       </tbody>
@@ -31,7 +46,12 @@ const Signatures = () => (
   </div>
 );
 
-export function TemplateDoc({ trade, doc }: { trade: TradeId; doc: DocId }) {
+export function TemplateDoc({ trade, doc, values, onChange }: { trade: TradeId; doc: DocId; values?: FormValues; onChange?: (v: FormValues) => void }) {
+  const ctx = values && onChange ? { values, set: (k: string, v: string) => onChange({ ...values, [k]: v }) } : null;
+  return <FillCtx.Provider value={ctx}><Doc trade={trade} doc={doc} /></FillCtx.Provider>;
+}
+
+function Doc({ trade, doc }: { trade: TradeId; doc: DocId }) {
   const t = TRADES.find((x) => x.id === trade)!;
   const name = DOCS.find((d) => d.id === doc)!.name;
   const header = (

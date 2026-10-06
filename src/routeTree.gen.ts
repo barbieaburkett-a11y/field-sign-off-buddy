@@ -16,6 +16,7 @@ import { Route as HowToTrackChangeOrdersRouteImport } from './routes/how-to-trac
 import { Route as HowToWriteAChangeOrderRouteImport } from './routes/how-to-write-a-change-order'
 import { Route as HowToWriteAConstructionScheduleRouteImport } from './routes/how-to-write-a-construction-schedule'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as MyTemplatesRouteImport } from './routes/my-templates'
 import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -68,6 +69,11 @@ const HowToWriteAConstructionScheduleRoute =
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyTemplatesRoute = MyTemplatesRouteImport.update({
+  id: '/my-templates',
+  path: '/my-templates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewRoute = NewRouteImport.update({
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
   '/how-to-write-a-construction-schedule': typeof HowToWriteAConstructionScheduleRoute
   '/mcp': typeof McpRoute
+  '/my-templates': typeof MyTemplatesRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -194,6 +201,7 @@ export interface FileRoutesByTo {
   '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
   '/how-to-write-a-construction-schedule': typeof HowToWriteAConstructionScheduleRoute
   '/mcp': typeof McpRoute
+  '/my-templates': typeof MyTemplatesRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -221,6 +229,7 @@ export interface FileRoutesById {
   '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
   '/how-to-write-a-construction-schedule': typeof HowToWriteAConstructionScheduleRoute
   '/mcp': typeof McpRoute
+  '/my-templates': typeof MyTemplatesRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/how-to-write-a-change-order'
     | '/how-to-write-a-construction-schedule'
     | '/mcp'
+    | '/my-templates'
     | '/new'
     | '/pricing'
     | '/privacy'
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
     | '/how-to-write-a-change-order'
     | '/how-to-write-a-construction-schedule'
     | '/mcp'
+    | '/my-templates'
     | '/new'
     | '/pricing'
     | '/privacy'
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
     | '/how-to-write-a-change-order'
     | '/how-to-write-a-construction-schedule'
     | '/mcp'
+    | '/my-templates'
     | '/new'
     | '/pricing'
     | '/privacy'
@@ -328,6 +340,7 @@ export interface RootRouteChildren {
   HowToWriteAChangeOrderRoute: typeof HowToWriteAChangeOrderRoute
   HowToWriteAConstructionScheduleRoute: typeof HowToWriteAConstructionScheduleRoute
   McpRoute: typeof McpRoute
+  MyTemplatesRoute: typeof MyTemplatesRoute
   NewRoute: typeof NewRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -396,6 +409,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-templates': {
+      id: '/my-templates'
+      path: '/my-templates'
+      fullPath: '/my-templates'
+      preLoaderRoute: typeof MyTemplatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new': {
@@ -528,6 +548,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowToWriteAChangeOrderRoute: HowToWriteAChangeOrderRoute,
   HowToWriteAConstructionScheduleRoute: HowToWriteAConstructionScheduleRoute,
   McpRoute: McpRoute,
+  MyTemplatesRoute: MyTemplatesRoute,
   NewRoute: NewRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
