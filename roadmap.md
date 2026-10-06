@@ -9,3 +9,4 @@
 - [x] Apply and verify selected Organic sage professional refinement
 - [x] Launch: published; Google Search Console verified + sitemap submitted
 - Skipped: social proof/reviews (user doesn't want invented reviews)
+- [x] Agent integrations (MCP) with OAuth

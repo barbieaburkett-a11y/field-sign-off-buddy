@@ -20,6 +20,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiPublicHooksPaymentRetryRemindersRouteImport } from './routes/api/public/hooks/payment-retry-reminders'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -79,6 +80,11 @@ const CoIdRoute = CoIdRouteImport.update({
   path: '/co/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksPaymentRetryRemindersRoute =
   ApiPublicHooksPaymentRetryRemindersRouteImport.update({
     id: '/api/public/hooks/payment-retry-reminders',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
+    | '/.lovable/oauth/consent'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
+    | '/.lovable/oauth/consent'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
+    | '/.lovable/oauth/consent'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiPublicHooksPaymentRetryRemindersRoute: typeof ApiPublicHooksPaymentRetryRemindersRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -294,6 +307,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/payment-retry-reminders': {
       id: '/api/public/hooks/payment-retry-reminders'
       path: '/api/public/hooks/payment-retry-reminders'
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiPublicHooksPaymentRetryRemindersRoute:
     ApiPublicHooksPaymentRetryRemindersRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
