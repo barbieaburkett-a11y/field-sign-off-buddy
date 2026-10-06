@@ -63,7 +63,7 @@ function Dashboard() {
       (
         await supabase
           .from("change_orders")
-          .select("id,number,title,amount,status,created_at,job_id,jobs(name)")
+          .select("id,number,title,amount,status,created_at,sent_at,job_id,jobs(name)")
           .order("created_at", { ascending: false })
       ).data ?? [],
   });
@@ -77,6 +77,14 @@ function Dashboard() {
     }
     return t;
   }, [filtered]);
+  const aging = useMemo(
+    () =>
+      cos
+        .filter((c) => c.status === "pending" && (job === "all" || c.job_id === job))
+        .map((c) => ({ ...c, days: Math.floor((Date.now() - new Date(c.sent_at ?? c.created_at).getTime()) / 86400000) }))
+        .sort((a, b) => b.days - a.days),
+    [cos, job],
+  );
 
   if (!user) return null;
 
@@ -96,6 +104,34 @@ function Dashboard() {
           <div className="mt-2 break-words font-display text-3xl font-extrabold tabular-nums">{money(totals.pending)}</div>
         </div>
       </div>
+
+      {aging.length > 0 && (
+        <section className="mt-6 rounded-lg border bg-card p-4 shadow-welcoming" aria-label="Awaiting signature, oldest first">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="font-bold text-heading">Waiting on a signature</h2>
+            <span className="font-mono text-xs text-muted-foreground">oldest first</span>
+          </div>
+          <ul className="mt-3 divide-y">
+            {aging.map((c) => (
+              <li key={c.id}>
+                <Link to="/co/$id" params={{ id: c.id }} className="flex items-center justify-between gap-3 py-3 hover:bg-muted/60">
+                  <div className="min-w-0">
+                    <div className="font-mono text-xs text-primary">{coNumber(c.number)} · {c.jobs?.name}</div>
+                    <div className="truncate text-sm">{c.title}</div>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <div className="font-bold tabular-nums">{money(c.amount)}</div>
+                    <div className={`font-mono text-xs ${c.days >= 7 ? "font-bold text-destructive" : c.days >= 3 ? "text-primary" : "text-muted-foreground"}`}>
+                      {c.days === 0 ? "sent today" : `${c.days} day${c.days === 1 ? "" : "s"} waiting`}
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
 
       <div className="mt-6 flex gap-2">
         <select className="h-12 min-w-0 flex-1 rounded-sm border bg-card px-3 text-sm" aria-label="Filter by job" value={job} onChange={(e) => setJob(e.target.value)}>
