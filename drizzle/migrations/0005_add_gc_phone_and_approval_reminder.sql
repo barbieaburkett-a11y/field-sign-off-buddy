@@ -1,0 +1,1 @@
+ALTER TABLE public.change_orders ADD COLUMN gc_phone text, ADD COLUMN approval_reminder_sent_at timestamptz;

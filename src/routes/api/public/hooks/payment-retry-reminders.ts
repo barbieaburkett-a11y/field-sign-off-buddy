@@ -55,7 +55,38 @@ export const Route = createFileRoute("/api/public/hooks/payment-retry-reminders"
             console.error("retry reminder send failed", row.user_id, e);
           }
         }
-        return Response.json({ ok: true, candidates: rows?.length ?? 0, sent });
+        // Same hourly run: remind subs about directives unsigned 24h after sending (one reminder each).
+        let approvalSent = 0;
+        const dayAgo = new Date(now.getTime() - 24 * 3600 * 1000).toISOString();
+        const { data: stale } = await supabaseAdmin
+          .from("change_orders")
+          .select("id, user_id, number, title, amount, jobs(name)")
+          .eq("status", "pending")
+          .is("approval_reminder_sent_at", null)
+          .lte("sent_at", dayAgo)
+          .limit(100);
+        for (const co of stale ?? []) {
+          const { data: u } = await supabaseAdmin.auth.admin.getUserById(co.user_id);
+          const email = u?.user?.email;
+          if (!email) continue;
+          try {
+            const result = await sendTemplateEmail("approval-reminder", email, {
+              templateData: {
+                number: `CD-${String(co.number).padStart(4, "0")}`,
+                title: co.title,
+                jobName: (co.jobs as { name?: string } | null)?.name,
+                amount: Number(co.amount).toLocaleString("en-US", { style: "currency", currency: "USD" }),
+                detailUrl: `https://approvefield.app/co/${co.id}`,
+              },
+              idempotencyKey: `approval-reminder-${co.id}`,
+            });
+            if (result.sent) approvalSent++;
+            await supabaseAdmin.from("change_orders").update({ approval_reminder_sent_at: new Date().toISOString() }).eq("id", co.id);
+          } catch (e) {
+            console.error("approval reminder send failed", co.id, e);
+          }
+        }
+        return Response.json({ ok: true, candidates: rows?.length ?? 0, sent, approvalSent });
       },
     },
   },

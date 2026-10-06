@@ -36,6 +36,13 @@
       "when": 1790766830526,
       "tag": "0004_add_next_payment_retry",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791298034663,
+      "tag": "0005_add_gc_phone_and_approval_reminder",
+      "breakpoints": true
     }
   ]
 }

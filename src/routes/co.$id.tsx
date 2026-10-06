@@ -36,6 +36,7 @@ function CODetail() {
   const qc = useQueryClient();
   const [signOpen, setSignOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [phoneDraft, setPhoneDraft] = useState<string | null>(null);
   const { data: account } = usePlan(user?.id);
 
   const { data: co, refetch } = useQuery({
@@ -51,6 +52,12 @@ function CODetail() {
   if (!user || !co) return <AppShell><p className="py-10 text-center text-muted-foreground">Loading…</p></AppShell>;
 
   const link = `${window.location.origin}/approve/${co.share_token}`;
+  const phone = phoneDraft ?? co.gc_phone ?? "";
+  const setPhone = setPhoneDraft;
+  const savePhone = async () => {
+    const v = phone.trim() || null;
+    if (v !== (co.gc_phone ?? null)) await supabase.from("change_orders").update({ gc_phone: v }).eq("id", co.id);
+  };
   const markSent = async () => {
     if (co.status === "draft") {
       await supabase.from("change_orders").update({ status: "pending", sent_at: new Date().toISOString() }).eq("id", co.id);
@@ -84,15 +91,18 @@ function CODetail() {
       {open && (
         <div className="no-print mb-5 rounded-xl bg-ink p-4 text-ink-foreground">
           <h2 className="font-display text-lg font-bold">Get it signed</h2>
-          <p className="text-sm opacity-70">Hand your phone to the superintendent, or text them a link.</p>
+          <p className="text-sm opacity-70">Hand your phone to the superintendent, or text them a link. If it isn't signed in 24 hours, we'll email you a reminder.</p>
+          {hasFeature(account, "sms_routing") && (
+            <Input type="tel" inputMode="tel" placeholder="Super's mobile number (optional)" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={savePhone} className="mt-3 h-11 bg-card text-foreground" />
+          )}
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
             <Button className="h-12" onClick={() => setSignOpen(true)}>
               <PenLine className="mr-1 h-4 w-4" /> Sign on this device
             </Button>
             {hasFeature(account, "sms_routing") ? (
               <Button className="h-12" variant="secondary" asChild>
-                <a href={`sms:?&body=${encodeURIComponent(msg)}`} onClick={markSent}>
-                  <MessageSquare className="mr-1 h-4 w-4" /> Text approval link
+                <a href={`sms:${phone.replace(/[^\d+]/g, "")}?&body=${encodeURIComponent(msg)}`} onClick={() => { savePhone(); markSent(); }}>
+                  <MessageSquare className="mr-1 h-4 w-4" /> {phone ? "Text the super" : "Text approval link"}
                 </a>
               </Button>
             ) : (

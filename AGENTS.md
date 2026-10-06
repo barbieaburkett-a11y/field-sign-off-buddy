@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Billing entitlements live in `public.account_plans`; the browser may create only its own Starter trial and update company display settings, while provider callbacks own subscription fields, preventing client-side plan escalation.
+- The hourly /api/public/hooks/payment-retry-reminders job also sends the one-time 24h unsigned-directive reminder; add new periodic emails there instead of new cron jobs to avoid extra schedules.

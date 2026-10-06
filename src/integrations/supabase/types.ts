@@ -77,9 +77,11 @@ export type Database = {
       change_orders: {
         Row: {
           amount: number
+          approval_reminder_sent_at: string | null
           created_at: string
           description: string
           foreman_name: string | null
+          gc_phone: string | null
           id: string
           job_id: string
           number: number
@@ -99,9 +101,11 @@ export type Database = {
         }
         Insert: {
           amount?: number
+          approval_reminder_sent_at?: string | null
           created_at?: string
           description?: string
           foreman_name?: string | null
+          gc_phone?: string | null
           id?: string
           job_id: string
           number?: number
@@ -121,9 +125,11 @@ export type Database = {
         }
         Update: {
           amount?: number
+          approval_reminder_sent_at?: string | null
           created_at?: string
           description?: string
           foreman_name?: string | null
+          gc_phone?: string | null
           id?: string
           job_id?: string
           number?: number
