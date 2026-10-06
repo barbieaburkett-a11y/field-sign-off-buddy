@@ -53,19 +53,41 @@ const PACK_NAMES: Record<string, string> = {
   bundle: "All-Trades Template Bundle",
 };
 
+// Webhook payloads don't carry product import tags, so also map by product name.
+const PACK_BY_PRODUCT_NAME: Record<string, string> = Object.fromEntries(
+  Object.entries(PACK_NAMES).map(([pack, name]) => [name, pack]),
+);
+
+function packForItem(item: { product?: { name?: string; customData?: { pack?: string } } | null; price?: { importMeta?: { externalId?: string } } }): string | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const anyItem = item as any;
+  const productPack = item.product?.customData?.pack;
+  const productExt: string | undefined = item.product
+    ? ((anyItem.product.import_meta?.external_id as string | undefined) ?? (anyItem.product.importMeta?.external_id as string | undefined) ?? (anyItem.product.importMeta?.externalId as string | undefined))
+    : undefined;
+  const priceExt: string | undefined =
+    (anyItem.price?.import_meta?.external_id as string | undefined) ??
+    (anyItem.price?.importMeta?.external_id as string | undefined) ??
+    (anyItem.price?.importMeta?.externalId as string | undefined);
+  const ext = productPack ?? productExt ?? priceExt;
+  return PACK_BY_PRODUCT[ext ?? ""] ?? PACK_BY_PRODUCT[(ext ?? "").replace(/_once$/, "")] ?? item.product?.name
+    ? (PACK_BY_PRODUCT_NAME[item.product?.name ?? ""] ?? undefined)
+    : undefined;
+}
+
 // One-time template pack purchase: record access and email the download link.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleTemplatePurchase(data: any, env: PaddleEnv) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const packs: string[] = [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  for (const i of (data.items ?? []) as any[]) {
-    const productExt: string | undefined = i.product?.importMeta?.externalId;
-    const priceExt: string | undefined = i.price?.importMeta?.externalId;
-    const pack = PACK_BY_PRODUCT[productExt ?? ""] ?? PACK_BY_PRODUCT[(priceExt ?? "").replace(/_once$/, "")];
-    if (pack) packs.push(pack);
+  const checkoutPacks: string[] | undefined = data.customData?.packs;
+  for (const pack of (checkoutPacks ?? []) as string[]) if (PACK_NAMES[pack]) packs.push(pack);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  for (const item of (data.items ?? []) as any[]) {
+    const pack = packForItem(item);
+    if (pack && !packs.includes(pack)) packs.push(pack);
   }
-  if (!packs.length) return;
+  if (!packs.length) { console.error("No packs for template purchase", data.id); return; }
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { getPaddleClient } = await import("@/lib/paddle.server");
   let email: string | undefined;
@@ -79,9 +101,13 @@ async function handleTemplatePurchase(data: any, env: PaddleEnv) {
     .select("access_token,email_sent_at").single();
   if (error || !row) { console.error("Template purchase save failed", error); return; }
   if (row.email_sent_at) return;
+  // Sandbox purchases link to the preview deployment; live purchases to the production site.
+  const origin = env === "sandbox"
+    ? "https://project--68f7fad7-c9ae-4e90-b333-5962ad4850c5-dev.lovable.app"
+    : "https://approvefield.app";
   const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
   await sendTemplateEmail("template-purchase", email, {
-    templateData: { packNames: packs.map((p) => PACK_NAMES[p]).join(", "), accessUrl: `https://approvefield.app/templates/access/${row.access_token}` },
+    templateData: { packNames: packs.map((p) => PACK_NAMES[p]).join(", "), accessUrl: `${origin}/templates/access/${row.access_token}` },
     idempotencyKey: `template-purchase-${data.id}`,
   });
   await supabaseAdmin.from("template_purchases").update({ email_sent_at: new Date().toISOString() }).eq("paddle_transaction_id", data.id);
