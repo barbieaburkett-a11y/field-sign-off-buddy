@@ -57,7 +57,14 @@ const PACK_NAMES: Record<string, string> = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleTemplatePurchase(data: any, env: PaddleEnv) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const packs: string[] = (data.items ?? []).map((i: any) => PACK_BY_PRODUCT[i.price?.productId && i.product?.importMeta?.externalId ? i.product.importMeta.externalId : i.price?.importMeta?.externalId?.replace(/_once$/, "") ?? ""]).filter(Boolean);
+  const packs: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  for (const i of (data.items ?? []) as any[]) {
+    const productExt: string | undefined = i.product?.importMeta?.externalId;
+    const priceExt: string | undefined = i.price?.importMeta?.externalId;
+    const pack = PACK_BY_PRODUCT[productExt ?? ""] ?? PACK_BY_PRODUCT[(priceExt ?? "").replace(/_once$/, "")];
+    if (pack) packs.push(pack);
+  }
   if (!packs.length) return;
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { getPaddleClient } = await import("@/lib/paddle.server");
