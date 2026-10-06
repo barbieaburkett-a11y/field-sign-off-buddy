@@ -48,3 +48,23 @@ export async function openPlanCheckout(plan: PlanId, user: { id: string; email?:
     },
   });
 }
+
+// One-time template pack purchase; no account needed. onCompleted gets the transaction id.
+export async function openTemplateCheckout(priceId: string, onCompleted: (transactionId: string) => void) {
+  await initializePaddle();
+  const id = await resolvePaddlePrice({ data: { priceId: priceId as "starter_monthly", environment: getPaddleEnvironment() } });
+  window.Paddle.Update({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    eventCallback: (e: any) => {
+      if (e?.name === "checkout.completed" && e.data?.transaction_id) {
+        window.Paddle.Checkout.close();
+        onCompleted(e.data.transaction_id as string);
+      }
+    },
+  });
+  window.Paddle.Checkout.open({
+    items: [{ priceId: id, quantity: 1 }],
+    customData: { kind: "templates" },
+    settings: { displayMode: "overlay", variant: "one-page" },
+  });
+}

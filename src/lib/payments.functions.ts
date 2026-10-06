@@ -5,7 +5,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const resolvePaddlePrice = createServerFn({ method: "GET" })
   .inputValidator((data) =>
     z.object({
-      priceId: z.enum(["starter_monthly", "pro_monthly", "unlimited_monthly"]),
+      priceId: z.enum(["starter_monthly", "pro_monthly", "unlimited_monthly", "tpl_electrical_once", "tpl_plumbing_hvac_once", "tpl_concrete_framing_once", "tpl_finishes_once", "tpl_bundle_once"]),
       environment: z.enum(["sandbox", "live"]),
     }).parse(data),
   )
