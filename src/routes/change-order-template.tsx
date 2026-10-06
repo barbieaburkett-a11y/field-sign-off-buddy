@@ -49,6 +49,7 @@ function TemplatePage() {
           <div className="mt-5 flex flex-wrap gap-3">
             <Button onClick={() => window.print()}><Printer className="mr-1 h-4 w-4" /> Print or save as PDF</Button>
             <Button variant="outline" asChild><Link to="/auth"><Smartphone className="mr-1 h-4 w-4" /> Do it on your phone instead</Link></Button>
+            <Button variant="outline" asChild><Link to="/templates">Trade template packs — $9.99</Link></Button>
           </div>
         </div>
 

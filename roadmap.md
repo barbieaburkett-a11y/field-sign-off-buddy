@@ -10,3 +10,4 @@
 - [x] Launch: published; Google Search Console verified + sitemap submitted
 - Skipped: social proof/reviews (user doesn't want invented reviews)
 - [x] Agent integrations (MCP) with OAuth
+- [x] Paid trade template packs ($9.99/trade, $39 bundle; download + email), covering most-searched template types (change orders, workflows, etc.)

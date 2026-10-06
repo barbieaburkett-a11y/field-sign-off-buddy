@@ -40,6 +40,53 @@ async function upsertFromSubscription(data: any, env: PaddleEnv) {
   if (data.status === "past_due") await startGracePeriod(data.id, data.nextBilledAt);
 }
 
+const PACK_BY_PRODUCT: Record<string, string> = {
+  tpl_electrical: "electrical",
+  tpl_plumbing_hvac: "plumbing_hvac",
+  tpl_concrete_framing: "concrete_framing",
+  tpl_finishes: "finishes",
+  tpl_bundle: "bundle",
+};
+const PACK_NAMES: Record<string, string> = {
+  electrical: "Electrical Template Pack", plumbing_hvac: "Plumbing & HVAC Template Pack",
+  concrete_framing: "Concrete & Framing Template Pack", finishes: "Drywall, Paint & Finishes Template Pack",
+  bundle: "All-Trades Template Bundle",
+};
+
+// One-time template pack purchase: record access and email the download link.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function handleTemplatePurchase(data: any, env: PaddleEnv) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const packs: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  for (const i of (data.items ?? []) as any[]) {
+    const productExt: string | undefined = i.product?.importMeta?.externalId;
+    const priceExt: string | undefined = i.price?.importMeta?.externalId;
+    const pack = PACK_BY_PRODUCT[productExt ?? ""] ?? PACK_BY_PRODUCT[(priceExt ?? "").replace(/_once$/, "")];
+    if (pack) packs.push(pack);
+  }
+  if (!packs.length) return;
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { getPaddleClient } = await import("@/lib/paddle.server");
+  let email: string | undefined;
+  if (data.customerId) {
+    const customer = await getPaddleClient(env).customers.get(data.customerId);
+    email = customer.email;
+  }
+  if (!email) { console.error("No customer email for template purchase", data.id); return; }
+  const { data: row, error } = await supabaseAdmin.from("template_purchases")
+    .upsert({ email, packs, paddle_transaction_id: data.id, environment: env }, { onConflict: "paddle_transaction_id" })
+    .select("access_token,email_sent_at").single();
+  if (error || !row) { console.error("Template purchase save failed", error); return; }
+  if (row.email_sent_at) return;
+  const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+  await sendTemplateEmail("template-purchase", email, {
+    templateData: { packNames: packs.map((p) => PACK_NAMES[p]).join(", "), accessUrl: `https://approvefield.app/templates/access/${row.access_token}` },
+    idempotencyKey: `template-purchase-${data.id}`,
+  });
+  await supabaseAdmin.from("template_purchases").update({ email_sent_at: new Date().toISOString() }).eq("paddle_transaction_id", data.id);
+}
+
 const GRACE_DAYS = 7;
 
 // Starts the grace period once per failure episode; access stays on until it ends.
@@ -77,6 +124,9 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
             case EventName.SubscriptionUpdated:
             case EventName.SubscriptionCanceled:
               await upsertFromSubscription(event.data, env);
+              break;
+            case EventName.TransactionCompleted:
+              if (!(event.data as { subscriptionId?: string | null }).subscriptionId) await handleTemplatePurchase(event.data, env);
               break;
             case EventName.TransactionPaymentFailed: {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any

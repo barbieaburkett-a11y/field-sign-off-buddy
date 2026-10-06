@@ -184,6 +184,39 @@ export type Database = {
         }
         Relationships: []
       }
+      template_purchases: {
+        Row: {
+          access_token: string
+          created_at: string
+          email: string
+          email_sent_at: string | null
+          environment: string
+          id: string
+          packs: string[]
+          paddle_transaction_id: string
+        }
+        Insert: {
+          access_token?: string
+          created_at?: string
+          email: string
+          email_sent_at?: string | null
+          environment?: string
+          id?: string
+          packs?: string[]
+          paddle_transaction_id: string
+        }
+        Update: {
+          access_token?: string
+          created_at?: string
+          email?: string
+          email_sent_at?: string | null
+          environment?: string
+          id?: string
+          packs?: string[]
+          paddle_transaction_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

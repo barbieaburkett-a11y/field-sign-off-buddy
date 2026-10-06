@@ -22,7 +22,10 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
+import { Route as TemplatesIndexRouteImport } from './routes/templates.index'
+import { Route as TemplatesThanksRouteImport } from './routes/templates.thanks'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
+import { Route as TemplatesAccessTokenRouteImport } from './routes/templates.access.$token'
 import { Route as ApiPublicHooksPaymentRetryRemindersRouteImport } from './routes/api/public/hooks/payment-retry-reminders'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -93,9 +96,24 @@ const CoIdRoute = CoIdRouteImport.update({
   path: '/co/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TemplatesIndexRoute = TemplatesIndexRouteImport.update({
+  id: '/templates/',
+  path: '/templates/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesThanksRoute = TemplatesThanksRouteImport.update({
+  id: '/templates/thanks',
+  path: '/templates/thanks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesAccessTokenRoute = TemplatesAccessTokenRouteImport.update({
+  id: '/templates/access/$token',
+  path: '/templates/access/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicHooksPaymentRetryRemindersRoute =
@@ -131,7 +149,10 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/templates/thanks': typeof TemplatesThanksRoute
+  '/templates/': typeof TemplatesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/templates/access/$token': typeof TemplatesAccessTokenRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -150,7 +171,10 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/templates/thanks': typeof TemplatesThanksRoute
+  '/templates': typeof TemplatesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/templates/access/$token': typeof TemplatesAccessTokenRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -170,7 +194,10 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/templates/thanks': typeof TemplatesThanksRoute
+  '/templates/': typeof TemplatesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/templates/access/$token': typeof TemplatesAccessTokenRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -191,7 +218,10 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/templates/thanks'
+    | '/templates/'
     | '/.lovable/oauth/consent'
+    | '/templates/access/$token'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -210,7 +240,10 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/templates/thanks'
+    | '/templates'
     | '/.lovable/oauth/consent'
+    | '/templates/access/$token'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -229,7 +262,10 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/templates/thanks'
+    | '/templates/'
     | '/.lovable/oauth/consent'
+    | '/templates/access/$token'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -249,7 +285,10 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
+  TemplatesThanksRoute: typeof TemplatesThanksRoute
+  TemplatesIndexRoute: typeof TemplatesIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  TemplatesAccessTokenRoute: typeof TemplatesAccessTokenRoute
   ApiPublicHooksPaymentRetryRemindersRoute: typeof ApiPublicHooksPaymentRetryRemindersRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -348,11 +387,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/templates/': {
+      id: '/templates/'
+      path: '/templates'
+      fullPath: '/templates/'
+      preLoaderRoute: typeof TemplatesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates/thanks': {
+      id: '/templates/thanks'
+      path: '/templates/thanks'
+      fullPath: '/templates/thanks'
+      preLoaderRoute: typeof TemplatesThanksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
       fullPath: '/.lovable/oauth/consent'
       preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates/access/$token': {
+      id: '/templates/access/$token'
+      path: '/templates/access/$token'
+      fullPath: '/templates/access/$token'
+      preLoaderRoute: typeof TemplatesAccessTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/payment-retry-reminders': {
@@ -394,7 +454,10 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,
+  TemplatesThanksRoute: TemplatesThanksRoute,
+  TemplatesIndexRoute: TemplatesIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  TemplatesAccessTokenRoute: TemplatesAccessTokenRoute,
   ApiPublicHooksPaymentRetryRemindersRoute:
     ApiPublicHooksPaymentRetryRemindersRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,

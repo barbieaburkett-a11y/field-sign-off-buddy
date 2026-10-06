@@ -33,7 +33,7 @@ export function Landing() {
             <Button variant="welcoming" size="lg" asChild className="h-14 rounded-lg text-sm font-bold uppercase"><Link to="/auth">Start 14-day free trial</Link></Button>
             <Button variant="outline" size="lg" asChild className="h-14 rounded-lg border-input bg-card text-sm font-bold uppercase"><Link to="/pricing">See plans & pricing</Link></Button>
           </div>
-          <p className="mt-6 font-mono text-xs leading-6 text-muted-foreground">No demo call. No sales rep. <Link to="/change-order-template" className="text-accent-foreground underline underline-offset-4">Grab our free printable template.</Link></p>
+          <p className="mt-6 font-mono text-xs leading-6 text-muted-foreground">No demo call. No sales rep. <Link to="/change-order-template" className="text-accent-foreground underline underline-offset-4">Grab our free printable template</Link> or <Link to="/templates" className="text-accent-foreground underline underline-offset-4">trade template packs</Link>.</p>
         </section>
         <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
           <div className="grid grid-cols-1 overflow-hidden rounded-lg border bg-card shadow-welcoming md:grid-cols-3">
