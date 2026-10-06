@@ -7,5 +7,5 @@
 - [x] Apply selected palette, home-page product presentation, and clearer dashboard hierarchy
 - [x] Verify public pages, dashboard filters, and existing photo-import form without altering records
 - [x] Apply and verify selected Organic sage professional refinement
-- [ ] Launch: publish (needs the user to click Publish)
+- [x] Launch: published; Google Search Console verified + sitemap submitted
 - Skipped: social proof/reviews (user doesn't want invented reviews)
