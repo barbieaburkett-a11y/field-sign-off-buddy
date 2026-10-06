@@ -81,25 +81,29 @@ function Dashboard() {
 
   return (
     <AppShell>
-      <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-xl bg-success p-4 text-success-foreground">
-          <div className="text-xs font-medium uppercase opacity-80">Approved</div>
-          <div className="mt-1 font-display text-2xl font-bold">{money(totals.approved)}</div>
+      <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2 border-b border-foreground pb-4">
+        <h1 className="text-2xl font-extrabold">Change directives</h1>
+        <span className="font-mono text-xs text-muted-foreground">{filtered.length} records</span>
+      </div>
+      <div className="grid grid-cols-1 border-y border-foreground min-[400px]:grid-cols-2">
+        <div className="min-w-0 border-b border-border py-5 min-[400px]:border-b-0 min-[400px]:border-r min-[400px]:pr-4">
+          <div className="font-mono text-xs font-medium uppercase text-success">Approved</div>
+          <div className="mt-2 break-words font-display text-3xl font-extrabold tabular-nums">{money(totals.approved)}</div>
         </div>
-        <div className="rounded-xl bg-warning p-4 text-warning-foreground">
-          <div className="text-xs font-medium uppercase opacity-80">Awaiting signature</div>
-          <div className="mt-1 font-display text-2xl font-bold">{money(totals.pending)}</div>
+        <div className="min-w-0 py-5 min-[400px]:pl-4">
+          <div className="font-mono text-xs font-medium uppercase text-primary">Awaiting signature</div>
+          <div className="mt-2 break-words font-display text-3xl font-extrabold tabular-nums">{money(totals.pending)}</div>
         </div>
       </div>
 
       <div className="mt-6 flex gap-2">
-        <select className="h-10 flex-1 rounded-md border bg-card px-3 text-sm" value={job} onChange={(e) => setJob(e.target.value)}>
+        <select className="h-12 min-w-0 flex-1 rounded-sm border bg-card px-3 text-sm" aria-label="Filter by job" value={job} onChange={(e) => setJob(e.target.value)}>
           <option value="all">All jobs</option>
           {jobs.map((j) => (
             <option key={j.id} value={j.id}>{j.name}</option>
           ))}
         </select>
-        <select className="h-10 flex-1 rounded-md border bg-card px-3 text-sm" value={status} onChange={(e) => setStatus(e.target.value as Status | "all")}>
+        <select className="h-12 min-w-0 flex-1 rounded-sm border bg-card px-3 text-sm" aria-label="Filter by status" value={status} onChange={(e) => setStatus(e.target.value as Status | "all")}>
           <option value="all">All statuses</option>
           {(Object.keys(STATUS_LABEL) as Status[]).map((s) => (
             <option key={s} value={s}>{STATUS_LABEL[s]}</option>
@@ -107,11 +111,11 @@ function Dashboard() {
         </select>
       </div>
 
-      <div className="mt-4 space-y-2 pb-24">
+      <div className="mt-4 divide-y border-b pb-24">
         {isLoading ? (
           <p className="py-10 text-center text-sm text-muted-foreground">Loading…</p>
         ) : filtered.length === 0 ? (
-          <div className="rounded-xl border-2 border-dashed p-10 text-center">
+          <div className="py-12 text-center">
             <Camera className="mx-auto h-8 w-8 text-muted-foreground" />
             <p className="mt-3 font-medium">No change directives yet</p>
             <p className="text-sm text-muted-foreground">Found extra work? Capture it before you start.</p>
@@ -122,16 +126,15 @@ function Dashboard() {
               key={c.id}
               to="/co/$id"
               params={{ id: c.id }}
-              className="flex items-center justify-between gap-3 rounded-xl border bg-card p-4 transition-colors hover:border-primary"
+              className="flex flex-wrap items-center justify-between gap-3 py-5 transition-colors hover:bg-muted/60"
             >
               <div className="min-w-0">
-                <div className="font-mono text-xs text-muted-foreground">
-                  {coNumber(c.number)} · {c.jobs?.name} · {dateOnly(c.created_at)}
-                </div>
-                <div className="mt-0.5 truncate font-medium">{c.title}</div>
+                <div className="font-mono text-xs text-primary">{coNumber(c.number)} · {dateOnly(c.created_at)}</div>
+                <div className="mt-1 break-words text-lg font-bold">{c.jobs?.name}</div>
+                <div className="mt-0.5 break-words text-sm text-muted-foreground">{c.title}</div>
                 <div className="mt-1.5"><StatusBadge status={c.status as Status} /></div>
               </div>
-              <div className="shrink-0 font-display text-lg font-bold">{money(c.amount)}</div>
+              <div className="font-display text-xl font-bold tabular-nums">{money(c.amount)}</div>
             </Link>
           ))
         )}
