@@ -5,7 +5,15 @@ import { getTokenForTransaction } from "@/lib/templates.functions";
 export const Route = createFileRoute("/templates/thanks")({
   staticData: { sitemap: false },
   validateSearch: (s: Record<string, unknown>) => ({ txn: typeof s["txn"] === "string" ? s["txn"] : "" }),
-  head: () => ({ meta: [{ title: "Thanks for your purchase — FieldCO" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [
+    { title: "Thanks for your purchase — FieldCO" },
+    { name: "description", content: "Your FieldCO template purchase confirmation and access to your forms." },
+    { property: "og:title", content: "Thanks for your purchase — FieldCO" },
+    { property: "og:description", content: "Your FieldCO template purchase confirmation and access to your forms." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+    { name: "robots", content: "noindex" },
+  ] }),
   component: Thanks,
 });
 

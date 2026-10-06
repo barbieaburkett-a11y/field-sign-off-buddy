@@ -8,7 +8,15 @@ import { DOCS, TRADES, tradesForPacks, type DocId, type TradeId } from "@/lib/te
 
 export const Route = createFileRoute("/templates/access/$token")({
   staticData: { sitemap: false },
-  head: () => ({ meta: [{ title: "Your templates — FieldCO" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [
+    { title: "Your templates — FieldCO" },
+    { name: "description", content: "Access your purchased FieldCO trade forms to print or save as PDF." },
+    { property: "og:title", content: "Your templates — FieldCO" },
+    { property: "og:description", content: "Access your purchased FieldCO trade forms to print or save as PDF." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+    { name: "robots", content: "noindex" },
+  ] }),
   loader: ({ params }) => getTemplateAccess({ data: { token: params.token } }).catch(() => null),
   errorComponent: () => <main className="p-8">Couldn't load your templates. Please use the link from your email.</main>,
   notFoundComponent: () => <main className="p-8">Not found.</main>,
