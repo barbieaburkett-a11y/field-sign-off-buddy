@@ -14,3 +14,4 @@
 - Shared visual roles and button treatments are defined in global theme tokens and Button variants; page styling must consume these roles so the public site and field workflows remain consistent.
 - MCP: agent tools live in src/lib/mcp/ with Supabase OAuth; RLS runs as the caller via forwarded token.
 - Public educational guides use standalone content routes with leaf metadata and explicit sitemap inclusion, linked from relevant public pages so readers and crawlers can discover them.
+- New educational guides share a GuidePage presentation and related-guide navigation while keeping article content and metadata in each leaf route, so layout and discovery stay consistent.
