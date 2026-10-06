@@ -184,6 +184,39 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_forms: {
+        Row: {
+          created_at: string
+          doc: string
+          id: string
+          title: string
+          trade: string
+          updated_at: string
+          user_id: string
+          values: Json
+        }
+        Insert: {
+          created_at?: string
+          doc: string
+          id?: string
+          title?: string
+          trade: string
+          updated_at?: string
+          user_id?: string
+          values?: Json
+        }
+        Update: {
+          created_at?: string
+          doc?: string
+          id?: string
+          title?: string
+          trade?: string
+          updated_at?: string
+          user_id?: string
+          values?: Json
+        }
+        Relationships: []
+      }
       template_purchases: {
         Row: {
           access_token: string
