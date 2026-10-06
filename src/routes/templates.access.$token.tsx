@@ -44,7 +44,7 @@ function Access() {
     <main className="mx-auto w-full max-w-3xl px-4 py-10">
       <div className="no-print">
         <h1 className="text-3xl font-extrabold text-heading">Your templates</h1>
-        <p className="mt-2 text-muted-foreground">Pick a trade and a form, then print or save as PDF. Bookmark this page — it's your personal access.</p>
+        <p className="mt-2 text-muted-foreground">Pick a trade and a form, then print or save as PDF. Bookmark this page — it's your personal access. Want to fill in and save forms? <Link to="/my-templates" className="text-accent-foreground underline underline-offset-4">Sign in with your purchase email</Link>.</p>
         <div className="mt-5 flex flex-wrap gap-3">
           <select aria-label="Trade" className="h-12 rounded-md border bg-card px-3" value={trade} onChange={(e) => setTrade(e.target.value as TradeId)}>
             {trades.map((id) => <option key={id} value={id}>{TRADES.find((t) => t.id === id)!.name}</option>)}
