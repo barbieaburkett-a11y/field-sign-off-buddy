@@ -31,7 +31,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
 export function LegalFooter() {
   return (
     <footer className="no-print border-t">
-      <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-xs text-muted-foreground">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-8 font-mono text-xs text-muted-foreground sm:px-8">
         <span>© {new Date().getFullYear()} The Command Suite</span>
         <nav className="flex flex-wrap gap-4">
           <Link to="/terms" className="hover:text-foreground hover:underline">Terms of Service</Link>

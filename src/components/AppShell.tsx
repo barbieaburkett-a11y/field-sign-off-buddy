@@ -17,9 +17,9 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
   return (
     <div className="min-h-screen">
       <div className="no-print"><PaymentTestModeBanner /></div>
-      <header className="no-print sticky top-0 z-10 border-b bg-ink text-ink-foreground">
+      <header className="no-print sticky top-0 z-10 border-b bg-background text-foreground">
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold">
+          <Link to="/" className="flex items-center gap-2 font-mono text-lg font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <HardHat className="h-5 w-5" />
             </span>
@@ -27,14 +27,14 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
           </Link>
           <div className="flex items-center gap-2">
             {action}
-            <Button variant="ghost" size="sm" asChild className="text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground">
+            <Button variant="ghost" size="sm" asChild>
               <Link to="/pricing"><Sparkles className="h-4 w-4" /><span className="hidden sm:inline">Plans</span></Link>
             </Button>
             <Button
               variant="ghost"
               size="icon"
               aria-label="Sign out"
-              className="text-ink-foreground opacity-70 hover:bg-ink-foreground/10 hover:text-ink-foreground hover:opacity-100"
+              className="text-muted-foreground hover:text-foreground"
               onClick={async () => {
                 await supabase.auth.signOut();
                 navigate({ to: "/auth" });
@@ -62,7 +62,7 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
 
 export function StatusBadge({ status }: { status: Status }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_CLASS[status]}`}>
+    <span className={`inline-flex items-center rounded-sm border border-current px-2.5 py-1 font-mono text-xs font-semibold ${STATUS_CLASS[status]}`}>
       {STATUS_LABEL[status]}
     </span>
   );

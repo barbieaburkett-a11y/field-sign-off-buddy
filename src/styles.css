@@ -5,9 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Archivo", "IBM Plex Sans", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-editorial: "Playfair Display", Georgia, serif;
+  --shadow-stamped: 4px 4px 0 var(--ink);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -42,33 +44,53 @@
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.955 0.025 82);
-  --foreground: oklch(0.29 0.025 55);
-  --card: oklch(0.985 0.012 82);
-  --card-foreground: oklch(0.29 0.025 55);
-  --popover: oklch(0.985 0.012 82);
-  --popover-foreground: oklch(0.29 0.025 55);
-  --primary: oklch(0.58 0.13 38);
-  --primary-foreground: oklch(0.985 0.012 82);
-  --secondary: oklch(0.88 0.045 86);
-  --secondary-foreground: oklch(0.31 0.03 60);
-  --muted: oklch(0.91 0.025 80);
-  --muted-foreground: oklch(0.47 0.025 55);
-  --accent: oklch(0.89 0.055 50);
-  --accent-foreground: oklch(0.34 0.07 35);
+  --radius: 0.25rem;
+  --background: #fdfdfb;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #b45309;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f0;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f3f4f0;
+  --muted-foreground: oklch(0.46 0.008 90);
+  --accent: oklch(0.94 0.025 60);
+  --accent-foreground: #b45309;
   --destructive: oklch(0.58 0.21 27);
   --destructive-foreground: oklch(0.99 0 0);
-  --success: oklch(0.55 0.075 135);
-  --success-foreground: oklch(0.985 0.012 82);
-  --warning: oklch(0.79 0.09 78);
-  --warning-foreground: oklch(0.31 0.05 55);
-  --ink: oklch(0.34 0.025 52);
-  --ink-foreground: oklch(0.965 0.018 82);
-  --border: oklch(0.82 0.035 76);
-  --input: oklch(0.79 0.035 76);
-  --ring: oklch(0.58 0.13 38);
-  --sage: oklch(0.62 0.075 135);
+  --success: #6b8e23;
+  --success-foreground: #ffffff;
+  --warning: oklch(0.86 0.1 85);
+  --warning-foreground: oklch(0.36 0.07 60);
+  --ink: #1a1a1a;
+  --ink-foreground: #fdfdfb;
+  --border: oklch(0.84 0.005 90);
+  --input: oklch(0.72 0.005 90);
+  --ring: #b45309;
+  --sage: #6b8e23;
+}
+
+.dark {
+  --background: oklch(0.2 0.004 90);
+  --foreground: #fdfdfb;
+  --card: oklch(0.25 0.004 90);
+  --card-foreground: #fdfdfb;
+  --popover: oklch(0.25 0.004 90);
+  --popover-foreground: #fdfdfb;
+  --primary: oklch(0.72 0.13 55);
+  --primary-foreground: #1a1a1a;
+  --secondary: oklch(0.29 0.01 90);
+  --secondary-foreground: #fdfdfb;
+  --muted: oklch(0.29 0.01 90);
+  --muted-foreground: oklch(0.75 0.008 90);
+  --accent: oklch(0.32 0.025 60);
+  --accent-foreground: oklch(0.8 0.12 55);
+  --border: oklch(0.4 0.005 90);
+  --input: oklch(0.5 0.005 90);
+  --ring: oklch(0.72 0.13 55);
 }
 
 @layer base {
@@ -78,7 +100,8 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
+  * { letter-spacing: 0; }
 }
 
 @media print {
