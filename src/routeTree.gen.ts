@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChangeOrderTemplateRouteImport } from './routes/change-order-template'
+import { Route as HowToWriteAChangeOrderRouteImport } from './routes/how-to-write-a-change-order'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -43,6 +44,11 @@ const AuthRoute = AuthRouteImport.update({
 const ChangeOrderTemplateRoute = ChangeOrderTemplateRouteImport.update({
   id: '/change-order-template',
   path: '/change-order-template',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowToWriteAChangeOrderRoute = HowToWriteAChangeOrderRouteImport.update({
+  id: '/how-to-write-a-change-order',
+  path: '/how-to-write-a-change-order',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
   '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
   '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/how-to-write-a-change-order': typeof HowToWriteAChangeOrderRoute
   '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/how-to-write-a-change-order'
     | '/mcp'
     | '/new'
     | '/pricing'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/how-to-write-a-change-order'
     | '/mcp'
     | '/new'
     | '/pricing'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/how-to-write-a-change-order'
     | '/mcp'
     | '/new'
     | '/pricing'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   ChangeOrderTemplateRoute: typeof ChangeOrderTemplateRoute
+  HowToWriteAChangeOrderRoute: typeof HowToWriteAChangeOrderRoute
   McpRoute: typeof McpRoute
   NewRoute: typeof NewRoute
   PricingRoute: typeof PricingRoute
@@ -315,6 +328,13 @@ declare module '@tanstack/react-router' {
       path: '/change-order-template'
       fullPath: '/change-order-template'
       preLoaderRoute: typeof ChangeOrderTemplateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-write-a-change-order': {
+      id: '/how-to-write-a-change-order'
+      path: '/how-to-write-a-change-order'
+      fullPath: '/how-to-write-a-change-order'
+      preLoaderRoute: typeof HowToWriteAChangeOrderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   ChangeOrderTemplateRoute: ChangeOrderTemplateRoute,
+  HowToWriteAChangeOrderRoute: HowToWriteAChangeOrderRoute,
   McpRoute: McpRoute,
   NewRoute: NewRoute,
   PricingRoute: PricingRoute,
