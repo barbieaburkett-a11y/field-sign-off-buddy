@@ -64,7 +64,8 @@ export async function openTemplateCheckout(priceId: string, onCompleted: (transa
   });
   window.Paddle.Checkout.open({
     items: [{ priceId: id, quantity: 1 }],
-    customData: { kind: "templates" },
+    // Paddle's webhook payload lacks product import tags, so the pack must ride on the transaction.
+    customData: { kind: "templates", packs: [priceId.replace(/_once$/, "")] },
     settings: { displayMode: "overlay", variant: "one-page" },
   });
 }
