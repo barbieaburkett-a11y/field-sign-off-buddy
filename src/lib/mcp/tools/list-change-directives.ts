@@ -25,7 +25,7 @@ export default defineTool({
     const directives = (data ?? []).map((c) => ({
       id: c.id,
       number: `CD-${String(c.number).padStart(4, "0")}`,
-      job: (c.jobs as { name: string } | null)?.name ?? null,
+      job: (c.jobs as unknown as { name: string } | null)?.name ?? null,
       title: c.title,
       description: c.description,
       amount: Number(c.amount),
