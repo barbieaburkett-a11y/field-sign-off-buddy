@@ -12,9 +12,11 @@ import { LegalFooter } from "@/components/LegalPage";
 
 export const Route = createFileRoute("/auth")({
   staticData: { sitemap: true },
-  validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited" } => {
+  validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited"; next?: string } => {
     const p = search["plan"];
-    return p === "starter" || p === "pro" || p === "unlimited" ? { plan: p } : {};
+    const n = search["next"];
+    const next = typeof n === "string" && n.startsWith("/") && !n.startsWith("//") ? n : undefined;
+    return { ...(p === "starter" || p === "pro" || p === "unlimited" ? { plan: p } : {}), ...(next ? { next } : {}) };
   },
   head: () => ({
     meta: [
@@ -32,7 +34,8 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const { session } = useAuth();
   const navigate = useNavigate();
-  const { plan } = Route.useSearch();
+  const { plan, next } = Route.useSearch();
+  const returnUrl = () => window.location.origin + (next ?? "");
   const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,8 +46,8 @@ function AuthPage() {
   }, [plan]);
 
   useEffect(() => {
-    if (session) navigate({ to: "/" });
-  }, [session, navigate]);
+    if (session) { if (next) window.location.href = next; else navigate({ to: "/" }); }
+  }, [session, navigate, next]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,14 +55,14 @@ function AuthPage() {
     const { error } =
       mode === "in"
         ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin } });
+        : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: returnUrl() } });
     setBusy(false);
     if (error) { toast.error(error.message); return; }
     if (mode === "up") toast.success("Check your email to confirm your account.");
   };
 
   const google = async () => {
-    const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: returnUrl() });
     if (r.error) toast.error(r.error.message ?? "Google sign-in failed");
   };
 

@@ -12,14 +12,17 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChangeOrderTemplateRouteImport } from './routes/change-order-template'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiPublicHooksPaymentRetryRemindersRouteImport } from './routes/api/public/hooks/payment-retry-reminders'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -37,6 +40,11 @@ const AuthRoute = AuthRouteImport.update({
 const ChangeOrderTemplateRoute = ChangeOrderTemplateRouteImport.update({
   id: '/change-order-template',
   path: '/change-order-template',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewRoute = NewRouteImport.update({
@@ -69,6 +77,12 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApproveTokenRoute = ApproveTokenRouteImport.update({
   id: '/approve/$token',
   path: '/approve/$token',
@@ -77,6 +91,11 @@ const ApproveTokenRoute = ApproveTokenRouteImport.update({
 const CoIdRoute = CoIdRouteImport.update({
   id: '/co/$id',
   path: '/co/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicHooksPaymentRetryRemindersRoute =
@@ -102,14 +121,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -118,14 +140,17 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -135,14 +160,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/change-order-template': typeof ChangeOrderTemplateRoute
+  '/mcp': typeof McpRoute
   '/new': typeof NewRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/hooks/payment-retry-reminders': typeof ApiPublicHooksPaymentRetryRemindersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -153,14 +181,17 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/mcp'
     | '/new'
     | '/pricing'
     | '/privacy'
     | '/refunds'
     | '/sitemap.xml'
     | '/terms'
+    | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/.lovable/oauth/consent'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -169,14 +200,17 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/mcp'
     | '/new'
     | '/pricing'
     | '/privacy'
     | '/refunds'
     | '/sitemap.xml'
     | '/terms'
+    | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/.lovable/oauth/consent'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -185,14 +219,17 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/change-order-template'
+    | '/mcp'
     | '/new'
     | '/pricing'
     | '/privacy'
     | '/refunds'
     | '/sitemap.xml'
     | '/terms'
+    | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/.lovable/oauth/consent'
     | '/api/public/hooks/payment-retry-reminders'
     | '/api/public/payments/webhook'
     | '/lovable/email/transactional/preview'
@@ -202,14 +239,17 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   ChangeOrderTemplateRoute: typeof ChangeOrderTemplateRoute
+  McpRoute: typeof McpRoute
   NewRoute: typeof NewRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundsRoute: typeof RefundsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiPublicHooksPaymentRetryRemindersRoute: typeof ApiPublicHooksPaymentRetryRemindersRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -236,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/change-order-template'
       fullPath: '/change-order-template'
       preLoaderRoute: typeof ChangeOrderTemplateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new': {
@@ -280,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/approve/$token': {
       id: '/approve/$token'
       path: '/approve/$token'
@@ -292,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/co/$id'
       fullPath: '/co/$id'
       preLoaderRoute: typeof CoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/payment-retry-reminders': {
@@ -322,14 +383,18 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   ChangeOrderTemplateRoute: ChangeOrderTemplateRoute,
+  McpRoute: McpRoute,
   NewRoute: NewRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   RefundsRoute: RefundsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiPublicHooksPaymentRetryRemindersRoute:
     ApiPublicHooksPaymentRetryRemindersRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
