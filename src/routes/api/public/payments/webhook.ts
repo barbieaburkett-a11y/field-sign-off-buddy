@@ -70,9 +70,8 @@ function packForItem(item: { product?: { name?: string; customData?: { pack?: st
     (anyItem.price?.importMeta?.external_id as string | undefined) ??
     (anyItem.price?.importMeta?.externalId as string | undefined);
   const ext = productPack ?? productExt ?? priceExt;
-  return PACK_BY_PRODUCT[ext ?? ""] ?? PACK_BY_PRODUCT[(ext ?? "").replace(/_once$/, "")] ?? item.product?.name
-    ? (PACK_BY_PRODUCT_NAME[item.product?.name ?? ""] ?? undefined)
-    : undefined;
+  const byExt = PACK_BY_PRODUCT[ext ?? ""] ?? PACK_BY_PRODUCT[(ext ?? "").replace(/_once$/, "")];
+  return byExt ?? PACK_BY_PRODUCT_NAME[item.product?.name ?? ""];
 }
 
 // One-time template pack purchase: record access and email the download link.
