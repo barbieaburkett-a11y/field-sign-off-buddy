@@ -1,7 +1,19 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Camera, X } from "lucide-react";
+import { Camera, Loader2, ScanText, X } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { scanDocument } from "@/lib/scan.functions";
+
+async function shrinkImage(file: File, max = 1600): Promise<string> {
+  const bmp = await createImageBitmap(file);
+  const s = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  const c = document.createElement("canvas");
+  c.width = Math.round(bmp.width * s);
+  c.height = Math.round(bmp.height * s);
+  c.getContext("2d")!.drawImage(bmp, 0, 0, c.width, c.height);
+  return c.toDataURL("image/jpeg", 0.85);
+}
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useRequireAuth } from "@/lib/auth";
@@ -45,8 +57,38 @@ function NewCO() {
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
 
+  const [scanning, setScanning] = useState(false);
+  const [scanned, setScanned] = useState(false);
+  const runScan = useServerFn(scanDocument);
+
   if (!user) return null;
   const addingJob = jobId === "__new" || jobs.length === 0;
+
+  const scan = async (file: File) => {
+    setScanning(true);
+    try {
+      const image = await shrinkImage(file);
+      const res = await runScan({ data: { image, jobs: jobs.map((j) => j.name) } });
+      if (!res.ok) { toast.error(res.error); return; }
+      const r = res.result;
+      if (r.job_name) {
+        const match = jobs.find((j) => j.name.toLowerCase() === r.job_name!.toLowerCase());
+        if (match) setJobId(match.id);
+        else { setJobId("__new"); setNewJob(r.job_name); }
+      }
+      if (r.title) setTitle(r.title);
+      if (r.description) setDesc(r.description);
+      if (r.amount != null) setAmount(String(r.amount));
+      if (r.foreman_name && !foreman) setForeman(r.foreman_name);
+      setFiles((prev) => [file, ...prev]);
+      setScanned(true);
+      if (r.amount == null) toast.message("Couldn't read a dollar amount — please enter it.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Couldn't read the photo");
+    } finally {
+      setScanning(false);
+    }
+  };
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,6 +126,19 @@ function NewCO() {
   return (
     <AppShell>
       <h1 className="text-2xl font-bold">New change directive</h1>
+      <label className={`mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-primary/40 bg-primary/5 p-4 ${scanning ? "pointer-events-none opacity-70" : "hover:bg-primary/10"}`}>
+        {scanning ? <Loader2 className="h-6 w-6 shrink-0 animate-spin text-primary" /> : <ScanText className="h-6 w-6 shrink-0 text-primary" />}
+        <div>
+          <div className="font-semibold">{scanning ? "Reading your photo…" : "Fill from a photo"}</div>
+          <div className="text-sm text-muted-foreground">Snap a field directive, GC mark-up, or invoice. You'll check everything before saving.</div>
+        </div>
+        <input type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) scan(f); }} />
+      </label>
+      {scanned && (
+        <p className="mt-2 rounded-md bg-accent px-3 py-2 text-sm text-accent-foreground">
+          Filled from your photo — please check the job, scope and amount before saving.
+        </p>
+      )}
       <form onSubmit={save} className="mt-5 space-y-5 pb-10">
         <div>
           <Label>Job</Label>
