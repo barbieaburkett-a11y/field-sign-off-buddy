@@ -56,9 +56,11 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
+      { name: "google-site-verification", content: "Az1B4mQ8ZoNyrv8T0PMqRXlDacOLXIb37AF6PluZCfg" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "FieldCO — Field Change Directives" },
       { name: "description", content: "Capture, sign, and track field change directives in minutes." },

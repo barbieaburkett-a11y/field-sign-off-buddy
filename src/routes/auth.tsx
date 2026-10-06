@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { LegalFooter } from "@/components/LegalPage";
 
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: true },
   validateSearch: (search: Record<string, unknown>): { plan?: "starter" | "pro" | "unlimited" } => {
     const p = search["plan"];
     return p === "starter" || p === "pro" || p === "unlimited" ? { plan: p } : {};

@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Route = createFileRoute("/new")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "New Change Directive — FieldCO" },

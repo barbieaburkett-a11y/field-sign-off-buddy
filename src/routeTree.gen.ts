@@ -16,6 +16,7 @@ import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundsRouteImport } from './routes/refunds'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
@@ -56,6 +57,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const RefundsRoute = RefundsRouteImport.update({
   id: '/refunds',
   path: '/refunds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/refunds'
+    | '/sitemap.xml'
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/refunds'
+    | '/sitemap.xml'
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/refunds'
+    | '/sitemap.xml'
     | '/terms'
     | '/approve/$token'
     | '/co/$id'
@@ -194,6 +206,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundsRoute: typeof RefundsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RefundsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -306,6 +326,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   RefundsRoute: RefundsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,

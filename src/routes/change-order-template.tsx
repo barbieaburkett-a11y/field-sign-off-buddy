@@ -7,6 +7,7 @@ const TITLE = "Free Change Order Template for Subcontractors (Printable) — Fie
 const DESC = "Free printable construction change order form for subcontractors: job, scope, lump-sum price, and GC signature lines. Print it, or get it signed on your phone.";
 
 export const Route = createFileRoute("/change-order-template")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: TITLE },

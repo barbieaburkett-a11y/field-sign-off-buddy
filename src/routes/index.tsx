@@ -13,6 +13,7 @@ import { coNumber, dateOnly, money, STATUS_LABEL, type Status } from "@/lib/form
 import type { PlanId } from "@/lib/plans";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "FieldCO — Field Change Orders for Subcontractors" },

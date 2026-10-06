@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 // Hourly job: email account owners one day before Paddle's next payment retry.
 // Idempotent: retry_reminder_sent_for records which retry date was already reminded.
 export const Route = createFileRoute("/api/public/hooks/payment-retry-reminders")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       POST: async ({ request }) => {
