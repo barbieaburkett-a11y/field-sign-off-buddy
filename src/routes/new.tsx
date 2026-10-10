@@ -71,7 +71,7 @@ function NewCO() {
     try {
       const raw = localStorage.getItem("fieldco.newDraft");
       if (raw) {
-        const d = JSON.parse(raw) as Record<string, string>;
+        const d = JSON.parse(raw) as { jobId?: string; newJob?: string; gc?: string; title?: string; desc?: string; amount?: string; foreman?: string };
         if (d.jobId) setJobId(d.jobId);
         if (d.newJob) setNewJob(d.newJob);
         if (d.gc) setGc(d.gc);
