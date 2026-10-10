@@ -78,7 +78,7 @@ export function Packet({ co }: { co: PacketData }) {
         </section>
       )}
       <footer className="mt-6 text-[10px] text-muted-foreground">
-        By signing, the authorized representative directs the subcontractor to proceed with the work described above for the stated lump-sum amount.
+        By signing, the representative confirms the scope and lump-sum price above were reviewed and authorizes the subcontractor to proceed with the work. This records approval of the extra work and its price; it does not amend the main contract or guarantee payment terms.
       </footer>
     </article>
   );
