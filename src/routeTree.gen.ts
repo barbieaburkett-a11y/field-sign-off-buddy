@@ -21,6 +21,7 @@ import { Route as NewRouteImport } from './routes/new'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundsRouteImport } from './routes/refunds'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WhatIsAChangeDirectiveRouteImport } from './routes/what-is-a-change-directive'
@@ -94,6 +95,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const RefundsRoute = RefundsRouteImport.update({
   id: '/refunds',
   path: '/refunds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
@@ -206,6 +213,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
@@ -234,6 +242,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
@@ -263,6 +272,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/refunds'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/terms'
     | '/what-is-a-change-directive'
@@ -290,6 +300,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/refunds'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/terms'
     | '/what-is-a-change-directive'
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/refunds'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/terms'
     | '/what-is-a-change-directive'
@@ -345,6 +357,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundsRoute: typeof RefundsRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   WhatIsAChangeDirectiveRoute: typeof WhatIsAChangeDirectiveRoute
@@ -444,6 +457,13 @@ declare module '@tanstack/react-router' {
       path: '/refunds'
       fullPath: '/refunds'
       preLoaderRoute: typeof RefundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -553,6 +573,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   RefundsRoute: RefundsRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   WhatIsAChangeDirectiveRoute: WhatIsAChangeDirectiveRoute,
