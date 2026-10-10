@@ -88,7 +88,7 @@ export function Landing() {
               <div className="mt-2 grid grid-cols-2 gap-2"><Input disabled readOnly value="$1,850.00" className="h-11 font-bold" aria-label="Demo lump sum" /><Input disabled readOnly value="0 days" className="h-11" aria-label="Demo schedule impact" /></div>
             </DemoStep>
             <DemoStep n={3} title="Review and request approval">
-              <div className="rounded-xl bg-ink p-4 text-ink-foreground"><p className="font-bold">Get it signed</p><div className="mt-2 grid grid-cols-2 gap-2"><Button tabIndex={-1} className="pointer-events-none h-10 text-xs"><PenLine className="mr-1 h-4 w-4" />Sign on this device</Button><Button tabIndex={-1} variant="secondary" className="pointer-events-none h-10 text-xs"><Copy className="mr-1 h-4 w-4" />Copy approval link</Button></div></div>
+              <div className="rounded-xl bg-ink p-4 text-ink-foreground"><p className="font-bold">Get it signed</p><div className="mt-2 grid grid-cols-2 gap-2"><Button tabIndex={-1} className="pointer-events-none h-10 text-xs">Sign on device</Button><Button tabIndex={-1} variant="secondary" className="pointer-events-none h-10 text-xs">Copy link</Button></div></div>
             </DemoStep>
             <DemoStep n={4} title="The GC rep signs or requests changes">
               <p className="text-sm text-muted-foreground">They open the link on their own phone — no account — review photos, scope and price, then sign or ask for changes.</p>
