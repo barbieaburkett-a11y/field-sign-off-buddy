@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Camera, Loader2, ScanText, X } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { scanDocument } from "@/lib/scan.functions";
@@ -60,7 +60,41 @@ function NewCO() {
 
   const [scanning, setScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
+  const restored = useRef(false);
   const runScan = useServerFn(scanDocument);
+
+  // Restore any unsaved draft from this device, and remember the last job used.
+  useEffect(() => {
+    if (restored.current) return;
+    restored.current = true;
+    try {
+      const raw = localStorage.getItem("fieldco.newDraft");
+      if (raw) {
+        const d = JSON.parse(raw) as Record<string, string>;
+        if (d.jobId) setJobId(d.jobId);
+        if (d.newJob) setNewJob(d.newJob);
+        if (d.gc) setGc(d.gc);
+        if (d.title) setTitle(d.title);
+        if (d.desc) setDesc(d.desc);
+        if (d.amount) setAmount(d.amount);
+        if (d.foreman) setForeman(d.foreman);
+        if (d.title || d.desc || d.amount) setDraftRestored(true);
+      }
+      const lastJob = localStorage.getItem("fieldco.lastJob");
+      setJobId((cur) => cur || (lastJob ?? ""));
+    } catch { /* storage unavailable — drafting still works, just won't persist */ }
+  }, []);
+
+  // Autosave the draft locally as they type (photos are not stored until Save).
+  useEffect(() => {
+    if (!restored.current) return;
+    try {
+      const d = { jobId, newJob, gc, title, desc, amount, foreman };
+      if (title || desc || amount || newJob) localStorage.setItem("fieldco.newDraft", JSON.stringify(d));
+      else localStorage.removeItem("fieldco.newDraft");
+    } catch { /* ignore */ }
+  }, [jobId, newJob, gc, title, desc, amount, foreman]);
 
   if (!user) return null;
   const addingJob = jobId === "__new" || jobs.length === 0;
@@ -116,6 +150,10 @@ function NewCO() {
         .select("id")
         .single();
       if (error) throw error;
+      try {
+        localStorage.removeItem("fieldco.newDraft");
+        localStorage.setItem("fieldco.lastJob", jid);
+      } catch { /* ignore */ }
       qc.invalidateQueries();
       navigate({ to: "/co/$id", params: { id: data.id } });
     } catch (err) {
@@ -195,9 +233,15 @@ function NewCO() {
             <Input id="f" className="mt-1 h-12" placeholder="Your name" value={foreman} onChange={(e) => setForeman(e.target.value)} />
           </div>
         </div>
+        {draftRestored && (
+          <p className="rounded-md bg-secondary px-3 py-2 text-sm text-secondary-foreground">
+            Restored your unsaved draft from this device. Photos need to be re-added.
+          </p>
+        )}
         <Button type="submit" className="h-12 w-full text-base" disabled={busy}>
           {busy ? "Saving…" : "Save & get signature"}
         </Button>
+        <p className="text-center text-xs text-muted-foreground">Your draft is saved on this device as you type. Nothing is sent until you choose how to get approval.</p>
       </form>
     </AppShell>
   );
