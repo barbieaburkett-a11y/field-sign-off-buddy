@@ -45,7 +45,7 @@ function Dashboard() {
     if (!pending) return;
     sessionStorage.removeItem("fieldco.pendingPlan");
     if (pending === "starter") {
-      toast.success("Your 14-day Pro trial is on — Starter kicks in when it ends.");
+      toast.success("Your 14-day Pro trial is on. Choose a plan any time to keep going after it ends.");
     } else {
       setUpgrade(pending);
     }

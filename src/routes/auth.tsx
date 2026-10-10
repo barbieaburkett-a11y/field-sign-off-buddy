@@ -93,9 +93,9 @@ function AuthPage() {
           <p className="mt-3 text-sm opacity-70">Photos, scope, price and the GC's signature — captured on your phone.</p>
           {mode === "up" && (
             <div className="mt-4 rounded-md border-l-4 border-sage bg-secondary px-3 py-3 text-sm text-secondary-foreground">
-              {plan && <p className="font-semibold">You picked {PLANS.find((x) => x.id === plan)!.name} — ${PLANS.find((x) => x.id === plan)!.price}/month after your trial.</p>}
-              <p className={plan ? "mt-1" : "font-semibold"}>14-day free trial with all Pro features. No payment details needed to start.</p>
-              <p className="mt-1 opacity-80">You're only charged if you choose a plan at checkout. Cancel any time from billing.</p>
+              {plan && <p className="font-semibold">You picked {PLANS.find((x) => x.id === plan)!.name} — ${PLANS.find((x) => x.id === plan)!.price}/month once you choose it at checkout.</p>}
+              <p className={plan ? "mt-1" : "font-semibold"}>Try all Pro features free for 14 days. No payment details required.</p>
+              <p className="mt-1 opacity-80">Nothing is charged unless you choose a paid plan and complete checkout. After 14 days, choose a plan to keep creating directives; existing records stay viewable and exportable.</p>
             </div>
           )}
           <div className="mt-8 rounded-xl bg-card p-5 text-card-foreground">

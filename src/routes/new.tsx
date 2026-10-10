@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { canWrite, usePlan } from "@/lib/plans";
 
 export const Route = createFileRoute("/new")({
   staticData: { sitemap: false },
@@ -55,6 +56,7 @@ function NewCO() {
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState("");
   const [foreman, setForeman] = useState("");
+  const [schedule, setSchedule] = useState("0");
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
 
@@ -96,7 +98,9 @@ function NewCO() {
     } catch { /* ignore */ }
   }, [jobId, newJob, gc, title, desc, amount, foreman]);
 
+  const { data: account } = usePlan(user?.id);
   if (!user) return null;
+  if (account && !canWrite(account)) return <AppShell><h1 className="text-2xl font-bold">New change directive</h1><p className="mt-3 text-sm text-muted-foreground">Choose a plan to create new directives.</p></AppShell>;
   const addingJob = jobId === "__new" || jobs.length === 0;
 
   const scan = async (file: File) => {
@@ -146,6 +150,7 @@ function NewCO() {
           amount: Number(amount),
           photos,
           foreman_name: foreman.trim() || null,
+          schedule_impact_days: schedule === "" ? null : Math.max(0, Math.round(Number(schedule))),
         })
         .select("id")
         .single();
@@ -232,6 +237,11 @@ function NewCO() {
             <Label htmlFor="f">Foreman</Label>
             <Input id="f" className="mt-1 h-12" placeholder="Your name" value={foreman} onChange={(e) => setForeman(e.target.value)} />
           </div>
+        </div>
+        <div>
+          <Label htmlFor="s">Schedule impact (working days)</Label>
+          <Input id="s" type="number" inputMode="numeric" min="0" step="1" className="mt-1 h-11" value={schedule} onChange={(e) => setSchedule(e.target.value)} />
+          <p className="mt-1 text-xs text-muted-foreground">Enter 0 if this extra work doesn't add time.</p>
         </div>
         {draftRestored && (
           <p className="rounded-md bg-secondary px-3 py-2 text-sm text-secondary-foreground">

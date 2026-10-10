@@ -94,7 +94,7 @@ function Store() {
             <li><strong className="text-foreground">Formats:</strong> print-ready pages you can print or save as PDF from your browser. Sign in with your purchase email and you can also type into the forms on screen and save them.</li>
             <li><strong className="text-foreground">Delivery:</strong> right after checkout you land on your forms page, and we email you a personal link so you can come back any time — no account needed.</li>
             <li><strong className="text-foreground">One-time purchase:</strong> no subscription, no expiry.</li>
-            <li><strong className="text-foreground">Questions?</strong> <Link to="/support" className="font-semibold text-accent-foreground underline">Contact support</Link> — we answer within one business day.</li>
+            <li><strong className="text-foreground">Questions?</strong> <Link to="/support" className="font-semibold text-accent-foreground underline">Contact support</Link> — email our team for help with your purchase.</li>
           </ul>
         </div>
 

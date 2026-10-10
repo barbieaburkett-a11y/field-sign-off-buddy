@@ -8,7 +8,7 @@ import { RelatedGuides } from "@/components/GuidePage";
 const FEATURES = [
   { icon: Camera, title: "Capture in the field", body: "Pick the job, snap photos of the condition, describe the scope, and enter a lump-sum price." },
   { icon: PenLine, title: "Sign on the spot", body: "Hand your phone to the GC superintendent. They review the scope and amount and sign right on screen." },
-  { icon: Smartphone, title: "Remote approval", body: "Text a secure link. The super reviews photos, description, and price on their own phone and signs digitally." },
+  { icon: Smartphone, title: "Remote approval", body: "Share a private link. The super reviews photos, description, and price on their own phone and signs digitally." },
   { icon: LayoutList, title: "Track every directive", body: "See every directive by job, status, date, and dollar amount. Know what is signed and what needs attention." },
   { icon: FileCheck2, title: "Pay-app ready", body: "Export a clean signed packet with timestamps, photos, totals, and signatures for your monthly pay application." },
 ];
