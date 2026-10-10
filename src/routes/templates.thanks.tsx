@@ -42,6 +42,11 @@ function Thanks() {
       <p className="text-muted-foreground">
         {waiting ? "Getting your templates ready…" : "We've emailed you a link to your templates. It can take a minute or two to arrive."}
       </p>
+      {!waiting && (
+        <p className="text-sm text-muted-foreground">
+          Nothing arrived? <a href="mailto:hello@thecommandsuite.com" className="font-semibold text-accent-foreground underline">Email hello@thecommandsuite.com</a> and we'll resend your link.
+        </p>
+      )}
     </main>
   );
 }

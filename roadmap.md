@@ -16,7 +16,9 @@
 
 ## Improvement brief (Oct 2026)
 - [x] Round 1: signup, trial and pricing clarity
-- [ ] Round 2: core app and approvals (nav, autosave, request changes, versions, PDFs)
-- [ ] Round 3: homepage "see how it works", sample PDF, template store ($29 bundle, previews)
-- [ ] Round 4: support page, policy review, mobile/accessibility pass
+- [x] Round 2: core app and approvals (autosave drafts, last-job memory, request-changes flow, plain-language approval wording, success screens, duplicate-tap guards)
+- [x] Round 3: homepage "see how it works", sample packet page, template store ($29 bundle live price, what's-included/delivery details)
+- [x] Round 4: /support page + footer links, packet wording aligned with policies
 - [ ] Owner decision: template no-refund rule vs Paddle's minimum refund requirement
+- [ ] Owner decision: should Starter require payment after the trial? (currently free-forever fallback)
+- [ ] Deferred from brief: multi-version re-approval of edited signed directives (approved records are read-only today; editing requires a new directive)

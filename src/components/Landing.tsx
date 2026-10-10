@@ -32,7 +32,7 @@ export function Landing() {
           <p className="mx-auto mb-12 mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">Not another all-in-one jobsite platform. FieldCO turns a <span className="font-mono font-medium text-foreground">“just do it”</span> from the GC into a signed, priced change directive — on site or by text.</p>
           <div className="flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
             <Button variant="welcoming" size="lg" asChild className="h-14 rounded-lg text-sm font-bold uppercase"><Link to="/auth" search={{ mode: "signup" }}>Start 14-day free trial</Link></Button>
-            <Button variant="outline" size="lg" asChild className="h-14 rounded-lg border-input bg-card text-sm font-bold uppercase"><Link to="/pricing">See plans & pricing</Link></Button>
+            <Button variant="outline" size="lg" asChild className="h-14 rounded-lg border-input bg-card text-sm font-bold uppercase"><a href="#how-it-works">See how it works</a></Button>
           </div>
           <p className="mt-6 font-mono text-xs leading-6 text-muted-foreground">No demo call. No sales rep. <Link to="/change-order-template" className="text-accent-foreground underline underline-offset-4">Grab our free printable template</Link> or <Link to="/templates" className="text-accent-foreground underline underline-offset-4">trade template packs</Link>.</p>
           <p className="mt-3 text-sm text-muted-foreground"><Link to="/how-to-write-a-change-order" className="underline underline-offset-4 hover:text-foreground">How to write a change order in construction <ArrowUpRight className="inline h-4 w-4" /></Link></p>
@@ -59,6 +59,27 @@ export function Landing() {
               <div><p className="font-mono text-xs text-muted-foreground">SAMPLE CD-0001 / ELECTRICAL</p><h3 className="mt-2 text-2xl font-extrabold text-heading">Two additional wall receptacles</h3><p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">Provide conduit, wiring, and two receptacles outside the original scope. Review the condition photo and lump-sum price before signing.</p></div>
               <div className="sm:text-right"><p className="font-mono text-xs text-muted-foreground">LUMP-SUM TOTAL</p><p className="mt-2 text-4xl font-extrabold text-heading tabular-nums">$1,850.00</p><p className="mt-2 inline-block rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">Awaiting signature</p></div>
             </div></div>
+          </div>
+        </section>
+        <section id="how-it-works" className="mx-auto max-w-7xl scroll-mt-8 px-5 pb-24 sm:px-8">
+          <h2 className="text-lg font-bold uppercase text-heading">See how it works</h2>
+          <div className="mt-5 grid gap-5 md:grid-cols-3">
+            <div className="rounded-lg border bg-card p-7 shadow-welcoming">
+              <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step 1</span>
+              <h3 className="mt-4 text-lg font-bold text-heading">Create the directive</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Pick the job, snap photos of the condition, describe the extra work, and enter a lump-sum price. Your draft saves on your phone as you type.</p>
+            </div>
+            <div className="rounded-lg border bg-card p-7 shadow-welcoming">
+              <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step 2</span>
+              <h3 className="mt-4 text-lg font-bold text-heading">The super reviews & signs</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Hand over your phone, or text a secure link. The superintendent sees the photos, scope, and price on their own phone — no account needed — and signs, or asks for changes.</p>
+            </div>
+            <div className="rounded-lg border bg-card p-7 shadow-welcoming">
+              <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step 3</span>
+              <h3 className="mt-4 text-lg font-bold text-heading">The signed packet</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Every approval becomes a clean packet with photos, timestamps, and the signature — ready to attach to your monthly pay application.</p>
+              <Link to="/sample-packet" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-foreground">View a sample signed packet <ArrowUpRight className="h-4 w-4" /></Link>
+            </div>
           </div>
         </section>
         <section className="bg-ink px-5 py-16 text-ink-foreground sm:py-20">
