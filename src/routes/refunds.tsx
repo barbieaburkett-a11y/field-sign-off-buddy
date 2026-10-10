@@ -40,8 +40,10 @@ function RefundsPage() {
       <section>
         <h2>Trials and cancellations</h2>
         <p>
-          New accounts start with a 14-day free trial — you won't be charged if you cancel before the trial ends.
-          You can cancel a paid subscription at any time; your access continues until the end of the current billing
+          New accounts can try all Pro features free for 14 days. No payment details are required and nothing is charged
+          unless you choose a paid plan and complete checkout, so there is nothing to cancel during a free trial. After 14 days,
+          choose a paid plan to continue creating directives and requesting approvals; existing records remain available to
+          view and export. You can cancel a paid subscription at any time; your access continues until the end of the current billing
           period, and the 30-day money-back guarantee above still applies to your most recent payment.
         </p>
       </section>

@@ -1,14 +1,28 @@
 import { Link } from "@tanstack/react-router";
-import { Camera, FileCheck2, HardHat, LayoutList, PenLine, Smartphone, ArrowUpRight } from "lucide-react";
+import { Copy, Camera, FileCheck2, HardHat, LayoutList, PenLine, Smartphone, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LegalFooter } from "@/components/LegalPage";
 import fieldPhoto from "@/assets/field-electrical.jpg";
 import { RelatedGuides } from "@/components/GuidePage";
+import { Input } from "@/components/ui/input";
+import { Packet } from "@/components/Packet";
+import { SAMPLE_PACKET } from "@/lib/sample-packet";
+import type { ReactNode } from "react";
+
+function DemoStep({ n, title, children }: { n: number; title: string; children: ReactNode }) {
+  return (
+    <li className="rounded-lg border bg-card p-6 shadow-welcoming">
+      <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step {n}</span>
+      <h3 className="mb-3 mt-3 font-bold text-heading">{title}</h3>
+      <div aria-hidden="true">{children}</div>
+    </li>
+  );
+}
 
 const FEATURES = [
   { icon: Camera, title: "Capture in the field", body: "Pick the job, snap photos of the condition, describe the scope, and enter a lump-sum price." },
   { icon: PenLine, title: "Sign on the spot", body: "Hand your phone to the GC superintendent. They review the scope and amount and sign right on screen." },
-  { icon: Smartphone, title: "Remote approval", body: "Text a secure link. The super reviews photos, description, and price on their own phone and signs digitally." },
+  { icon: Smartphone, title: "Remote approval", body: "Share a private link. The super reviews photos, description, and price on their own phone and signs digitally." },
   { icon: LayoutList, title: "Track every directive", body: "See every directive by job, status, date, and dollar amount. Know what is signed and what needs attention." },
   { icon: FileCheck2, title: "Pay-app ready", body: "Export a clean signed packet with timestamps, photos, totals, and signatures for your monthly pay application." },
 ];
@@ -34,7 +48,8 @@ export function Landing() {
             <Button variant="welcoming" size="lg" asChild className="h-14 rounded-lg text-sm font-bold uppercase"><Link to="/auth" search={{ mode: "signup" }}>Start 14-day free trial</Link></Button>
             <Button variant="outline" size="lg" asChild className="h-14 rounded-lg border-input bg-card text-sm font-bold uppercase"><a href="#how-it-works">See how it works</a></Button>
           </div>
-          <p className="mt-6 font-mono text-xs leading-6 text-muted-foreground">No demo call. No sales rep. <Link to="/change-order-template" className="text-accent-foreground underline underline-offset-4">Grab our free printable template</Link> or <Link to="/templates" className="text-accent-foreground underline underline-offset-4">trade template packs</Link>.</p>
+          <p className="mt-6 text-sm text-muted-foreground">Try all Pro features free for 14 days. No payment details required. Nothing is charged unless you choose a paid plan and complete checkout.</p>
+          <p className="mt-3 font-mono text-xs leading-6 text-muted-foreground">No demo call. No sales rep. <Link to="/change-order-template" className="text-accent-foreground underline underline-offset-4">Grab our free printable template</Link> or <Link to="/templates" className="text-accent-foreground underline underline-offset-4">trade template packs</Link>.</p>
           <p className="mt-3 text-sm text-muted-foreground"><Link to="/how-to-write-a-change-order" className="underline underline-offset-4 hover:text-foreground">How to write a change order in construction <ArrowUpRight className="inline h-4 w-4" /></Link></p>
         </section>
         <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
@@ -61,25 +76,29 @@ export function Landing() {
             </div></div>
           </div>
         </section>
-        <section id="how-it-works" className="mx-auto max-w-7xl scroll-mt-8 px-5 pb-24 sm:px-8">
-          <h2 className="text-lg font-bold uppercase text-heading">See how it works</h2>
-          <div className="mt-5 grid gap-5 md:grid-cols-3">
-            <div className="rounded-lg border bg-card p-7 shadow-welcoming">
-              <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step 1</span>
-              <h3 className="mt-4 text-lg font-bold text-heading">Create the directive</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Pick the job, snap photos of the condition, describe the extra work, and enter a lump-sum price. Your draft saves on your phone as you type.</p>
-            </div>
-            <div className="rounded-lg border bg-card p-7 shadow-welcoming">
-              <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step 2</span>
-              <h3 className="mt-4 text-lg font-bold text-heading">The super reviews & signs</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Hand over your phone, or text a secure link. The superintendent sees the photos, scope, and price on their own phone — no account needed — and signs, or asks for changes.</p>
-            </div>
-            <div className="rounded-lg border bg-card p-7 shadow-welcoming">
-              <span className="rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Step 3</span>
-              <h3 className="mt-4 text-lg font-bold text-heading">The signed packet</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Every approval becomes a clean packet with photos, timestamps, and the signature — ready to attach to your monthly pay application.</p>
-              <Link to="/sample-packet" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-foreground">View a sample signed packet <ArrowUpRight className="h-4 w-4" /></Link>
-            </div>
+        <section id="how-it-works" className="mx-auto max-w-5xl scroll-mt-8 px-5 pb-24 sm:px-8">
+          <div className="flex flex-wrap items-baseline justify-between gap-2"><h2 className="text-lg font-bold uppercase text-heading">See how it works</h2><span className="text-xs italic text-muted-foreground">Demo · fictional data · nothing here saves, sends or signs</span></div>
+          <ol className="mt-5 grid gap-5 md:grid-cols-2">
+            <DemoStep n={1} title="Select a job and add a photo">
+              <select disabled aria-label="Demo job" className="h-11 w-full rounded-md border bg-card px-3 text-sm"><option>Riverside Medical — Tenant Fit-Out (sample)</option></select>
+              <div className="mt-2 grid grid-cols-3 gap-2"><img src={fieldPhoto} alt="Sample condition photo" loading="lazy" className="aspect-square rounded-lg border object-cover" /><div className="flex aspect-square flex-col items-center justify-center rounded-lg border-2 border-dashed text-muted-foreground"><Camera className="h-6 w-6" /><span className="text-xs">Add photo</span></div></div>
+            </DemoStep>
+            <DemoStep n={2} title="Enter scope, price and schedule impact">
+              <Input disabled value="Two additional wall receptacles" className="h-11" aria-label="Demo title" readOnly />
+              <div className="mt-2 grid grid-cols-2 gap-2"><Input disabled readOnly value="$1,850.00" className="h-11 font-bold" aria-label="Demo lump sum" /><Input disabled readOnly value="0 days" className="h-11" aria-label="Demo schedule impact" /></div>
+            </DemoStep>
+            <DemoStep n={3} title="Review and request approval">
+              <div className="rounded-xl bg-ink p-4 text-ink-foreground"><p className="font-bold">Get it signed</p><div className="mt-2 grid grid-cols-2 gap-2"><Button tabIndex={-1} className="pointer-events-none h-10 text-xs">Sign on device</Button><Button tabIndex={-1} variant="secondary" className="pointer-events-none h-10 text-xs">Copy link</Button></div></div>
+            </DemoStep>
+            <DemoStep n={4} title="The GC rep signs or requests changes">
+              <p className="text-sm text-muted-foreground">They open the link on their own phone — no account — review photos, scope and price, then sign or ask for changes.</p>
+              <div className="mt-2 grid grid-cols-2 gap-2"><Button tabIndex={-1} className="pointer-events-none h-10 text-xs">Approve & sign</Button><Button tabIndex={-1} variant="outline" className="pointer-events-none h-10 text-xs">Request changes</Button></div>
+            </DemoStep>
+          </ol>
+          <div className="mt-5 rounded-lg border bg-card p-5 shadow-welcoming">
+            <p className="font-mono text-xs font-bold text-accent-foreground">Step 5 · The completed packet (actual export layout, sample data)</p>
+            <div className="mt-3 max-h-[440px] overflow-hidden"><Packet co={SAMPLE_PACKET} /></div>
+            <Link to="/sample-packet" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-foreground">Open the full sample packet <ArrowUpRight className="h-4 w-4" /></Link>
           </div>
         </section>
         <section className="bg-ink px-5 py-16 text-ink-foreground sm:py-20">

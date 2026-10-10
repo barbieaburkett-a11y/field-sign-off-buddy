@@ -9,23 +9,23 @@ export const PLANS = [
     id: "starter" as const,
     name: "Starter",
     price: 19.99,
-    summary: "For small field teams protecting every extra.",
+    summary: "For small crews documenting extra work.",
     foremen: "Up to 3 foremen",
-    features: ["Unlimited change directives", "On-screen signing", "PDF exports"],
+    features: ["Unlimited jobs and directives", "On-screen approval", "Approval links you share yourself", "PDF exports"],
   },
   {
     id: "pro" as const,
     name: "Pro",
     price: 99,
-    summary: "For growing crews that route approvals back to the office.",
+    summary: "For growing crews keeping the field and office in sync.",
     foremen: "Up to 10 foremen",
-    features: ["Everything in Starter", "SMS approval routing", "Custom logo on packets", "Automatic office PM email CC"],
+    features: ["Everything in Starter", "Company name and logo on packets", "Office PM copied on packet emails", "One-tap text sharing"],
   },
   {
     id: "unlimited" as const,
     name: "Unlimited",
     price: 199,
-    summary: "For multi-crew contractors working across many jobs.",
+    summary: "For larger teams across multiple jobs.",
     foremen: "Unlimited foremen",
     features: ["Everything in Pro", "Unlimited foremen"],
   },
@@ -89,6 +89,15 @@ export function isInGracePeriod(account?: AccountPlan | null) {
 export function graceDaysLeft(account?: AccountPlan | null) {
   if (!isInGracePeriod(account)) return 0;
   return Math.max(1, Math.ceil((new Date(account?.grace_period_ends_at ?? 0).getTime() - Date.now()) / 86_400_000));
+}
+
+/** True when the account may create, edit, send, or collect approvals. Mirrors public.account_can_write. */
+export function canWrite(account?: AccountPlan | null) {
+  return hasPaidPlan(account) || isTrialActive(account);
+}
+
+export function isTrialExpired(account?: AccountPlan | null) {
+  return Boolean(account && !canWrite(account) && account.subscription_status === "trialing");
 }
 
 export function effectivePlan(account?: AccountPlan | null): PlanId {

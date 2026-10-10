@@ -39,7 +39,7 @@ function Support() {
         <div className="mt-8 rounded-lg border bg-card p-6 shadow-welcoming">
           <h2 className="flex items-center gap-2 text-lg font-bold text-heading"><Mail className="h-5 w-5 text-primary" /> Email us</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Write to <a href="mailto:hello@thecommandsuite.com" className="font-semibold text-accent-foreground underline">hello@thecommandsuite.com</a> and we answer within one business day.
+            Write to <a href="mailto:hello@thecommandsuite.com" className="font-semibold text-accent-foreground underline">hello@thecommandsuite.com</a>. Email our support team for help with your account, directives, or purchases.
           </p>
           <p className="mt-3 text-sm text-muted-foreground">It helps if you include:</p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
@@ -53,7 +53,7 @@ function Support() {
           <div className="rounded-lg border bg-card p-5">
             <h3 className="font-bold text-heading">Billing & refunds</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Cancel any time from the billing portal in the app. Our <Link to="/refunds" className="text-accent-foreground underline">Refund Policy</Link> explains the 30-day money-back guarantee.
+              Cancel a paid plan from the billing portal in the app. Our <Link to="/refunds" className="text-accent-foreground underline">Refund Policy</Link> explains the 30-day money-back guarantee.
             </p>
           </div>
           <div className="rounded-lg border bg-card p-5">

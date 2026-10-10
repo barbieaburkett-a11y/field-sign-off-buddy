@@ -20,5 +20,6 @@
 - [x] Round 3: homepage "see how it works", sample packet page, template store ($29 bundle live price, what's-included/delivery details)
 - [x] Round 4: /support page + footer links, packet wording aligned with policies
 - [ ] Owner decision: template no-refund rule vs Paddle's minimum refund requirement
-- [ ] Owner decision: should Starter require payment after the trial? (currently free-forever fallback)
+- [x] Trial ends → paid plan required to create/edit/send/approve; records stay viewable/exportable (enforced in database + approval links)
+- [x] Brief 2: billing copy, one-tap text sharing wording, plan positioning, home demo, complete sample packet, template previews, support wording
 - [ ] Deferred from brief: multi-version re-approval of edited signed directives (approved records are read-only today; editing requires a new directive)

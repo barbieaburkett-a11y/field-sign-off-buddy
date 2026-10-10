@@ -33,21 +33,22 @@ const rows = [
   ["Foremen", "Up to 3", "Up to 10", "Unlimited"],
   ["Jobs", "Unlimited", "Unlimited", "Unlimited"],
   ["Change directives", "Unlimited", "Unlimited", "Unlimited"],
-  ["On-screen signing", true, true, true],
-  ["Shareable approval link (you send it)", true, true, true],
-  ["PDF exports", true, true, true],
-  ["SMS approval routing (text pre-filled for the super)", false, true, true],
-  ["Custom packet logo", false, true, true],
-  ["Automatic office PM CC", false, true, true],
+  ["On-screen approval on your phone", true, true, true],
+  ["Approval link you copy and share yourself", true, true, true],
+  ["Print / save signed packets as PDF", true, true, true],
+  ["Company name and logo on packets", false, true, true],
+  ["Office PM pre-filled as CC on packet emails", false, true, true],
+  ["One-tap text sharing (opens a ready-to-send text)", false, true, true],
 ] as const;
 
 const FAQ = [
-  ["How does the free trial work?", "Every new account gets 14 days with all Pro features. We don't ask for payment details to start, and nothing is charged unless you choose a plan and complete checkout."],
-  ["What happens when the trial ends?", "Pro-only features (SMS routing, custom packet logo, office PM copy) switch off and the 3-foreman Starter limit applies. Your jobs and directives stay. Choose a plan any time to keep going."],
-  ["How do I cancel?", "Paid plans renew monthly. Cancel any time from the billing portal; you keep access until the end of the period you paid for. See our Refund Policy for the 30-day guarantee."],
+  ["How does the free trial work?", "Try all Pro features free for 14 days. No payment details required. Nothing is charged unless you choose a paid plan and complete checkout."],
+  ["What happens when the trial ends?", "After 14 days, choose a paid plan to continue creating directives and requesting approvals. Existing records remain available to view and export. Approval links you sent during the trial show the GC an \"inactive\" notice until you choose a plan."],
+  ["What if I buy during my trial?", "Your paid plan starts, and you're charged, when you complete checkout — the remaining trial days don't delay the first payment."],
+  ["How do paid plans renew and cancel?", "Paid plans renew monthly until cancelled. Cancel from the billing portal; you keep paid access until the end of the period you paid for. After that the subscription expires and your records stay viewable and exportable. See our Refund Policy for the 30-day guarantee."],
   ["Who counts as a foreman?", "Each distinct foreman name entered on a directive counts toward your plan. Office staff and admins who don't appear as the foreman on a directive don't count."],
   ["Are jobs limited?", "No. Every plan includes unlimited jobs and unlimited change directives."],
-  ["How does the GC approve?", "On any plan, they can sign on your phone or open a private approval link you share. On Pro and Unlimited, FieldCO also opens a text to the super with the link already filled in."],
+  ["How does the GC approve?", "On any plan, they can sign on your phone or open a private approval link you copy and share. On Pro and Unlimited, one-tap text sharing opens a ready-to-send text with the approval link — you send it from your phone. FieldCO doesn't send or track the text."],
   ["Does the GC need an account?", "No. The person approving just opens the link, reviews photos, scope and price, and signs."],
   ["Can I export signed records?", "Yes. Every plan can print or save a signed packet as a PDF with photos, scope, price, signer and timestamp."],
 ] as const;
@@ -94,7 +95,7 @@ function PricingPage() {
       {isTrialActive(account) && (
         <div className="mb-6 border-l-4 border-sage bg-secondary p-4">
           <p className="font-semibold">Your Pro trial has {trialDaysLeft(account)} days left.</p>
-          <p className="text-sm text-muted-foreground">All Pro features stay open during your 14-day trial. No charge unless you choose a plan.</p>
+          <p className="text-sm text-muted-foreground">No payment details required. Nothing is charged unless you choose a paid plan and complete checkout.</p>
         </div>
       )}
 
@@ -103,8 +104,7 @@ function PricingPage() {
           const current = hasPaidPlan(account) && account?.plan === item.id;
           return (
             <section key={item.id} className={`border bg-card p-5 ${item.id === "pro" ? "border-primary shadow-sm" : ""}`}>
-              {item.id === "pro" && <p className="mb-3 text-xs font-bold uppercase text-primary">Most popular</p>}
-              <h2 className="text-2xl font-bold">{item.name}</h2>
+                            <h2 className="text-2xl font-bold">{item.name}</h2>
               <p className="mt-2 min-h-10 text-sm text-muted-foreground">{item.summary}</p>
               <p className="mt-5"><span className="font-display text-4xl font-bold">${item.price}</span><span className="text-sm text-muted-foreground"> / month</span></p>
               <p className="mt-2 text-sm font-semibold">{item.foremen} · unlimited jobs</p>

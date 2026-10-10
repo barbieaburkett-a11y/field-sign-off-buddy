@@ -5,7 +5,7 @@ import { STATUS_CLASS, STATUS_LABEL, type Status } from "@/lib/format";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
-import { isTrialActive, trialDaysLeft, usePlan } from "@/lib/plans";
+import { isTrialActive, isTrialExpired, canWrite, trialDaysLeft, usePlan } from "@/lib/plans";
 import { PaymentIssueBanner } from "@/components/PaymentIssueBanner";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { LegalFooter } from "@/components/LegalPage";
@@ -51,6 +51,17 @@ export function AppShell({ children, action }: { children: ReactNode; action?: R
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-2 text-sm">
             <span><strong>Pro trial:</strong> {trialDaysLeft(account)} days left</span>
             <Link to="/pricing" className="shrink-0 font-semibold text-primary hover:underline">Choose a plan</Link>
+          </div>
+        </div>
+      )}
+      {account && !canWrite(account) && !account.payment_failed_at && (
+        <div className="no-print border-b bg-accent">
+          <div className="mx-auto max-w-3xl px-4 py-4 text-sm text-accent-foreground">
+            <p className="font-semibold">{isTrialExpired(account) ? "Your free trial has ended." : "Your subscription has ended."} Your existing records are safe and available to view and export. Choose a plan to create new directives and request approvals.</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button size="sm" asChild><Link to="/pricing">Choose a plan</Link></Button>
+              <Button size="sm" variant="outline" asChild><Link to="/">View existing records</Link></Button>
+            </div>
           </div>
         </div>
       )}

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { coNumber, money, type Status } from "@/lib/format";
-import { hasFeature, usePlan } from "@/lib/plans";
+import { canWrite, hasFeature, usePlan } from "@/lib/plans";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 
 export const Route = createFileRoute("/co/$id")({
@@ -78,7 +78,7 @@ function CODetail() {
     window.location.href = `mailto:?${cc}subject=${encodeURIComponent(`Change Directive ${coNumber(co.number)} – ${co.jobs?.name}`)}&body=${encodeURIComponent(body)}`;
   };
 
-  const open = co.status === "draft" || co.status === "pending";
+  const open = (co.status === "draft" || co.status === "pending") && canWrite(account);
 
   return (
     <AppShell>
@@ -92,7 +92,7 @@ function CODetail() {
       {open && (
         <div className="no-print mb-5 rounded-xl bg-ink p-4 text-ink-foreground">
           <h2 className="font-display text-lg font-bold">Get it signed</h2>
-          <p className="text-sm opacity-70">Hand your phone to the superintendent, or text them a link. If it isn't signed in 24 hours, we'll email you a reminder.</p>
+          <p className="text-sm opacity-70">Hand your phone to the superintendent, or share the approval link yourself. If it isn't signed in 24 hours, we'll email you a reminder.</p>
           {hasFeature(account, "sms_routing") && (
             <Input type="tel" inputMode="tel" placeholder="Super's mobile number (optional)" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={savePhone} className="mt-3 h-11 bg-card text-foreground" />
           )}
@@ -103,15 +103,16 @@ function CODetail() {
             {hasFeature(account, "sms_routing") ? (
               <Button className="h-12" variant="secondary" asChild>
                 <a href={`sms:${phone.replace(/[^\d+]/g, "")}?&body=${encodeURIComponent(msg)}`} onClick={() => { savePhone(); markSent(); }}>
-                  <MessageSquare className="mr-1 h-4 w-4" /> {phone ? "Text the super" : "Text approval link"}
+                  <MessageSquare className="mr-1 h-4 w-4" /> Open a ready-to-send text
                 </a>
               </Button>
             ) : (
               <Button className="h-12" variant="secondary" onClick={() => setUpgradeOpen(true)}>
-                <LockKeyhole className="mr-1 h-4 w-4" /> SMS requires Pro
+                <LockKeyhole className="mr-1 h-4 w-4" /> One-tap text sharing (Pro)
               </Button>
             )}
           </div>
+          {hasFeature(account, "sms_routing") && <p className="mt-2 text-xs opacity-70">This opens your phone's messaging app with the link filled in — you send it. FieldCO doesn't send or track the text. No texting on this device? Copy the link below.</p>}
           <button onClick={copy} className="mt-3 flex w-full items-center gap-2 rounded-md bg-ink-foreground/10 px-3 py-2 text-left text-xs">
             <Copy className="h-3.5 w-3.5 shrink-0" /> <span className="truncate font-mono">{link}</span>
           </button>
@@ -130,7 +131,7 @@ function CODetail() {
       </div>
 
       <OnSiteSign open={signOpen} onOpenChange={setSignOpen} coId={co.id} amount={co.amount} title={co.title} onDone={() => { refetch(); qc.invalidateQueries({ queryKey: ["cos"] }); }} />
-      <UpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} recommended="pro" reason="SMS approval routing is included with Pro and Unlimited." />
+      <UpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} recommended="pro" reason="One-tap text sharing is included with Pro and Unlimited." />
     </AppShell>
   );
 }

@@ -81,7 +81,13 @@ function Approve() {
               </div>
             )}
             <Packet co={{ ...co, amount: Number(co.amount) }} />
-            {co.status === "pending" && (
+            {co.status === "pending" && co.accountInactive && (
+              <section className="no-print mt-5 rounded-xl border bg-card p-5">
+                <h2 className="font-display text-lg font-bold">This approval link is inactive</h2>
+                <p className="mt-1 text-sm text-muted-foreground">The subcontractor's FieldCO account isn't on an active plan right now, so this directive can't be signed here. Nothing has been approved. Please contact the subcontractor directly — they can send a fresh link once their account is active.</p>
+              </section>
+            )}
+            {co.status === "pending" && !co.accountInactive && (
               <section className="no-print mt-5 space-y-3 rounded-xl border bg-card p-5">
                 <h2 className="font-display text-lg font-bold">Your response</h2>
                 <p className="text-sm text-muted-foreground">
