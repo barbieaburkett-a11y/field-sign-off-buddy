@@ -75,7 +75,7 @@ export function Packet({ co }: { co: PacketData }) {
           {co.signature && <img src={co.signature} alt="Signature" className="mt-2 h-24 max-w-full border-b object-contain" />}
           <p className="mt-1 font-medium">{co.signer_name}{co.signer_title ? `, ${co.signer_title}` : ""}</p>
           <p className="text-xs text-muted-foreground">
-            {co.signed_at ? new Date(co.signed_at).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short", timeZoneName: "short" }) : "—"}
+            {co.signed_at ? new Date(co.signed_at).toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }) : "—"}
             {co.signed_method ? ` · ${co.signed_method === "remote" ? "Approval method: signed on their own device via private link" : "Approval method: signed on site on the subcontractor's device"}` : ""}
           </p>
           {co.reject_reason && <p className="mt-2 text-sm">Reason: {co.reject_reason}</p>}
