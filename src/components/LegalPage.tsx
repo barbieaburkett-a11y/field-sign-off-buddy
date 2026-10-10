@@ -37,6 +37,7 @@ export function LegalFooter() {
           <Link to="/terms" className="hover:text-foreground hover:underline">Terms of Service</Link>
           <Link to="/privacy" className="hover:text-foreground hover:underline">Privacy Policy</Link>
           <Link to="/refunds" className="hover:text-foreground hover:underline">Refund Policy</Link>
+          <a href="mailto:hello@thecommandsuite.com" className="hover:text-foreground hover:underline">Support: hello@thecommandsuite.com</a>
         </nav>
       </div>
     </footer>

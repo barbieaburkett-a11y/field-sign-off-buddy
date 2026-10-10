@@ -48,7 +48,8 @@ function RefundsPage() {
       <section>
         <h2>Questions</h2>
         <p>
-          For any billing or refund question, contact <strong>Barbie Burkett</strong>, The Command Suite, or visit{" "}
+          For any billing or refund question, contact <strong>Barbie Burkett</strong>, The Command Suite, at{" "}
+          <a href="mailto:hello@thecommandsuite.com">hello@thecommandsuite.com</a>, or visit{" "}
           <a href="https://paddle.net" target="_blank" rel="noreferrer">paddle.net</a>.
         </p>
       </section>

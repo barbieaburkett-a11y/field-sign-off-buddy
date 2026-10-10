@@ -10,7 +10,7 @@ export const PLANS = [
     name: "Starter",
     price: 49,
     summary: "For small field teams protecting every extra.",
-    foremen: "1–3 foremen",
+    foremen: "Up to 3 foremen",
     features: ["Unlimited change directives", "On-screen signing", "PDF exports"],
   },
   {
@@ -27,7 +27,7 @@ export const PLANS = [
     price: 199,
     summary: "For multi-crew contractors working across many jobs.",
     foremen: "Unlimited foremen",
-    features: ["Everything in Pro", "Unlimited foremen", "Unlimited jobs"],
+    features: ["Everything in Pro", "Unlimited foremen"],
   },
 ];
 

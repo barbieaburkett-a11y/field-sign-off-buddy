@@ -30,14 +30,26 @@ export const Route = createFileRoute("/pricing")({
 });
 
 const rows = [
-  ["Foremen", "1–3", "Up to 10", "Unlimited"],
+  ["Foremen", "Up to 3", "Up to 10", "Unlimited"],
+  ["Jobs", "Unlimited", "Unlimited", "Unlimited"],
   ["Change directives", "Unlimited", "Unlimited", "Unlimited"],
   ["On-screen signing", true, true, true],
+  ["Shareable approval link (you send it)", true, true, true],
   ["PDF exports", true, true, true],
-  ["SMS approval routing", false, true, true],
+  ["SMS approval routing (text pre-filled for the super)", false, true, true],
   ["Custom packet logo", false, true, true],
   ["Automatic office PM CC", false, true, true],
-  ["Jobs", "—", "—", "Unlimited"],
+] as const;
+
+const FAQ = [
+  ["How does the free trial work?", "Every new account gets 14 days with all Pro features. We don't ask for payment details to start, and nothing is charged unless you choose a plan and complete checkout."],
+  ["What happens when the trial ends?", "Pro-only features (SMS routing, custom packet logo, office PM copy) switch off and the 3-foreman Starter limit applies. Your jobs and directives stay. Choose a plan any time to keep going."],
+  ["How do I cancel?", "Paid plans renew monthly. Cancel any time from the billing portal; you keep access until the end of the period you paid for. See our Refund Policy for the 30-day guarantee."],
+  ["Who counts as a foreman?", "Each distinct foreman name entered on a directive counts toward your plan. Office staff and admins who don't appear as the foreman on a directive don't count."],
+  ["Are jobs limited?", "No. Every plan includes unlimited jobs and unlimited change directives."],
+  ["How does the GC approve?", "On any plan, they can sign on your phone or open a private approval link you share. On Pro and Unlimited, FieldCO also opens a text to the super with the link already filled in."],
+  ["Does the GC need an account?", "No. The person approving just opens the link, reviews photos, scope and price, and signs."],
+  ["Can I export signed records?", "Yes. Every plan can print or save a signed packet as a PDF with photos, scope, price, signer and timestamp."],
 ] as const;
 
 function PricingPage() {
@@ -82,7 +94,7 @@ function PricingPage() {
       {isTrialActive(account) && (
         <div className="mb-6 border-l-4 border-sage bg-secondary p-4">
           <p className="font-semibold">Your Pro trial has {trialDaysLeft(account)} days left.</p>
-          <p className="text-sm text-muted-foreground">All Pro features stay open during your 14-day trial.</p>
+          <p className="text-sm text-muted-foreground">All Pro features stay open during your 14-day trial. No charge unless you choose a plan.</p>
         </div>
       )}
 
@@ -95,7 +107,7 @@ function PricingPage() {
               <h2 className="text-2xl font-bold">{item.name}</h2>
               <p className="mt-2 min-h-10 text-sm text-muted-foreground">{item.summary}</p>
               <p className="mt-5"><span className="font-display text-4xl font-bold">${item.price}</span><span className="text-sm text-muted-foreground"> / month</span></p>
-              <p className="mt-2 text-sm font-semibold">{item.foremen}</p>
+              <p className="mt-2 text-sm font-semibold">{item.foremen} · unlimited jobs</p>
               <ul className="my-5 space-y-2 text-sm">
                 {item.features.map((feature) => <li key={feature} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />{feature}</li>)}
               </ul>
@@ -125,6 +137,13 @@ function PricingPage() {
         </div>
         <Button className="mt-4" disabled={!canBrand} onClick={saveSettings}>Save settings</Button>
       </section>}
+      <section className="mt-10">
+        <h2 className="text-xl font-bold">Questions</h2>
+        <dl className="mt-4 divide-y border-y">
+          {FAQ.map(([q, a]) => <div key={q} className="py-4"><dt className="font-semibold">{q}</dt><dd className="mt-1 text-sm text-muted-foreground">{a}</dd></div>)}
+        </dl>
+        <p className="mt-4 text-sm text-muted-foreground">Still unsure? Email <a className="font-semibold text-accent-foreground underline" href="mailto:hello@thecommandsuite.com">hello@thecommandsuite.com</a>.</p>
+      </section>
       <UpgradeDialog open={upgrade !== null} onOpenChange={(open) => !open && setUpgrade(null)} recommended={upgrade ?? "pro"} />
     </Shell>
   );
@@ -134,11 +153,11 @@ function PublicShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-ink text-ink-foreground">
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
-          <Link to="/pricing" className="flex items-center gap-2 font-display text-lg font-bold">
+          <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><HardHat className="h-5 w-5" /></span>
             FieldCO
           </Link>
-          <Button size="sm" asChild><Link to="/auth">Start free trial</Link></Button>
+          <Button size="sm" asChild><Link to="/auth" search={{ mode: "signup" }}>Start free trial</Link></Button>
         </div>
       </header>
       <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
