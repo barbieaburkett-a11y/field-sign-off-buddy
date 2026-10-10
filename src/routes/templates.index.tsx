@@ -57,7 +57,7 @@ function Store() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-12">
         <h1 className="text-4xl font-extrabold leading-tight text-heading sm:text-5xl">Templates built for your trade</h1>
         <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          Not ready for an app? Get printable paperwork made for the way your crew works. One-time purchase, no account needed — download right away and we email you the link.
+          Not ready for an app? Get printable paperwork made for the way your crew works. One-time purchase, no account needed — open your forms right away and we email you the link.
         </p>
 
         <div className="mt-8 rounded-lg border bg-card p-6 shadow-welcoming">
