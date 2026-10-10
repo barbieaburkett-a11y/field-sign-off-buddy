@@ -37,7 +37,7 @@ function TemplatePage() {
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><HardHat className="h-5 w-5" /></span>
             FieldCO
           </Link>
-          <Button size="sm" asChild><Link to="/auth">Start free trial</Link></Button>
+          <Button size="sm" asChild><Link to="/auth" search={{ mode: "signup" }}>Start free trial</Link></Button>
         </div>
       </header>
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
@@ -49,7 +49,7 @@ function TemplatePage() {
           <p className="mt-3 text-sm text-muted-foreground">Need help with the wording? <Link to="/how-to-write-a-change-order" className="text-accent-foreground underline underline-offset-4">Read our guide to writing a construction change order</Link>.</p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Button onClick={() => window.print()}><Printer className="mr-1 h-4 w-4" /> Print or save as PDF</Button>
-            <Button variant="outline" asChild><Link to="/auth"><Smartphone className="mr-1 h-4 w-4" /> Do it on your phone instead</Link></Button>
+            <Button variant="outline" asChild><Link to="/auth" search={{ mode: "signup" }}><Smartphone className="mr-1 h-4 w-4" /> Do it on your phone instead</Link></Button>
             <Button variant="outline" asChild><Link to="/templates">Trade template packs — $9.99</Link></Button>
           </div>
         </div>
@@ -89,7 +89,7 @@ function TemplatePage() {
           <p className="mt-2 text-sm text-muted-foreground">
             With FieldCO, foremen snap photos, enter the scope and price, and the super signs on the phone or by text. Every signed directive becomes a time-stamped packet ready for your monthly pay application. Try it free for 14 days, no demo call needed.
           </p>
-          <Button className="mt-4" asChild><Link to="/auth">Start free trial</Link></Button>
+          <Button className="mt-4" asChild><Link to="/auth" search={{ mode: "signup" }}>Start free trial</Link></Button>
         </section>
       </main>
       <div className="no-print"><LegalFooter /></div>

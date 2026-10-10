@@ -89,7 +89,7 @@ function Store() {
         </div>
 
         <p className="mt-8 text-sm text-muted-foreground">
-          Rather skip the paper? <Link to="/auth" className="font-semibold text-accent-foreground underline">Try FieldCO free</Link> — photos, price and the GC's signature on your phone.
+          Rather skip the paper? <Link to="/auth" search={{ mode: "signup" }} className="font-semibold text-accent-foreground underline">Try FieldCO free</Link> — photos, price and the GC's signature on your phone.
         </p>
       </main>
       <LegalFooter />

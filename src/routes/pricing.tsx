@@ -134,11 +134,11 @@ function PublicShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-ink text-ink-foreground">
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
-          <Link to="/pricing" className="flex items-center gap-2 font-display text-lg font-bold">
+          <Link to="/" className="flex items-center gap-2 font-display text-lg font-bold">
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><HardHat className="h-5 w-5" /></span>
             FieldCO
           </Link>
-          <Button size="sm" asChild><Link to="/auth">Start free trial</Link></Button>
+          <Button size="sm" asChild><Link to="/auth" search={{ mode: "signup" }}>Start free trial</Link></Button>
         </div>
       </header>
       <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>

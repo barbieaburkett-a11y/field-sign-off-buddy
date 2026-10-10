@@ -31,7 +31,7 @@ export function Landing() {
           <h1 className="text-4xl font-extrabold text-heading leading-[1.05] sm:text-6xl lg:text-7xl">Get the extra work signed<br className="hidden sm:block" /> <span className="font-editorial font-normal italic text-accent-foreground">before</span> you build it.</h1>
           <p className="mx-auto mb-12 mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">Not another all-in-one jobsite platform. FieldCO turns a <span className="font-mono font-medium text-foreground">“just do it”</span> from the GC into a signed, priced change directive — on site or by text.</p>
           <div className="flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
-            <Button variant="welcoming" size="lg" asChild className="h-14 rounded-lg text-sm font-bold uppercase"><Link to="/auth">Start 14-day free trial</Link></Button>
+            <Button variant="welcoming" size="lg" asChild className="h-14 rounded-lg text-sm font-bold uppercase"><Link to="/auth" search={{ mode: "signup" }}>Start 14-day free trial</Link></Button>
             <Button variant="outline" size="lg" asChild className="h-14 rounded-lg border-input bg-card text-sm font-bold uppercase"><Link to="/pricing">See plans & pricing</Link></Button>
           </div>
           <p className="mt-6 font-mono text-xs leading-6 text-muted-foreground">No demo call. No sales rep. <Link to="/change-order-template" className="text-accent-foreground underline underline-offset-4">Grab our free printable template</Link> or <Link to="/templates" className="text-accent-foreground underline underline-offset-4">trade template packs</Link>.</p>
