@@ -38,12 +38,14 @@ function Approve() {
   const [rejecting, setRejecting] = useState(false);
   const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
+  const [justResponded, setJustResponded] = useState<"approved" | "rejected" | null>(null);
 
   const send = async (decision: "approved" | "rejected") => {
+    if (busy) return;
     setBusy(true);
     try {
       await submit({ data: { token, decision, signerName: name, signerTitle: title, signature: sig ?? undefined, reason: reason || undefined } });
-      toast.success(decision === "approved" ? "Approved — thank you" : "Response sent");
+      setJustResponded(decision);
       refetch();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Something went wrong");
@@ -67,30 +69,41 @@ function Approve() {
         ) : (
           <>
             {co.status === "approved" && (
-              <div className="no-print mb-4 flex items-center gap-2 rounded-xl bg-success p-4 text-success-foreground"><CheckCircle2 /> Approved. You can print this page for your records.</div>
+              <div className="no-print mb-4 rounded-xl bg-success p-5 text-success-foreground">
+                <div className="flex items-center gap-2 font-bold"><CheckCircle2 /> {justResponded === "approved" ? "Thank you — your signature is recorded." : "Approved."}</div>
+                <p className="mt-1 text-sm opacity-90">The subcontractor can see the signed directive right away. Use the button below to save or print your copy.</p>
+              </div>
             )}
             {co.status === "rejected" && (
-              <div className="no-print mb-4 flex items-center gap-2 rounded-xl bg-destructive p-4 text-destructive-foreground"><XCircle /> This directive was rejected.</div>
+              <div className="no-print mb-4 rounded-xl bg-destructive p-5 text-destructive-foreground">
+                <div className="flex items-center gap-2 font-bold"><XCircle /> {justResponded === "rejected" ? "Your requested changes were sent." : "Changes were requested on this directive."}</div>
+                <p className="mt-1 text-sm opacity-90">The subcontractor can update the directive and send you a new link to review.</p>
+              </div>
             )}
             <Packet co={{ ...co, amount: Number(co.amount) }} />
             {co.status === "pending" && (
               <section className="no-print mt-5 space-y-3 rounded-xl border bg-card p-5">
                 <h2 className="font-display text-lg font-bold">Your response</h2>
+                <p className="text-sm text-muted-foreground">
+                  Approving means you authorize the subcontractor to do the work described above for the stated lump-sum price.
+                  It does not change the main contract or guarantee payment terms — it records that the extra work and its price were reviewed and accepted.
+                </p>
                 <div className="grid grid-cols-2 gap-2">
-                  <Input className="h-11" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
-                  <Input className="h-11" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                  <Input className="h-11" placeholder="Full name" aria-label="Your full name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <Input className="h-11" placeholder="Title" aria-label="Your title or company" value={title} onChange={(e) => setTitle(e.target.value)} />
                 </div>
                 {!rejecting ? (
                   <>
                     <SignaturePad onChange={setSig} />
-                    <Button className="h-12 w-full" disabled={!name.trim() || !sig || busy} onClick={() => send("approved")}>Approve & sign</Button>
-                    <button className="w-full text-sm text-muted-foreground" onClick={() => setRejecting(true)}>Reject this directive</button>
+                    <Button className="h-12 w-full" disabled={!name.trim() || !sig || busy} onClick={() => send("approved")}>{busy ? "Sending…" : "Approve & sign"}</Button>
+                    <button className="w-full text-sm text-muted-foreground underline" onClick={() => setRejecting(true)}>Something off? Request changes</button>
                   </>
                 ) : (
                   <>
-                    <Textarea placeholder="Reason (optional)" value={reason} onChange={(e) => setReason(e.target.value)} />
-                    <Button variant="destructive" className="h-12 w-full" disabled={!name.trim() || busy} onClick={() => send("rejected")}>Reject</Button>
-                    <button className="w-full text-sm text-muted-foreground" onClick={() => setRejecting(false)}>Back to approve</button>
+                    <p className="text-sm text-muted-foreground">Tell the subcontractor what to fix — a price, the scope, missing photos. They can update the directive and send you a fresh link.</p>
+                    <Textarea placeholder="What should change? (optional but helpful)" aria-label="What should change" value={reason} onChange={(e) => setReason(e.target.value)} />
+                    <Button variant="destructive" className="h-12 w-full" disabled={!name.trim() || busy} onClick={() => send("rejected")}>{busy ? "Sending…" : "Request changes"}</Button>
+                    <button className="w-full text-sm text-muted-foreground underline" onClick={() => setRejecting(false)}>Back to approve</button>
                   </>
                 )}
               </section>
