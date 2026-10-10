@@ -80,12 +80,22 @@ function Store() {
         <div className="mt-6 flex flex-col items-start justify-between gap-4 rounded-lg bg-secondary p-7 sm:flex-row sm:items-center">
           <div>
             <h3 className="text-xl font-extrabold text-heading">All-trades bundle</h3>
-            <p className="text-sm text-muted-foreground">All four packs, 28 templates.</p>
+            <p className="text-sm text-muted-foreground">All four packs, 28 templates — saves $10.96 versus buying separately.</p>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-3xl font-extrabold text-heading">{PACK_PRICE_LABEL.bundle}</span>
             <Button variant="welcoming" size="lg" disabled={busy !== null} onClick={() => buy("bundle")}>{busy === "bundle" ? "Opening…" : "Buy bundle"}</Button>
           </div>
+        </div>
+
+        <div className="mt-8 rounded-lg border bg-card p-6">
+          <h2 className="text-lg font-bold text-heading">What you get</h2>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <li><strong className="text-foreground">Formats:</strong> print-ready pages you can print or save as PDF from your browser. Sign in with your purchase email and you can also type into the forms on screen and save them.</li>
+            <li><strong className="text-foreground">Delivery:</strong> right after checkout you land on your forms page, and we email you a personal link so you can come back any time — no account needed.</li>
+            <li><strong className="text-foreground">One-time purchase:</strong> no subscription, no expiry.</li>
+            <li><strong className="text-foreground">Questions?</strong> <Link to="/support" className="font-semibold text-accent-foreground underline">Contact support</Link> — we answer within one business day.</li>
+          </ul>
         </div>
 
         <p className="mt-8 text-sm text-muted-foreground">
