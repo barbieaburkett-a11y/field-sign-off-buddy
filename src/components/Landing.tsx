@@ -49,7 +49,7 @@ export function Landing() {
             <div className="flex flex-col justify-between bg-secondary p-7 sm:p-10">
               <p className="font-mono text-xs font-bold uppercase text-success">Every plan</p>
               <p className="mt-3 text-xl font-bold">Unlimited directives.<br />Fixed monthly cost.</p>
-              <Link to="/pricing" className="mt-5 flex items-center gap-2 text-sm font-semibold text-accent-foreground">From $49/month <ArrowUpRight className="h-4 w-4" /></Link>
+              <Link to="/pricing" className="mt-5 flex items-center gap-2 text-sm font-semibold text-accent-foreground">From $19.99/month <ArrowUpRight className="h-4 w-4" /></Link>
             </div>
           </div>
           <div className="mx-auto mt-24 max-w-6xl">

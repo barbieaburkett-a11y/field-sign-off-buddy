@@ -8,7 +8,7 @@ export const PLANS = [
   {
     id: "starter" as const,
     name: "Starter",
-    price: 49,
+    price: 19.99,
     summary: "For small field teams protecting every extra.",
     foremen: "Up to 3 foremen",
     features: ["Unlimited change directives", "On-screen signing", "PDF exports"],
