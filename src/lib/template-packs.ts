@@ -42,10 +42,10 @@ export const PACK_PRICE_ID: Record<PackId, string> = {
   plumbing_hvac: "tpl_plumbing_hvac_once",
   concrete_framing: "tpl_concrete_framing_once",
   finishes: "tpl_finishes_once",
-  bundle: "tpl_bundle_once",
+  bundle: "tpl_bundle_once_29",
 };
 export const PACK_PRICE_LABEL: Record<PackId, string> = {
-  electrical: "$9.99", plumbing_hvac: "$9.99", concrete_framing: "$9.99", finishes: "$9.99", bundle: "$39",
+  electrical: "$9.99", plumbing_hvac: "$9.99", concrete_framing: "$9.99", finishes: "$9.99", bundle: "$29",
 };
 
 export function tradesForPacks(packs: string[]): TradeId[] {
