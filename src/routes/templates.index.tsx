@@ -29,8 +29,8 @@ export const Route = createFileRoute("/templates/")({
 function Store() {
   const navigate = useNavigate();
   const [busy, setBusy] = useState<PackId | null>(null);
-  const [previewTrade, setPreviewTrade] = useState(TRADES[0].id);
-  const [previewDoc, setPreviewDoc] = useState<(typeof DOCS)[number]["id"]>(DOCS[0].id);
+  const [previewTrade, setPreviewTrade] = useState(TRADES[0]!.id);
+  const [previewDoc, setPreviewDoc] = useState<(typeof DOCS)[number]["id"]>(DOCS[0]!.id);
 
   const buy = async (pack: PackId) => {
     setBusy(pack);
