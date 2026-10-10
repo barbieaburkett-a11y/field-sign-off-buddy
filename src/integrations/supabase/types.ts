@@ -87,6 +87,7 @@ export type Database = {
           number: number
           photos: string[]
           reject_reason: string | null
+          schedule_impact_days: number | null
           sent_at: string | null
           share_token: string
           signature: string | null
@@ -98,6 +99,7 @@ export type Database = {
           title: string
           updated_at: string
           user_id: string
+          version: number
         }
         Insert: {
           amount?: number
@@ -111,6 +113,7 @@ export type Database = {
           number?: number
           photos?: string[]
           reject_reason?: string | null
+          schedule_impact_days?: number | null
           sent_at?: string | null
           share_token?: string
           signature?: string | null
@@ -122,6 +125,7 @@ export type Database = {
           title: string
           updated_at?: string
           user_id?: string
+          version?: number
         }
         Update: {
           amount?: number
@@ -135,6 +139,7 @@ export type Database = {
           number?: number
           photos?: string[]
           reject_reason?: string | null
+          schedule_impact_days?: number | null
           sent_at?: string | null
           share_token?: string
           signature?: string | null
@@ -146,6 +151,7 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+          version?: number
         }
         Relationships: [
           {
@@ -255,7 +261,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      account_can_write: { Args: { _uid: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
