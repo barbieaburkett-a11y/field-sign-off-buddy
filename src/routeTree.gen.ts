@@ -22,7 +22,9 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SamplePacketRouteImport } from './routes/sample-packet'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WhatIsAChangeDirectiveRouteImport } from './routes/what-is-a-change-directive'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -102,9 +104,19 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SamplePacketRoute = SamplePacketRouteImport.update({
+  id: '/sample-packet',
+  path: '/sample-packet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -186,7 +198,9 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sample-packet': typeof SamplePacketRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -214,7 +228,9 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sample-packet': typeof SamplePacketRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -243,7 +259,9 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sample-packet': typeof SamplePacketRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/what-is-a-change-directive': typeof WhatIsAChangeDirectiveRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -273,7 +291,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refunds'
     | '/reset-password'
+    | '/sample-packet'
     | '/sitemap.xml'
+    | '/support'
     | '/terms'
     | '/what-is-a-change-directive'
     | '/.well-known/oauth-protected-resource'
@@ -301,7 +321,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refunds'
     | '/reset-password'
+    | '/sample-packet'
     | '/sitemap.xml'
+    | '/support'
     | '/terms'
     | '/what-is-a-change-directive'
     | '/.well-known/oauth-protected-resource'
@@ -329,7 +351,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refunds'
     | '/reset-password'
+    | '/sample-packet'
     | '/sitemap.xml'
+    | '/support'
     | '/terms'
     | '/what-is-a-change-directive'
     | '/.well-known/oauth-protected-resource'
@@ -358,7 +382,9 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RefundsRoute: typeof RefundsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SamplePacketRoute: typeof SamplePacketRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
   WhatIsAChangeDirectiveRoute: typeof WhatIsAChangeDirectiveRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -466,11 +492,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sample-packet': {
+      id: '/sample-packet'
+      path: '/sample-packet'
+      fullPath: '/sample-packet'
+      preLoaderRoute: typeof SamplePacketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -574,7 +614,9 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RefundsRoute: RefundsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SamplePacketRoute: SamplePacketRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
   WhatIsAChangeDirectiveRoute: WhatIsAChangeDirectiveRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
