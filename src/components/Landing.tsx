@@ -101,6 +101,23 @@ export function Landing() {
             <Link to="/sample-packet" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent-foreground">Open the full sample packet <ArrowUpRight className="h-4 w-4" /></Link>
           </div>
         </section>
+        <section className="mx-auto max-w-5xl px-5 pb-24 sm:px-8" aria-labelledby="objection-head">
+          <div className="rounded-lg border bg-card p-6 shadow-welcoming sm:p-10">
+            <p className="font-mono text-xs font-bold uppercase text-muted-foreground">The honest question</p>
+            <h2 id="objection-head" className="mt-3 text-2xl font-extrabold text-heading sm:text-3xl">“What if the GC won’t sign?”</h2>
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              <div>
+                <h3 className="font-bold text-heading">Most do.</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Put a clear scope and a fair price in front of someone <em>before</em> the work starts, and signing takes less than a minute. The fights happen when the price shows up after the work is done.</p>
+              </div>
+              <div>
+                <h3 className="font-bold text-heading">And if they don’t, you still have proof.</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Every directive is timestamped, with photos, scope, and price — even unsigned. That record beats “he said, she said” at pay-app time, every time.</p>
+              </div>
+            </div>
+            <p className="mt-6 text-sm text-muted-foreground">Nothing is sent until you send it. You stay in control of every approval request.</p>
+          </div>
+        </section>
         <section className="bg-ink px-5 py-16 text-ink-foreground sm:py-20">
           <div className="mx-auto max-w-4xl text-center"><h2 className="text-3xl font-extrabold uppercase sm:text-4xl">Built for every trade in the field</h2><p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-ink-foreground/75">Keep extra work documented, priced, and signed — without adding another complicated system to your day.</p><div className="mt-8 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-xs uppercase"><span>Electrical</span><span>HVAC</span><span>Plumbing</span><span>Drywall</span><span>Concrete</span></div></div>
         </section>
