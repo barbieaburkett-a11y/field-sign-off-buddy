@@ -11,6 +11,39 @@ import { openTemplateCheckout } from "@/lib/paddle";
 const TITLE = "Construction Template Packs by Trade — Change Orders, Logs, Schedules | FieldCO";
 const DESC = "Printable change order, change order log, work order, schedule, budget and workflow templates for electrical, plumbing & HVAC, concrete & framing, and drywall subs. $9.99 per trade.";
 
+// Illustrative filled change-order example (Miller Porch) shown in the "Filled example" preview.
+// Keys match TemplateDoc field labels and table cell keys ("Item|Qty|Unit|Unit price|Total#row#col").
+const FILLED_EXAMPLE: Record<string, string> = {
+  "Subcontractor": "Apex Electric Co.",
+  "Date": "10/14/2026",
+  "Project / job name": "Miller Porch Addition",
+  "General contractor": "Hartwell Builders",
+  "Location on site": "Rear porch & patio",
+  "Description of changed condition": "Homeowner added 6 recessed lights to the porch ceiling after rough-in — not shown on E-101.",
+  "Scope of extra work": "Cut in 6 recessed cans, run 85 LF of 14/2, tie into the existing porch circuit, patch drywall.",
+  "Item|Qty|Unit|Unit price|Total#1#1": "85",
+  "Item|Qty|Unit|Unit price|Total#1#2": "LF",
+  "Item|Qty|Unit|Unit price|Total#1#3": "1.20",
+  "Item|Qty|Unit|Unit price|Total#1#4": "102.00",
+  "Item|Qty|Unit|Unit price|Total#2#1": "6",
+  "Item|Qty|Unit|Unit price|Total#2#2": "EA",
+  "Item|Qty|Unit|Unit price|Total#2#3": "8.50",
+  "Item|Qty|Unit|Unit price|Total#2#4": "51.00",
+  "Item|Qty|Unit|Unit price|Total#4#1": "6",
+  "Item|Qty|Unit|Unit price|Total#4#2": "EA",
+  "Item|Qty|Unit|Unit price|Total#4#3": "45.00",
+  "Item|Qty|Unit|Unit price|Total#4#4": "270.00",
+  "Item|Qty|Unit|Unit price|Total#5#1": "6",
+  "Item|Qty|Unit|Unit price|Total#5#2": "hrs",
+  "Item|Qty|Unit|Unit price|Total#5#3": "95.00",
+  "Item|Qty|Unit|Unit price|Total#5#4": "570.00",
+  "Lump-sum price ($)": "993.00",
+  "Schedule impact (days)": "1",
+  "Photos attached (#)": "4",
+  "Subcontractor signature / date": "D. Alvarez — 10/14/2026",
+  "GC / superintendent signature / date": "M. Hartwell — 10/14/2026",
+};
+
 export const Route = createFileRoute("/templates/")({
   staticData: { sitemap: true },
   head: () => ({
@@ -31,6 +64,7 @@ function Store() {
   const [busy, setBusy] = useState<PackId | null>(null);
   const [previewTrade, setPreviewTrade] = useState(TRADES[0]!.id);
   const [previewDoc, setPreviewDoc] = useState<(typeof DOCS)[number]["id"]>(DOCS[0]!.id);
+  const [previewMode, setPreviewMode] = useState<"blank" | "filled">("blank");
 
   const buy = async (pack: PackId) => {
     setBusy(pack);
@@ -69,20 +103,31 @@ function Store() {
 
         <section className="mt-8 rounded-lg border bg-card p-6">
           <h2 className="text-lg font-bold text-heading">Preview the actual forms</h2>
-          <p className="mt-1 text-sm text-muted-foreground">This is the real form from each pack, shown blank. Pick a trade and form to look inside.</p>
+          <p className="mt-1 text-sm text-muted-foreground">This is the real form from each pack. Look at it blank, or see a filled example of what a finished change order looks like.</p>
+          <div className="mt-4 flex gap-2">
+            <Button variant={previewMode === "blank" ? "default" : "outline"} size="sm" onClick={() => setPreviewMode("blank")}>Blank form</Button>
+            <Button variant={previewMode === "filled" ? "default" : "outline"} size="sm" onClick={() => setPreviewMode("filled")}>Filled example</Button>
+          </div>
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            <select aria-label="Trade" className="h-11 rounded-md border bg-background px-3" value={previewTrade} onChange={(e) => setPreviewTrade(e.target.value as typeof previewTrade)}>
+            <select aria-label="Trade" disabled={previewMode === "filled"} className="h-11 rounded-md border bg-background px-3 disabled:opacity-50" value={previewTrade} onChange={(e) => setPreviewTrade(e.target.value as typeof previewTrade)}>
               {TRADES.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
             </select>
-            <select aria-label="Form" className="h-11 rounded-md border bg-background px-3" value={previewDoc} onChange={(e) => setPreviewDoc(e.target.value as typeof previewDoc)}>
+            <select aria-label="Form" disabled={previewMode === "filled"} className="h-11 rounded-md border bg-background px-3 disabled:opacity-50" value={previewDoc} onChange={(e) => setPreviewDoc(e.target.value as typeof previewDoc)}>
               {DOCS.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
             </select>
           </div>
           <div className="relative mt-4 max-h-[520px] overflow-hidden rounded-md border bg-background p-4" aria-label="Form preview">
-            <div className="pointer-events-none select-none"><TemplateDoc trade={previewTrade} doc={previewDoc} /></div>
+            <div className="pointer-events-none select-none">
+              {previewMode === "filled"
+                ? <TemplateDoc trade="electrical" doc="change-order" values={FILLED_EXAMPLE} onChange={() => {}} />
+                : <TemplateDoc trade={previewTrade} doc={previewDoc} />}
+            </div>
             <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-card to-transparent" />
-            <span className="absolute right-3 top-3 rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">Preview</span>
+            <span className="absolute right-3 top-3 rounded bg-accent px-2 py-1 font-mono text-xs font-bold text-accent-foreground">{previewMode === "filled" ? "Filled example" : "Preview"}</span>
           </div>
+          {previewMode === "filled" && (
+            <p className="mt-2 text-xs text-muted-foreground">Illustrative example — not a customer record. This is what a finished, signed change order looks like before you hand it to the GC.</p>
+          )}
         </section>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
