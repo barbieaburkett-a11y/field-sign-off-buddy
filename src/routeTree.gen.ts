@@ -30,6 +30,9 @@ import { Route as WhatIsAChangeDirectiveRouteImport } from './routes/what-is-a-c
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as ApproveTokenRouteImport } from './routes/approve.$token'
 import { Route as CoIdRouteImport } from './routes/co.$id'
+import { Route as EstimatesIndexRouteImport } from './routes/estimates.index'
+import { Route as EstimatesIdRouteImport } from './routes/estimates.$id'
+import { Route as EstimatesNewRouteImport } from './routes/estimates.new'
 import { Route as TemplatesIndexRouteImport } from './routes/templates.index'
 import { Route as TemplatesThanksRouteImport } from './routes/templates.thanks'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -145,6 +148,21 @@ const CoIdRoute = CoIdRouteImport.update({
   path: '/co/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EstimatesIndexRoute = EstimatesIndexRouteImport.update({
+  id: '/estimates/',
+  path: '/estimates/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstimatesIdRoute = EstimatesIdRouteImport.update({
+  id: '/estimates/$id',
+  path: '/estimates/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstimatesNewRoute = EstimatesNewRouteImport.update({
+  id: '/estimates/new',
+  path: '/estimates/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TemplatesIndexRoute = TemplatesIndexRouteImport.update({
   id: '/templates/',
   path: '/templates/',
@@ -206,7 +224,10 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/estimates/$id': typeof EstimatesIdRoute
+  '/estimates/new': typeof EstimatesNewRoute
   '/templates/thanks': typeof TemplatesThanksRoute
+  '/estimates/': typeof EstimatesIndexRoute
   '/templates/': typeof TemplatesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/templates/access/$token': typeof TemplatesAccessTokenRoute
@@ -236,7 +257,10 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/estimates/$id': typeof EstimatesIdRoute
+  '/estimates/new': typeof EstimatesNewRoute
   '/templates/thanks': typeof TemplatesThanksRoute
+  '/estimates': typeof EstimatesIndexRoute
   '/templates': typeof TemplatesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/templates/access/$token': typeof TemplatesAccessTokenRoute
@@ -267,7 +291,10 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/approve/$token': typeof ApproveTokenRoute
   '/co/$id': typeof CoIdRoute
+  '/estimates/$id': typeof EstimatesIdRoute
+  '/estimates/new': typeof EstimatesNewRoute
   '/templates/thanks': typeof TemplatesThanksRoute
+  '/estimates/': typeof EstimatesIndexRoute
   '/templates/': typeof TemplatesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/templates/access/$token': typeof TemplatesAccessTokenRoute
@@ -299,7 +326,10 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/estimates/$id'
+    | '/estimates/new'
     | '/templates/thanks'
+    | '/estimates/'
     | '/templates/'
     | '/.lovable/oauth/consent'
     | '/templates/access/$token'
@@ -329,7 +359,10 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/estimates/$id'
+    | '/estimates/new'
     | '/templates/thanks'
+    | '/estimates'
     | '/templates'
     | '/.lovable/oauth/consent'
     | '/templates/access/$token'
@@ -359,7 +392,10 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/approve/$token'
     | '/co/$id'
+    | '/estimates/$id'
+    | '/estimates/new'
     | '/templates/thanks'
+    | '/estimates/'
     | '/templates/'
     | '/.lovable/oauth/consent'
     | '/templates/access/$token'
@@ -390,7 +426,10 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ApproveTokenRoute: typeof ApproveTokenRoute
   CoIdRoute: typeof CoIdRoute
+  EstimatesIdRoute: typeof EstimatesIdRoute
+  EstimatesNewRoute: typeof EstimatesNewRoute
   TemplatesThanksRoute: typeof TemplatesThanksRoute
+  EstimatesIndexRoute: typeof EstimatesIndexRoute
   TemplatesIndexRoute: typeof TemplatesIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   TemplatesAccessTokenRoute: typeof TemplatesAccessTokenRoute
@@ -548,6 +587,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/estimates/': {
+      id: '/estimates/'
+      path: '/estimates'
+      fullPath: '/estimates/'
+      preLoaderRoute: typeof EstimatesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estimates/$id': {
+      id: '/estimates/$id'
+      path: '/estimates/$id'
+      fullPath: '/estimates/$id'
+      preLoaderRoute: typeof EstimatesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estimates/new': {
+      id: '/estimates/new'
+      path: '/estimates/new'
+      fullPath: '/estimates/new'
+      preLoaderRoute: typeof EstimatesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/templates/': {
       id: '/templates/'
       path: '/templates'
@@ -623,7 +683,10 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   ApproveTokenRoute: ApproveTokenRoute,
   CoIdRoute: CoIdRoute,
+  EstimatesIdRoute: EstimatesIdRoute,
+  EstimatesNewRoute: EstimatesNewRoute,
   TemplatesThanksRoute: TemplatesThanksRoute,
+  EstimatesIndexRoute: EstimatesIndexRoute,
   TemplatesIndexRoute: TemplatesIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   TemplatesAccessTokenRoute: TemplatesAccessTokenRoute,

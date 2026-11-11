@@ -178,10 +178,16 @@ function Dashboard() {
       </div>
 
       <div className="no-print fixed inset-x-0 bottom-0 border-t bg-background/90 p-4 backdrop-blur">
-        <div className="mx-auto max-w-3xl">
-          <Button asChild className="h-12 w-full text-base">
+        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-2">
+          <Button asChild className="h-12 text-base">
             <Link to="/new"><Plus className="mr-1 h-5 w-5" /> New change directive</Link>
           </Button>
+          <Button asChild variant="secondary" className="h-12 text-base">
+            <Link to="/estimates/new"><Camera className="mr-1 h-5 w-5" /> New photo estimate</Link>
+          </Button>
+        </div>
+        <div className="mx-auto mt-2 max-w-3xl text-center">
+          <Link to="/estimates" className="text-sm font-medium text-muted-foreground hover:text-foreground">View photo estimates</Link>
         </div>
       </div>
       <UpgradeDialog open={upgrade !== null} onOpenChange={(open) => !open && setUpgrade(null)} recommended={upgrade ?? "pro"} />

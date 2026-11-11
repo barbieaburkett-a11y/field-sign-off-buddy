@@ -163,6 +163,182 @@ export type Database = {
           },
         ]
       }
+      estimate_items: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string
+          equipment: number
+          id: string
+          is_sample: boolean
+          labor: number
+          material: number
+          sample_key: string | null
+          unit: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description: string
+          equipment?: number
+          id?: string
+          is_sample?: boolean
+          labor?: number
+          material?: number
+          sample_key?: string | null
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string
+          equipment?: number
+          id?: string
+          is_sample?: boolean
+          labor?: number
+          material?: number
+          sample_key?: string | null
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      estimate_lines: {
+        Row: {
+          created_at: string
+          description: string
+          equipment: number
+          estimate_id: string
+          id: string
+          item_id: string | null
+          labor: number
+          material: number
+          quantity: number
+          sort_order: number
+          status: string
+          unit: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          equipment?: number
+          estimate_id: string
+          id?: string
+          item_id?: string | null
+          labor?: number
+          material?: number
+          quantity?: number
+          sort_order?: number
+          status?: string
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          equipment?: number
+          estimate_id?: string
+          id?: string
+          item_id?: string | null
+          labor?: number
+          material?: number
+          quantity?: number
+          sort_order?: number
+          status?: string
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estimate_lines_estimate_id_fkey"
+            columns: ["estimate_id"]
+            isOneToOne: false
+            referencedRelation: "estimates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "estimate_lines_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "estimate_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      estimates: {
+        Row: {
+          client_name: string | null
+          created_at: string
+          id: string
+          job_id: string | null
+          markup_percent: number
+          measure: Json
+          number: number
+          overhead_percent: number
+          photos: string[]
+          sent_at: string | null
+          site_notes: string
+          source: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          client_name?: string | null
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          markup_percent?: number
+          measure?: Json
+          number?: number
+          overhead_percent?: number
+          photos?: string[]
+          sent_at?: string | null
+          site_notes?: string
+          source?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          client_name?: string | null
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          markup_percent?: number
+          measure?: Json
+          number?: number
+          overhead_percent?: number
+          photos?: string[]
+          sent_at?: string | null
+          site_notes?: string
+          source?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "estimates_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobs: {
         Row: {
           address: string | null
